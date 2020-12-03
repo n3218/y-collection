@@ -1,9 +1,18 @@
 import React from "react"
 import { Navbar, Nav, NavDropdown, Form, FormControl, Button, Container } from "react-bootstrap"
-// import { ReactComponent as Logo } from "../assets/wool.svg"
+import { useSelector, useDispatch } from "react-redux"
 import { LinkContainer } from "react-router-bootstrap"
+import { logout } from "../actions/userActions"
 
 const Header = () => {
+  const dispatch = useDispatch()
+  const userLogin = useSelector(state => state.userLogin)
+  const { userInfo } = userLogin
+
+  const logoutHandler = () => {
+    console.log("logout")
+    dispatch(logout())
+  }
   return (
     <header>
       <Navbar bg="light" expand="lg" collapseOnSelect>
@@ -42,11 +51,24 @@ const Header = () => {
                   <i className="fas fa-shopping-cart"></i> Cart
                 </Nav.Link>
               </LinkContainer>
-              <LinkContainer to="/login">
-                <Nav.Link>
-                  <i className="fas fa-user"></i> Sign In
-                </Nav.Link>
-              </LinkContainer>
+              {userInfo ? (
+                <NavDropdown title={userInfo.name} id="username">
+                  <LinkContainer to="/profile">
+                    <NavDropdown.Item>Profile</NavDropdown.Item>
+                  </LinkContainer>
+                  <LinkContainer to="/orders">
+                    <NavDropdown.Item>My orders</NavDropdown.Item>
+                  </LinkContainer>
+                  <NavDropdown.Divider />
+                  <NavDropdown.Item onClick={logoutHandler}>Logout</NavDropdown.Item>
+                </NavDropdown>
+              ) : (
+                <LinkContainer to="/login">
+                  <Nav.Link>
+                    <i className="fas fa-user"></i> Sign In
+                  </Nav.Link>
+                </LinkContainer>
+              )}
             </Nav>
             <Form inline>
               <FormControl type="text" placeholder="Search" className="mr-sm-2" />
