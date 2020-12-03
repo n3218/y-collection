@@ -13,9 +13,11 @@ const Product = ({ product }) => {
         <Link to={`/products/${product._id}`}>
           <Card.Title as="div">{product.name}</Card.Title>
         </Link>
-        <Card.Text as="div">
-          <Rating value={product.rating} text={`${product.numReviews} reviews`} />
-        </Card.Text>
+        {product.rating && (
+          <Card.Text as="div">
+            <Rating value={product.rating} text={`${product.numReviews} reviews`} />
+          </Card.Text>
+        )}
         <Card.Text as="h3">${product.price}</Card.Text>
       </Card.Body>
     </Card>

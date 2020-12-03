@@ -3,6 +3,7 @@ import { Container } from "react-bootstrap"
 import Footer from "./components/Footer"
 import Header from "./components/Header"
 import HomeScreen from "./screens/HomeScreen"
+import LoginScreen from "./screens/LoginScreen"
 import AboutScreen from "./screens/AboutScreen"
 import HowToScreen from "./screens/HowToScreen"
 import ProductScreen from "./screens/ProductScreen"
@@ -17,6 +18,7 @@ const App = () => {
         <Container>
           <Switch>
             <Route path="/" exact component={HomeScreen} />
+            <Route path="/login" exact component={LoginScreen} />
             <Route path="/about" component={AboutScreen} />
             <Route path="/how-to" component={HowToScreen} />
             <Route path="/products/:id" component={ProductScreen} />
