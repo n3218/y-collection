@@ -1,4 +1,5 @@
 import React from "react"
+import { useEffect } from "react"
 import { Navbar, Nav, NavDropdown, Form, FormControl, Button, Container } from "react-bootstrap"
 import { useSelector, useDispatch } from "react-redux"
 import { LinkContainer } from "react-router-bootstrap"
@@ -8,11 +9,14 @@ const Header = () => {
   const dispatch = useDispatch()
   const userLogin = useSelector(state => state.userLogin)
   const { userInfo } = userLogin
+  const cart = useSelector(state => state.cart)
+  const { cartItems } = cart
 
   const logoutHandler = () => {
     console.log("logout")
     dispatch(logout())
   }
+
   return (
     <header>
       <Navbar bg="light" expand="lg" collapseOnSelect>
@@ -48,7 +52,7 @@ const Header = () => {
               </NavDropdown>
               <LinkContainer to="/cart">
                 <Nav.Link>
-                  <i className="fas fa-shopping-cart"></i> Cart
+                  <i className="fas fa-shopping-cart"></i> Cart ({cartItems && cartItems.reduce((acc, item) => acc + item.qty, 0)})
                 </Nav.Link>
               </LinkContainer>
               {userInfo ? (

@@ -13,7 +13,7 @@ import AboutScreen from "./screens/AboutScreen"
 import HowToScreen from "./screens/HowToScreen"
 import ProductScreen from "./screens/ProductScreen"
 import Switch from "react-bootstrap/esm/Switch"
-import CartScreen from "./screens/ CartScreen"
+import CartScreen from "./screens/CartScreen"
 
 const App = () => {
   return (
