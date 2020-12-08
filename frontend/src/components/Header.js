@@ -1,5 +1,4 @@
 import React from "react"
-import { useEffect } from "react"
 import { Navbar, Nav, NavDropdown, Form, FormControl, Button, Container } from "react-bootstrap"
 import { useSelector, useDispatch } from "react-redux"
 import { LinkContainer } from "react-router-bootstrap"
