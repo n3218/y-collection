@@ -14,6 +14,7 @@ import HowToScreen from "./screens/HowToScreen"
 import ProductScreen from "./screens/ProductScreen"
 import Switch from "react-bootstrap/esm/Switch"
 import CartScreen from "./screens/CartScreen"
+import OrderScreen from "./screens/OrderScreen"
 
 const App = () => {
   return (
@@ -33,6 +34,7 @@ const App = () => {
             <Route path="/how-to" component={HowToScreen} />
             <Route path="/products/:id" component={ProductScreen} />
             <Route path="/cart/:id?" component={CartScreen} />
+            <Route path="/orders/:id" component={OrderScreen} />
           </Switch>
         </Container>
       </main>

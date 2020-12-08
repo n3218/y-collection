@@ -2,8 +2,7 @@ import React from "react"
 import { Link } from "react-router-dom"
 import { useDispatch, useSelector } from "react-redux"
 import Message from "../components/Message"
-import Loader from "../components/Loader"
-import { Row, Col, Listgroup, Image, Form, Button, Card, ListGroup } from "react-bootstrap"
+import { Row, Col, Image, Form, Button, Card, ListGroup } from "react-bootstrap"
 import { cartAddItemAction, cartRemoveItemAction } from "../actions/cartActions"
 import { useEffect } from "react"
 
@@ -39,8 +38,8 @@ const CartScreen = ({ match, location, history }) => {
         <Col md={8}>
           {cartItems.length === 0 ? (
             <Message>
-              Your cart is empty <br />
-              <Link to="/">Go Back</Link>
+              {" "}
+              Your cart is empty <br /> <Link to="/">Go Back</Link>
             </Message>
           ) : (
             <ListGroup variant="flush">
