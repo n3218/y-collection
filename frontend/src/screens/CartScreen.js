@@ -13,8 +13,6 @@ const CartScreen = ({ match, location, history }) => {
   const cart = useSelector(state => state.cart)
   const { cartItems } = cart
 
-  console.log(cartItems)
-
   useEffect(() => {
     if (productId) {
       dispatch(cartAddItemAction(productId, qty))
@@ -22,12 +20,10 @@ const CartScreen = ({ match, location, history }) => {
   }, [dispatch, productId, qty])
 
   const removeFromCartHandler = id => {
-    console.log("removeFromCartHandler: " + id)
     dispatch(cartRemoveItemAction(id))
   }
 
   const checkoutHandler = () => {
-    console.log("checkoutHandler")
     history.push("/login?redirect=shipping")
   }
 
