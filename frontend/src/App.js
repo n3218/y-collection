@@ -15,6 +15,7 @@ import ProductScreen from "./screens/ProductScreen"
 import Switch from "react-bootstrap/esm/Switch"
 import CartScreen from "./screens/CartScreen"
 import OrderScreen from "./screens/OrderScreen"
+import UserListScreen from "./screens/UserListScreen"
 
 const App = () => {
   return (
@@ -35,6 +36,7 @@ const App = () => {
             <Route path="/products/:id" component={ProductScreen} />
             <Route path="/cart/:id?" component={CartScreen} />
             <Route path="/orders/:id" component={OrderScreen} />
+            <Route path="/admin/userlist" exact component={UserListScreen} />
           </Switch>
         </Container>
       </main>

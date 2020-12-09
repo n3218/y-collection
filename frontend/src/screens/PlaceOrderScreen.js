@@ -9,7 +9,6 @@ import { createOrderAction } from "../actions/orderActions"
 const PlaceOrderScreen = ({ history }) => {
   const dispatch = useDispatch()
   const cart = useSelector(state => state.cart)
-  console.log(cart.cartItems)
 
   // Calculate prices
   const addDecimals = num => (Math.round(num * 100) / 100).toFixed(2)
@@ -29,7 +28,6 @@ const PlaceOrderScreen = ({ history }) => {
   }, [history, success])
 
   const placeOrderHandler = () => {
-    console.log("placeOrderHandler")
     dispatch(
       createOrderAction({
         orderItems: cart.cartItems,

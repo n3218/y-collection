@@ -12,7 +12,6 @@ const Header = () => {
   const { cartItems } = cart
 
   const logoutHandler = () => {
-    console.log("logout")
     dispatch(logout())
   }
 
@@ -77,6 +76,21 @@ const Header = () => {
               <FormControl type="text" placeholder="Search" className="mr-sm-2" />
               <Button variant="warning">Search</Button>
             </Form>
+            {userInfo && userInfo.isAdmin && (
+              <NavDropdown title="Admin" id="adminmenu">
+                <LinkContainer to="/admin/userlist">
+                  <NavDropdown.Item>Users</NavDropdown.Item>
+                </LinkContainer>
+                <LinkContainer to="/admin/productlist">
+                  <NavDropdown.Item>Products</NavDropdown.Item>
+                </LinkContainer>
+                <LinkContainer to="/admin/orderlist">
+                  <NavDropdown.Item>Orders</NavDropdown.Item>
+                </LinkContainer>
+                <NavDropdown.Divider />
+                <NavDropdown.Item onClick={logoutHandler}>Logout</NavDropdown.Item>
+              </NavDropdown>
+            )}
           </Navbar.Collapse>
         </Container>
       </Navbar>

@@ -18,7 +18,6 @@ const ShippingScreen = ({ history }) => {
 
   const submitShippingHandler = e => {
     e.preventDefault()
-    console.log("submitShippingHandler")
     dispatch(saveShippingAddressAction({ address, city, zipCode, country }))
     history.push("/payment")
   }

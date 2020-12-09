@@ -18,10 +18,6 @@ const OrderScreen = ({ match }) => {
   const orderPay = useSelector(state => state.orderPay)
   const { loading: loadingPay, success: successPay } = orderPay
 
-  console.log("orderPay: ", orderPay)
-  console.log("successPay: ", successPay)
-  console.log("loadingPay: ", loadingPay)
-
   if (!loading) {
     // Calculate prices
     const addDecimals = num => (Math.round(num * 100) / 100).toFixed(2)
@@ -55,7 +51,6 @@ const OrderScreen = ({ match }) => {
 
   const successPaymentHandler = paymentResult => {
     // paymentResult
-    console.log("paymentResult: " + paymentResult)
     dispatch(payOrderAction(orderId, paymentResult))
   }
 
@@ -153,9 +148,6 @@ const OrderScreen = ({ match }) => {
               </ListGroup.Item>
               {!order.isPaid && (
                 <ListGroup.Item>
-                  {console.log("order: ", order)}
-                  {console.log("loadingPay: ", loadingPay)}
-                  {console.log("sdkReady: ", sdkReady)}
                   {loadingPay && <Loader />}
                   {!sdkReady ? <Loader /> : <PayPalButton amount={order.totalPrice} onSuccess={successPaymentHandler} />}
                 </ListGroup.Item>
