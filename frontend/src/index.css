@@ -13,3 +13,14 @@ main {
 h1 {
   margin: 0.8em 0 0.6em 0;
 }
+
+/* .text-danger {
+  color: #cf1b1b !important;
+}
+.text-success {
+  color: green !important;
+} */
+
+.custom-control {
+  padding-left: 0;
+}

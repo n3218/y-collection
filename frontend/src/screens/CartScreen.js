@@ -42,13 +42,15 @@ const CartScreen = ({ match, location, history }) => {
               {cartItems.map(item => (
                 <ListGroup.Item key={item.product}>
                   <Row>
-                    <Col md={2}>
+                    <Col md={3}>
                       <Image src={item.image} alt={item.name} fluid rounded />
                     </Col>
-                    <Col md={3}>
-                      <Link to={`/products/${item.product}`}>{item.name}</Link>
+                    <Col>
+                      <Link to={`/products/${item.product}`} className="text-info">
+                        {item.name}
+                      </Link>
                     </Col>
-                    <Col md={2}>{item.price}</Col>
+                    <Col md={2}>€{item.price}</Col>
                     <Col md={2}>
                       <Form.Control as="select" value={item.qty} onChange={e => dispatch(cartAddItemAction(item.product, Number(e.target.value)))}>
                         {[...Array(item.countInStock).keys()].map(x => (
@@ -58,9 +60,9 @@ const CartScreen = ({ match, location, history }) => {
                         ))}
                       </Form.Control>
                     </Col>
-                    <Col md={2}>
+                    <Col md={1}>
                       <Button variant="link" type="button" onClick={() => removeFromCartHandler(item.product)}>
-                        <i className="fas fa-trash"></i>
+                        <i className="fas fa-trash text-danger"></i>
                       </Button>
                     </Col>
                   </Row>

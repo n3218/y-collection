@@ -1,5 +1,5 @@
 import React, { useState } from "react"
-import { Form, Button, Col } from "react-bootstrap"
+import { Form, Button } from "react-bootstrap"
 import { useDispatch, useSelector } from "react-redux"
 import FormContainer from "../components/FormContainer"
 import { savePaymentMethodAction } from "../actions/cartActions"
@@ -8,13 +8,10 @@ import CheckoutSteps from "../components/CheckoutSteps"
 const PaymentScreen = ({ history }) => {
   const cart = useSelector(state => state.cart)
   const { shippingAddress } = cart
-
   if (!shippingAddress) {
     history.push("/shipping")
   }
-
   const [paymentMethod, setPaymentMethod] = useState("PayPal")
-
   const dispatch = useDispatch()
 
   const submitHandler = e => {
@@ -22,6 +19,21 @@ const PaymentScreen = ({ history }) => {
     dispatch(savePaymentMethodAction(paymentMethod))
     history.push("/placeorder")
   }
+
+  const radioButton = (label, name) => (
+    <Form.Check //
+      type="radio"
+      label={label}
+      id={name}
+      name="paymentMethod"
+      value={name}
+      checked={paymentMethod === name}
+      onChange={e => setPaymentMethod(e.target.value)}
+      className="my-3"
+    ></Form.Check>
+  )
+
+  console.log(paymentMethod)
   return (
     <FormContainer>
       <CheckoutSteps step1 step2 step3 />
@@ -29,54 +41,17 @@ const PaymentScreen = ({ history }) => {
       <Form onSubmit={submitHandler}>
         <Form.Group>
           <Form.Label as="legend">Select Payment Method</Form.Label>
-        </Form.Group>
 
-        <Col>
-          <Form.Check //
-            type="radio"
-            label="PayPal or Credit Card"
-            id="PayPal"
-            name="paymentMethod"
-            value="PayPal"
-            checked
-            onChange={e => setPaymentMethod(e.target.value)}
-          ></Form.Check>
-          <Form.Check //
-            type="radio"
-            label="Stripe"
-            id="Stripe"
-            name="paymentMethod"
-            value="Stripe"
-            onChange={e => setPaymentMethod(e.target.value)}
-          ></Form.Check>
-          <Form.Check //
-            type="radio"
-            label="Paysend"
-            id="Paysend"
-            name="paymentMethod"
-            value="Paysend"
-            onChange={e => setPaymentMethod(e.target.value)}
-          ></Form.Check>
-          <Form.Check //
-            type="radio"
-            label="GoolePay"
-            id="GoolePay"
-            name="paymentMethod"
-            value="GoolePay"
-            onChange={e => setPaymentMethod(e.target.value)}
-          ></Form.Check>
-          <Form.Check //
-            type="radio"
-            label="ApplePay"
-            id="ApplePay"
-            name="paymentMethod"
-            value="ApplePay"
-            onChange={e => setPaymentMethod(e.target.value)}
-          ></Form.Check>
-        </Col>
-        <Button type="submit" variant="primary">
-          Continue
-        </Button>
+          {radioButton("PayPal or Credit Card", "PayPal")}
+          {radioButton("GoolePay", "GoolePay")}
+          {radioButton("ApplePay", "ApplePay")}
+          {radioButton("Paysend", "Paysend")}
+          {radioButton("Stripe", "Stripe")}
+
+          <Button type="submit" variant="primary">
+            Continue
+          </Button>
+        </Form.Group>
       </Form>
     </FormContainer>
   )

@@ -63,7 +63,7 @@ const UserEditScreen = ({ history, match }) => {
               <Form.Label>Email Address</Form.Label>
               <Form.Control type="email" placeholder="Enter Email" value={email} onChange={e => setEmail(e.target.value)}></Form.Control>
             </Form.Group>
-            <Form.Group controlId="password">
+            <Form.Group controlId="isAdmin">
               <Form.Check type="checkbox" label="isAdmin" checked={isAdmin} onChange={e => setIsAdmin(e.target.checked)}></Form.Check>
             </Form.Group>
 

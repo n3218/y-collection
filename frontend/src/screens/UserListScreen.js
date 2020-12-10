@@ -54,25 +54,27 @@ const UserListScreen = ({ history }) => {
                 <td>{user._id}</td>
                 <td>{user.name}</td>
                 <td>
-                  <a href={`mailto:${user.email}`}>{user.email}</a>
+                  <a href={`mailto:${user.email}`} className="text-info">
+                    {user.email}
+                  </a>
                 </td>
                 <td>
                   {user.isAdmin ? ( //
-                    <i className="fas fa-check" style={{ color: "green" }}></i>
+                    <i className="fas fa-check text-success"></i>
                   ) : (
-                    <i className="fas fa-times" style={{ color: "red" }}></i>
+                    <i className="fas fa-times text-danger"></i>
                   )}
                 </td>
                 <td>
                   <LinkContainer to={`/admin/user/${user._id}/edit`}>
                     <Button variant="link" title="Edit">
-                      <i className="fas fa-edit" style={{ color: "green" }}></i>
+                      <i className="fas fa-edit text-success"></i>
                     </Button>
                   </LinkContainer>
                 </td>
                 <td>
                   <Button variant="link" title="Delete" onClick={() => deleteHandler(user._id)}>
-                    <i className="fas fa-trash" style={{ color: "red" }}></i>
+                    <i className="fas fa-trash text-danger"></i>
                   </Button>
                 </td>
               </tr>

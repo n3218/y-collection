@@ -70,19 +70,22 @@ const OrderScreen = ({ match }) => {
                 <strong>Name:</strong> {order.user.name}
               </p>
               <p>
-                <strong>Email:</strong> <a href={`mailto:${order.user.email}`}>{order.user.email}</a>
+                <strong>Email:</strong>{" "}
+                <a href={`mailto:${order.user.email}`} className="text-info">
+                  {order.user.email}
+                </a>
               </p>
               <p>
                 <strong>Address: </strong>
                 {order.shippingAddress.address}, {order.shippingAddress.city}, {order.shippingAddress.zipCode}, {order.shippingAddress.country}
               </p>
-              {order.isDelivered ? <Message variant="success">Delivered on {order.deliveredAt}</Message> : <Message variant="danger">Not Delivered</Message>}
+              {order.isDelivered ? <Message variant="success">Delivered on {order.deliveredAt.substring(0, 10)}</Message> : <Message variant="danger">Not Delivered</Message>}
             </ListGroup.Item>
 
             <ListGroup.Item>
               <h2>PAYMENT METHOD:</h2>
               <p>{order.paymentMethod}</p>
-              {order.isPaid ? <Message variant="success">Paid on {order.paidAt}</Message> : <Message variant="danger">Not Paid</Message>}
+              {order.isPaid ? <Message variant="info">Paid on {order.paidAt.substring(0, 10)}</Message> : <Message variant="danger">Not Paid</Message>}
             </ListGroup.Item>
 
             <ListGroup.Item>
@@ -98,7 +101,9 @@ const OrderScreen = ({ match }) => {
                           <Image src={item.image} alt={item.name} fluid rounded />
                         </Col>
                         <Col>
-                          <Link to={`/products/${item.product}`}>{item.name}</Link>
+                          <Link to={`/products/${item.product}`} className="text-info">
+                            {item.name}
+                          </Link>
                         </Col>
                         <Col md={4}>
                           {item.qty} x ${item.price} = ${item.qty * item.price}

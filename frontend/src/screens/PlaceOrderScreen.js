@@ -128,7 +128,7 @@ const PlaceOrderScreen = ({ history }) => {
                   disabled={cart.cartItems === 0}
                   onClick={placeOrderHandler}
                 >
-                  Review Order
+                  Place Order and Pay
                 </Button>
               </ListGroup.Item>
             </ListGroup>
