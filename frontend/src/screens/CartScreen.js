@@ -76,7 +76,7 @@ const CartScreen = ({ match, location, history }) => {
             <ListGroup variant="flush">
               <ListGroup.Item>
                 <h4>Subtotal ({cartItems.reduce((acc, item) => acc + item.qty, 0)}) items</h4>
-                <h6>${cartItems.reduce((acc, item) => acc + item.qty * item.price, 0).toFixed(2)}</h6>
+                <h6>€{cartItems.reduce((acc, item) => acc + item.qty * item.price, 0).toFixed(2)}</h6>
               </ListGroup.Item>
               <ListGroup.Item>
                 <Button type="button" className="btn-block" disabled={cartItems.length === 0} onClick={checkoutHandler}>
