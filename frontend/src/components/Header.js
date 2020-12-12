@@ -1,6 +1,6 @@
 import React from "react"
 import { Link, Route } from "react-router-dom"
-import { Navbar, Nav, NavDropdown, Form, FormControl, Button, Container } from "react-bootstrap"
+import { Navbar, Nav, NavDropdown, Container } from "react-bootstrap"
 import { useSelector, useDispatch } from "react-redux"
 import { LinkContainer } from "react-router-bootstrap"
 import { logout } from "../actions/userActions"
