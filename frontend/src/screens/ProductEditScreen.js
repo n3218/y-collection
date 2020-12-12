@@ -1,13 +1,12 @@
 import React, { useState, useEffect } from "react"
 import axios from "axios"
 import { Link } from "react-router-dom"
-import { Form, Button } from "react-bootstrap"
+import { Form, Button, Row, Col, Image } from "react-bootstrap"
 import { useDispatch, useSelector } from "react-redux"
-import FormContainer from "../components/FormContainer"
 import Message from "../components/Message"
-import { productDetailsAction, productUpdateAction } from "../actions/productActions"
 import Loader from "../components/Loader"
 import FormField from "../components/FormField"
+import { productDetailsAction, productUpdateAction } from "../actions/productActions"
 import { PRODUCT_UPDATE_RESET } from "../constants/productConstants"
 
 const ProductEditScreen = ({ history, match }) => {
@@ -90,40 +89,46 @@ const ProductEditScreen = ({ history, match }) => {
 
   return (
     <>
-      <Link to="/admin/productList" className="btn btn-light my-3">
-        Back
-      </Link>
-      <FormContainer>
-        <h1>Edit Product</h1>
-        {loadingUpdate && <Loader />}
-        {errorUpdate && <Message variant="danger">{errorUpdate}</Message>}
-        {loading ? (
-          <Loader />
-        ) : error ? (
-          <Message variant="danger">{error}</Message>
-        ) : (
-          <Form onSubmit={submitHandler}>
-            <FormField value={name} label="Name" onChange={setName} />
-            <FormField value={price} label="Price" onChange={setPrice} />
-            {/* <FormField value={image} label="Image" onChange={setImage} /> */}
-            <FormField value={brand} label="Brand" onChange={setBrand} />
-            <FormField value={category} label="Category" onChange={setCategory} />
-            <FormField value={description} label="Description" onChange={setDescription} />
-            <FormField value={countInStock} label="Count In Stock" onChange={setCountInStock} />
+      <Row>
+        <Col md={4}>
+          <Link to="/admin/productList" className="btn btn-light my-3">
+            Back
+          </Link>
+          <Image src={product.image} alt={product.name} fluid />
+        </Col>
+        <Col>
+          <h1>Edit Product</h1>
+          {loadingUpdate && <Loader />}
+          {errorUpdate && <Message variant="danger">{errorUpdate}</Message>}
+          {loading ? (
+            <Loader />
+          ) : error ? (
+            <Message variant="danger">{error}</Message>
+          ) : (
+            <Form onSubmit={submitHandler}>
+              <FormField value={name} label="Name" onChange={setName} />
+              <FormField value={price} label="Price" onChange={setPrice} />
+              {/* <FormField value={image} label="Image" onChange={setImage} /> */}
+              <FormField value={brand} label="Brand" onChange={setBrand} />
+              <FormField value={category} label="Category" onChange={setCategory} />
+              <FormField value={description} label="Description" onChange={setDescription} />
+              <FormField value={countInStock} label="Count In Stock" onChange={setCountInStock} />
 
-            <Form.Group controlId="image-file">
-              <Form.Label>Image</Form.Label>
-              <Form.Control type="text" placeholder="Image file" value={image} onChange={e => setImage(e.target.value)}></Form.Control>
-              <Form.File id="image-file" label="Choose File" custom onChange={uploadFileHandler}></Form.File>
-              {uploading && <Loader />}
-            </Form.Group>
+              <Form.Group controlId="image-file">
+                <Form.Label>Image</Form.Label>
+                <div>{image}</div>
+                {/* <Form.Control type="text" placeholder="Image file" value={image} onChange={e => setImage(e.target.value)}></Form.Control> */}
+                <Form.File id="image-file" label="Choose File" custom onChange={uploadFileHandler}></Form.File>
+                {uploading && <Loader />}
+              </Form.Group>
 
-            <Button type="submit" variant="primary">
-              Save
-            </Button>
-          </Form>
-        )}
-      </FormContainer>
+              <Button type="submit" variant="primary">
+                Save
+              </Button>
+            </Form>
+          )}
+        </Col>
+      </Row>
     </>
   )
 }

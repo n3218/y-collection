@@ -87,10 +87,7 @@ const OrderScreen = ({ match, history }) => {
                 <strong>Name:</strong> {order.user.name}
               </p>
               <p>
-                <strong>Email:</strong>{" "}
-                <a href={`mailto:${order.user.email}`} className="text-info">
-                  {order.user.email}
-                </a>
+                <strong>Email:</strong> <a href={`mailto:${order.user.email}`}>{order.user.email}</a>
               </p>
               <p>
                 <strong>Address: </strong>
@@ -102,7 +99,7 @@ const OrderScreen = ({ match, history }) => {
             <ListGroup.Item>
               <h2>PAYMENT METHOD:</h2>
               <p>{order.paymentMethod}</p>
-              {order.isPaid ? <Message variant="info">Paid on {order.paidAt.substring(0, 10)}</Message> : <Message variant="danger">Not Paid</Message>}
+              {order.isPaid ? <Message variant="success">Paid on {order.paidAt.substring(0, 10)}</Message> : <Message variant="danger">Not Paid</Message>}
             </ListGroup.Item>
 
             <ListGroup.Item>
@@ -118,9 +115,7 @@ const OrderScreen = ({ match, history }) => {
                           <Image src={item.image} alt={item.name} fluid rounded />
                         </Col>
                         <Col>
-                          <Link to={`/products/${item.product}`} className="text-info">
-                            {item.name}
-                          </Link>
+                          <Link to={`/products/${item.product}`}>{item.name}</Link>
                         </Col>
                         <Col md={4}>
                           {item.qty} x ${item.price} = ${item.qty * item.price}

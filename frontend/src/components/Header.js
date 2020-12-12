@@ -1,8 +1,10 @@
 import React from "react"
+import { Link, Route } from "react-router-dom"
 import { Navbar, Nav, NavDropdown, Form, FormControl, Button, Container } from "react-bootstrap"
 import { useSelector, useDispatch } from "react-redux"
 import { LinkContainer } from "react-router-bootstrap"
 import { logout } from "../actions/userActions"
+import SearchBox from "./SearchBox"
 
 const Header = () => {
   const dispatch = useDispatch()
@@ -24,6 +26,10 @@ const Header = () => {
               <img className="logo" alt="Logo" src="/assets/wool.svg" />
             </Navbar.Brand>
           </LinkContainer>
+
+          <Link to="/" className="text-decoration-none">
+            <h1 className="text-dark">Woolunatics</h1>
+          </Link>
 
           <Navbar.Toggle aria-controls="basic-navbar-nav" />
 
@@ -70,10 +76,14 @@ const Header = () => {
                   </Nav.Link>
                 </LinkContainer>
               )}
-              <Form inline>
+
+              <Route render={({ history }) => <SearchBox history={history} />} />
+
+              {/* <Form inline>
                 <FormControl type="text" placeholder="Search" className="mr-sm-2" />
                 <Button>Search</Button>
-              </Form>
+              </Form>  */}
+
               {userInfo && userInfo.isAdmin && (
                 <NavDropdown title={"Admin"} id="adminmenu">
                   <LinkContainer to="/admin/userlist">

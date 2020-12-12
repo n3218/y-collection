@@ -1,6 +1,6 @@
 import React, { useEffect } from "react"
 import { LinkContainer } from "react-router-bootstrap"
-import { Table, Button, Row, Col } from "react-bootstrap"
+import { Table, Button, Row, Col, Image } from "react-bootstrap"
 import { useDispatch, useSelector } from "react-redux"
 import Message from "../components/Message"
 import Loader from "../components/Loader"
@@ -70,6 +70,7 @@ const ProductListScreen = ({ history }) => {
           <thead>
             <tr>
               <th>ID</th>
+              <th>PIC</th>
               <th>NAME</th>
               <th>PRICE</th>
               <th>CATEGORY</th>
@@ -82,6 +83,9 @@ const ProductListScreen = ({ history }) => {
             {products.map(product => (
               <tr key={product._id}>
                 <td>{product._id}</td>
+                <td width="50px">
+                  <Image src={product.image} alt={product.name} fluid />
+                </td>
                 <td>
                   <Link to={`/products/${product._id}`}>{product.name}</Link>
                 </td>
