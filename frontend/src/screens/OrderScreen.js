@@ -8,6 +8,7 @@ import Loader from "../components/Loader"
 import Message from "../components/Message"
 import { getOrderDetailsAction, payOrderAction, deliverOrderAction } from "../actions/orderActions"
 import { ORDER_PAY_RESET, ORDER_DELIVER_RESET } from "../constants/orderConstants"
+import Meta from "../components/Meta"
 
 const OrderScreen = ({ match, history }) => {
   const orderId = match.params.id
@@ -77,6 +78,7 @@ const OrderScreen = ({ match, history }) => {
     <Message>{error}</Message>
   ) : (
     <>
+      <Meta title={`Order #${order._id} | Woolunatics`} />
       <h1>Order #{order._id}</h1>
       <Row>
         <Col md={8}>

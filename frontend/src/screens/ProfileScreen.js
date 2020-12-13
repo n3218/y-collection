@@ -6,6 +6,7 @@ import Message from "../components/Message"
 import { getUserDetails, updateUserProfileAction } from "../actions/userActions"
 import Loader from "../components/Loader"
 import { listMyOrdersAction } from "../actions/orderActions"
+import Meta from "../components/Meta"
 
 const ProfileScreen = ({ history, location }) => {
   const [name, setName] = useState("")
@@ -57,6 +58,7 @@ const ProfileScreen = ({ history, location }) => {
 
   return (
     <Row>
+      <Meta title="Profile | Woolunatics" />
       <Col md={3}>
         <h2>My Profile</h2>
         {message && <Message variant="danger">{message}</Message>}

@@ -29,6 +29,10 @@ h1 {
 
 @media only screen and (min-width: 1200px) {
   .container {
-    max-width: 95%;
+    max-width: 94%;
   }
+}
+
+.carousel {
+  margin: 0 -4% 0 -4%;
 }

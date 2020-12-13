@@ -5,6 +5,7 @@ import { useDispatch, useSelector } from "react-redux"
 import Message from "../components/Message"
 import Loader from "../components/Loader"
 import { listUsersAction, deleteUserAction } from "../actions/userActions"
+import Meta from "../components/Meta"
 
 const UserListScreen = ({ history }) => {
   const dispatch = useDispatch()
@@ -31,6 +32,7 @@ const UserListScreen = ({ history }) => {
 
   return (
     <>
+      <Meta title="Admin | User List | Woolunatics" />
       <h1>Users</h1>
       {loading ? (
         <Loader />

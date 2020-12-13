@@ -1,8 +1,10 @@
 import React from "react"
+import Meta from "../components/Meta"
 
 const HowToScreen = () => {
   return (
     <>
+      <Meta title="How to Order | Woolunatics" />
       <h1>Как сделать заказ:</h1>
       <ol>
         <li>Вы выбираете заинтересовавшие вас артикулы, предварительно ознакомившись с ассортиментом в постах, видео Igtv, прикрепленных сторис.</li>

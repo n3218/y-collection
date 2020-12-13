@@ -8,6 +8,7 @@ import Loader from "../components/Loader"
 import FormField from "../components/FormField"
 import { productDetailsAction, productUpdateAction } from "../actions/productActions"
 import { PRODUCT_UPDATE_RESET } from "../constants/productConstants"
+import Meta from "../components/Meta"
 
 const ProductEditScreen = ({ history, match }) => {
   const productId = match.params.id
@@ -89,6 +90,7 @@ const ProductEditScreen = ({ history, match }) => {
 
   return (
     <>
+      <Meta title="Admin | Edit Product | Woolunatics" />
       <Row>
         <Col md={4}>
           <Link to="/admin/productList" className="btn btn-light my-3">
@@ -108,7 +110,6 @@ const ProductEditScreen = ({ history, match }) => {
             <Form onSubmit={submitHandler}>
               <FormField value={name} label="Name" onChange={setName} />
               <FormField value={price} label="Price" onChange={setPrice} />
-              {/* <FormField value={image} label="Image" onChange={setImage} /> */}
               <FormField value={brand} label="Brand" onChange={setBrand} />
               <FormField value={category} label="Category" onChange={setCategory} />
               <FormField value={description} label="Description" onChange={setDescription} />

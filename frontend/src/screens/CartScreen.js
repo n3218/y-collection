@@ -5,6 +5,7 @@ import Message from "../components/Message"
 import { Row, Col, Image, Form, Button, Card, ListGroup } from "react-bootstrap"
 import { cartAddItemAction, cartRemoveItemAction } from "../actions/cartActions"
 import { useEffect } from "react"
+import Meta from "../components/Meta"
 
 const CartScreen = ({ match, location, history }) => {
   const productId = match.params.id
@@ -29,6 +30,7 @@ const CartScreen = ({ match, location, history }) => {
 
   return (
     <>
+      <Meta title="Shopping Cart | Woolunatics" />
       <h1>Shopping Cart</h1>
       <Row>
         <Col md={8}>

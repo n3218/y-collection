@@ -25,7 +25,7 @@ const App = () => {
   return (
     <Router>
       <Header />
-      <main className="py-3">
+      <main>
         <Container>
           <Switch>
             <Route path="/login" exact component={LoginScreen} />

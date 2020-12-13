@@ -7,6 +7,7 @@ import Loader from "../components/Loader"
 import { listProducts } from "../actions/productActions"
 import Paginate from "../components/Paginate"
 import ProductCarousel from "../components/ProductCarousel"
+import Meta from "../components/Meta"
 
 const HomeScreen = ({ match }) => {
   const keyword = match.params.keyword
@@ -30,6 +31,7 @@ const HomeScreen = ({ match }) => {
         <Message variant="danger">{error}</Message>
       ) : (
         <>
+          <Meta />
           <Paginate pages={pages} page={page} keyword={keyword} />
           <Row>
             {products.map(product => (

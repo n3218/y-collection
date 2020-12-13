@@ -8,6 +8,7 @@ import { listProducts, productCreateAction, productDeleteAction } from "../actio
 import { PRODUCT_CREATE_RESET } from "../constants/productConstants"
 import { Link } from "react-router-dom"
 import Paginate from "../components/Paginate"
+import Meta from "../components/Meta"
 
 const ProductListScreen = ({ history, match }) => {
   const dispatch = useDispatch()
@@ -71,6 +72,7 @@ const ProductListScreen = ({ history, match }) => {
         <Message variant="danger">{error}</Message>
       ) : (
         <>
+          <Meta title="Admin | Product List | Woolunatics" />
           <Paginate isAdmin pages={pages} page={page} />
           <Table striped hover responsive className="table-sm">
             <thead>

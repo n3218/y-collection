@@ -7,6 +7,7 @@ import Message from "../components/Message"
 import { getUserDetails, updateUserAction } from "../actions/userActions"
 import Loader from "../components/Loader"
 import { USER_UPDATE_RESET } from "../constants/userConstants"
+import Meta from "../components/Meta"
 
 const UserEditScreen = ({ history, match }) => {
   const userId = match.params.id
@@ -42,6 +43,7 @@ const UserEditScreen = ({ history, match }) => {
 
   return (
     <>
+      <Meta title="Admin | Edit User | Woolunatics" />
       <Link to="/admin/userList" className="btn btn-light my-3">
         Back
       </Link>

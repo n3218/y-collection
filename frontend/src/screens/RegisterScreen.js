@@ -6,6 +6,7 @@ import FormContainer from "../components/FormContainer"
 import Message from "../components/Message"
 import { register } from "../actions/userActions"
 import Loader from "../components/Loader"
+import Meta from "../components/Meta"
 
 const RegisterScreen = ({ history, location }) => {
   const [name, setName] = useState("")
@@ -38,6 +39,7 @@ const RegisterScreen = ({ history, location }) => {
 
   return (
     <FormContainer>
+      <Meta title="Register | Woolunatics" />
       <h1>Sign Up</h1>
       {message && <Message variant="danger">{message}</Message>}
       {error && <Message variant="danger">{error}</Message>}

@@ -5,6 +5,7 @@ import { Row, Col, Image, Button, Card, ListGroup } from "react-bootstrap"
 import CheckoutSteps from "../components/CheckoutSteps"
 import Message from "../components/Message"
 import { createOrderAction } from "../actions/orderActions"
+import Meta from "../components/Meta"
 
 const PlaceOrderScreen = ({ history }) => {
   const dispatch = useDispatch()
@@ -42,6 +43,7 @@ const PlaceOrderScreen = ({ history }) => {
   }
   return (
     <>
+      <Meta title="Place order | Woolunatics" />
       <CheckoutSteps step1 step2 step3 step4 />
 
       <Row>
