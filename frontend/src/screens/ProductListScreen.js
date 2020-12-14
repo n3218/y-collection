@@ -92,7 +92,7 @@ const ProductListScreen = ({ history, match }) => {
                 <tr key={product._id}>
                   <td>{product._id}</td>
                   <td width="50px">
-                    <Image src={product.image} alt={product.name} fluid />
+                    <Image src={product.image[0]} alt={product.name} fluid />
                   </td>
                   <td>
                     <Link to={`/products/${product._id}`}>{product.name}</Link>

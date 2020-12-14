@@ -13,7 +13,6 @@ import Meta from "../components/Meta"
 const ProductEditScreen = ({ history, match }) => {
   const productId = match.params.id
   const dispatch = useDispatch()
-
   const [name, setName] = useState("")
   const [price, setPrice] = useState(0)
   const [image, setImage] = useState("")
@@ -22,10 +21,8 @@ const ProductEditScreen = ({ history, match }) => {
   const [description, setDescription] = useState("")
   const [countInStock, setCountInStock] = useState(0)
   const [uploading, setUploading] = useState(false)
-
   const productDetails = useSelector(state => state.productDetails)
   const { loading, error, product } = productDetails
-
   const productUpdate = useSelector(state => state.productUpdate)
   const { loading: loadingUpdate, error: errorUpdate, success: successUpdate } = productUpdate
 
@@ -48,22 +45,27 @@ const ProductEditScreen = ({ history, match }) => {
     }
   }, [product, dispatch, productId, history, successUpdate])
 
+  //
+  //
   const uploadFileHandler = async e => {
-    const file = e.target.files[0]
+    const file = e.target.files
     const formData = new FormData()
-    formData.append("image", file)
-    setUploading(true)
+    for (let i in file) {
+      if (typeof file[i] === "object") {
+        formData.append("image", file[i])
+      }
+    }
 
+    setUploading(true)
     try {
       const config = {
         headers: {
           "Content-Type": "multipart/form-data"
         }
       }
-
       const { data } = await axios.post("/api/upload", formData, config)
-
-      setImage(data)
+      console.log("data: ", data)
+      setImage([...image, ...data.map(img => `/${img.path}`)])
       setUploading(false)
     } catch (error) {
       console.error(error)
@@ -87,7 +89,7 @@ const ProductEditScreen = ({ history, match }) => {
       })
     )
   }
-
+  console.log(image)
   return (
     <>
       <Meta title="Admin | Edit Product | Woolunatics" />
@@ -96,7 +98,13 @@ const ProductEditScreen = ({ history, match }) => {
           <Link to="/admin/productList" className="btn btn-light my-3">
             Back
           </Link>
-          <Image src={product.image} alt={product.name} fluid />
+          {image &&
+            image.map(i => (
+              <div key={i}>
+                {i}:
+                <Image src={i} alt={name} fluid />
+              </div>
+            ))}
         </Col>
         <Col>
           <h1>Edit Product</h1>
@@ -117,9 +125,9 @@ const ProductEditScreen = ({ history, match }) => {
 
               <Form.Group controlId="image-file">
                 <Form.Label>Image</Form.Label>
-                <div>{image}</div>
+                <div>{image && image.map(i => <div key={i}>{i}</div>)}</div>
                 {/* <Form.Control type="text" placeholder="Image file" value={image} onChange={e => setImage(e.target.value)}></Form.Control> */}
-                <Form.File id="image-file" label="Choose File" custom onChange={uploadFileHandler}></Form.File>
+                <Form.File id="image-file" label="Choose File" custom onChange={uploadFileHandler} multiple></Form.File>
                 {uploading && <Loader />}
               </Form.Group>
 

@@ -35,4 +35,12 @@ h1 {
 
 .carousel {
   margin: 0 -4% 0 -4%;
+  height: 30vh;
+  max-height: 30vh;
+  overflow: hidden;
+}
+
+.carousel-caption {
+  bottom: auto;
+  top: 10px;
 }
