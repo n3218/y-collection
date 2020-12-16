@@ -12,22 +12,16 @@ import Meta from "../components/Meta"
 
 const OrderScreen = ({ match, history }) => {
   const orderId = match.params.id
-
   const [sdkReady, setSdkReady] = useState(false)
   const dispatch = useDispatch()
-
   const orderDetails = useSelector(state => state.orderDetails)
   const { order, loading, error } = orderDetails
-
   const orderPay = useSelector(state => state.orderPay)
   const { loading: loadingPay, success: successPay } = orderPay
-
   const orderDeliver = useSelector(state => state.orderDeliver)
   const { loading: loadingDeliver, success: successDeliver } = orderDeliver
-
   const userLogin = useSelector(state => state.userLogin)
   const { userInfo } = userLogin
-
   if (!loading) {
     // Calculate prices
     const addDecimals = num => (Math.round(num * 100) / 100).toFixed(2)
@@ -38,7 +32,6 @@ const OrderScreen = ({ match, history }) => {
     if (!userInfo) {
       history.pushState("/login")
     }
-
     const addPayPalScript = async () => {
       const { data: clientId } = await axios.get("/api/config/paypal")
       const script = document.createElement("script")
@@ -120,7 +113,7 @@ const OrderScreen = ({ match, history }) => {
                           <Link to={`/products/${item.product}`}>{item.name}</Link>
                         </Col>
                         <Col md={4}>
-                          {item.qty} x ${item.price} = ${item.qty * item.price}
+                          {item.qty} x €{item.price} = €{item.qty * item.price}
                         </Col>
                       </Row>
                     </ListGroup.Item>
@@ -140,19 +133,19 @@ const OrderScreen = ({ match, history }) => {
               <ListGroup.Item>
                 <Row>
                   <Col>Items</Col>
-                  <Col>${order.itemsPrice}</Col>
+                  <Col>€{order.itemsPrice}</Col>
                 </Row>
               </ListGroup.Item>
               <ListGroup.Item>
                 <Row>
                   <Col>Shipping</Col>
-                  <Col>${order.shippingPrice}</Col>
+                  <Col>€{order.shippingPrice}</Col>
                 </Row>
               </ListGroup.Item>
               <ListGroup.Item>
                 <Row>
                   <Col>Tax</Col>
-                  <Col>${order.taxPrice}</Col>
+                  <Col>€{order.taxPrice}</Col>
                 </Row>
               </ListGroup.Item>
               <ListGroup.Item>
@@ -161,7 +154,7 @@ const OrderScreen = ({ match, history }) => {
                     <h5>Total</h5>
                   </Col>
                   <Col>
-                    <h5>${order.totalPrice}</h5>
+                    <h5>€{order.totalPrice}</h5>
                   </Col>
                 </Row>
               </ListGroup.Item>

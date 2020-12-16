@@ -7,6 +7,7 @@ import { getUserDetails, updateUserProfileAction } from "../actions/userActions"
 import Loader from "../components/Loader"
 import { listMyOrdersAction } from "../actions/orderActions"
 import Meta from "../components/Meta"
+import { USER_UPDATE_PROFILE_RESET } from "../constants/userConstants"
 
 const ProfileScreen = ({ history, location }) => {
   const [name, setName] = useState("")
@@ -30,7 +31,8 @@ const ProfileScreen = ({ history, location }) => {
     if (!userInfo) {
       history.push("/login")
     } else {
-      if (!user.name) {
+      if (!user || !user.name || success) {
+        dispatch({ type: USER_UPDATE_PROFILE_RESET })
         dispatch(getUserDetails("profile"))
         dispatch(listMyOrdersAction())
       } else {
@@ -38,7 +40,7 @@ const ProfileScreen = ({ history, location }) => {
         setEmail(user.email)
       }
     }
-  }, [dispatch, history, userInfo, user])
+  }, [dispatch, history, userInfo, user, success])
 
   const updateProfileHandler = e => {
     e.preventDefault()
@@ -62,30 +64,34 @@ const ProfileScreen = ({ history, location }) => {
       <Col md={3}>
         <h2>My Profile</h2>
         {message && <Message variant="danger">{message}</Message>}
-        {error && <Message variant="danger">{error}</Message>}
         {success && <Message variant="success">Profile Updated</Message>}
-        {loading && <Loader />}
-        <Form onSubmit={updateProfileHandler}>
-          <Form.Group controlId="name">
-            <Form.Label>Name</Form.Label>
-            <Form.Control type="text" placeholder="Enter Name" value={name} autoComplete="name" onChange={e => setName(e.target.value)}></Form.Control>
-          </Form.Group>
-          <Form.Group controlId="email">
-            <Form.Label>Email Address</Form.Label>
-            <Form.Control type="email" placeholder="Enter Email" value={email} autoComplete="email" onChange={e => setEmail(e.target.value)}></Form.Control>
-          </Form.Group>
-          <Form.Group controlId="password">
-            <Form.Label>Password</Form.Label>
-            <Form.Control type="password" placeholder="Enter Password" value={password} autoComplete="new-password" onChange={e => setPassword(e.target.value)}></Form.Control>
-          </Form.Group>
-          <Form.Group controlId="confirmPassword">
-            <Form.Label>Confirm Password</Form.Label>
-            <Form.Control type="password" placeholder="Confirm Password" value={confirmPassword} autoComplete="new-password" onChange={e => setConfirmPassword(e.target.value)}></Form.Control>
-          </Form.Group>
-          <Button type="submit" variant="primary">
-            Update
-          </Button>
-        </Form>
+        {loading ? (
+          <Loader />
+        ) : error ? (
+          <Message variant="danger">{error}</Message>
+        ) : (
+          <Form onSubmit={updateProfileHandler}>
+            <Form.Group controlId="name">
+              <Form.Label>Name</Form.Label>
+              <Form.Control type="text" placeholder="Enter Name" value={name} autoComplete="name" onChange={e => setName(e.target.value)}></Form.Control>
+            </Form.Group>
+            <Form.Group controlId="email">
+              <Form.Label>Email Address</Form.Label>
+              <Form.Control type="email" placeholder="Enter Email" value={email} autoComplete="email" onChange={e => setEmail(e.target.value)}></Form.Control>
+            </Form.Group>
+            <Form.Group controlId="password">
+              <Form.Label>Password</Form.Label>
+              <Form.Control type="password" placeholder="Enter Password" value={password} autoComplete="new-password" onChange={e => setPassword(e.target.value)}></Form.Control>
+            </Form.Group>
+            <Form.Group controlId="confirmPassword">
+              <Form.Label>Confirm Password</Form.Label>
+              <Form.Control type="password" placeholder="Confirm Password" value={confirmPassword} autoComplete="new-password" onChange={e => setConfirmPassword(e.target.value)}></Form.Control>
+            </Form.Group>
+            <Button type="submit" variant="primary">
+              Update
+            </Button>
+          </Form>
+        )}
       </Col>
       <Col md={9}>
         <h2>My Orders</h2>

@@ -56,7 +56,7 @@ const Header = () => {
                   <NavDropdown.Item>All</NavDropdown.Item>
                 </LinkContainer>
               </NavDropdown>
-              <LinkContainer to="/cart">
+              <LinkContainer to="/cart" className="text-nowrap">
                 <Nav.Link>
                   <i className="fas fa-shopping-cart"></i> Cart ({cartItems && cartItems.reduce((acc, item) => acc + item.qty, 0)})
                 </Nav.Link>

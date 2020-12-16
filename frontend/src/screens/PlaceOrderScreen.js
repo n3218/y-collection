@@ -6,6 +6,7 @@ import CheckoutSteps from "../components/CheckoutSteps"
 import Message from "../components/Message"
 import { createOrderAction } from "../actions/orderActions"
 import Meta from "../components/Meta"
+import { ORDER_CREATE_RESET } from "../constants/orderConstants"
 
 const PlaceOrderScreen = ({ history }) => {
   const dispatch = useDispatch()
@@ -25,6 +26,7 @@ const PlaceOrderScreen = ({ history }) => {
     if (success) {
       history.push(`/orders/${order._id}`)
     }
+    dispatch({ type: ORDER_CREATE_RESET })
     // eslint-disable-next-line
   }, [history, success])
 
@@ -77,7 +79,7 @@ const PlaceOrderScreen = ({ history }) => {
                           <Link to={`/products/${item.product}`}>{item.name}</Link>
                         </Col>
                         <Col md={4}>
-                          {item.qty} x ${item.price} = ${item.qty * item.price}
+                          {item.qty} x €{item.price} = €{item.qty * item.price}
                         </Col>
                       </Row>
                     </ListGroup.Item>
@@ -97,19 +99,19 @@ const PlaceOrderScreen = ({ history }) => {
               <ListGroup.Item>
                 <Row>
                   <Col>Items</Col>
-                  <Col>${cart.itemsPrice}</Col>
+                  <Col>€{cart.itemsPrice}</Col>
                 </Row>
               </ListGroup.Item>
               <ListGroup.Item>
                 <Row>
                   <Col>Shipping</Col>
-                  <Col>${cart.shippingPrice}</Col>
+                  <Col>€{cart.shippingPrice}</Col>
                 </Row>
               </ListGroup.Item>
               <ListGroup.Item>
                 <Row>
                   <Col>Tax</Col>
-                  <Col>${cart.taxPrice}</Col>
+                  <Col>€{cart.taxPrice}</Col>
                 </Row>
               </ListGroup.Item>
               <ListGroup.Item>
@@ -118,7 +120,7 @@ const PlaceOrderScreen = ({ history }) => {
                     <h5>Total</h5>
                   </Col>
                   <Col>
-                    <h5>${cart.totalPrice}</h5>
+                    <h5>€{cart.totalPrice}</h5>
                   </Col>
                 </Row>
               </ListGroup.Item>

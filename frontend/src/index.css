@@ -1,4 +1,4 @@
-@import "./bootstrap.min.css";
+@import "./_cosmo.min.css";
 
 main {
   min-height: 80vh;
@@ -15,13 +15,6 @@ main {
 h1 {
   margin: 0.8em 0 0.6em 0;
 }
-
-/* .text-danger {
-  color: #cf1b1b !important;
-}
-.text-success {
-  color: green !important;
-} */
 
 .custom-control {
   padding-left: 0;
@@ -43,4 +36,17 @@ h1 {
 .carousel-caption {
   bottom: auto;
   top: 10px;
+}
+
+.form-control {
+  border-top: 0;
+  border-right: 0;
+  border-left: 0;
+}
+
+.card.product-card {
+  border: 0;
+}
+.table thead th {
+  border: 0;
 }

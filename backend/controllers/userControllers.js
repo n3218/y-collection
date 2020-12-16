@@ -116,7 +116,7 @@ export const deleteUser = asyncHandler(async (req, res) => {
   }
 })
 
-// @desc   Det User By Id
+// @desc   Get User By Id
 // @route  GET /api/users/:id
 // @access Private/+Admin
 export const getUserById = asyncHandler(async (req, res) => {

@@ -15,24 +15,23 @@ const ProductScreen = ({ history, match }) => {
   const [qty, setQty] = useState(1)
   const [rating, setRating] = useState(0)
   const [comment, setComment] = useState("")
-
   const userLogin = useSelector(state => state.userLogin)
   const { userInfo } = userLogin
-
   const productDetails = useSelector(state => state.productDetails)
   const { loading, error, product } = productDetails
-
   const productCreateReview = useSelector(state => state.productCreateReview)
-  const { error: errorCreateReview, success: successCreateReview } = productCreateReview
+  const { loading: loadingCreateReview, error: errorCreateReview, success: successCreateReview } = productCreateReview
 
   useEffect(() => {
     if (successCreateReview) {
       console.log("successCreateReview")
       setRating(0)
       setComment("")
+    }
+    if (!product._id || product._id !== match.params.id) {
+      dispatch(productDetailsAction(match.params.id))
       dispatch({ type: PRODUCT_CREATE_REVIEW_RESET })
     }
-    dispatch(productDetailsAction(match.params.id))
   }, [dispatch, match, successCreateReview])
 
   const addToCartHandler = () => {
@@ -168,6 +167,8 @@ const ProductScreen = ({ history, match }) => {
               <ListGroup>
                 <ListGroup.Item>
                   <h3>Write a customer Review</h3>
+                  {loadingCreateReview && <Loader />}
+                  {successCreateReview && <Message variant="success">Review submitted successfully</Message>}
                   {errorCreateReview && <Message variant="danger">{errorCreateReview}</Message>}
                   {userInfo ? (
                     <Form onSubmit={submitHandler}>
@@ -196,7 +197,7 @@ const ProductScreen = ({ history, match }) => {
                         <Form.Label>Comment</Form.Label>
                         <Form.Control as="textarea" row="5" value={comment} onChange={e => setComment(e.target.value)}></Form.Control>
                       </Form.Group>
-                      <Button type="submit" className="btn-block">
+                      <Button type="submit" className="btn-block" disabled={loadingCreateReview}>
                         Submit a review
                       </Button>
                     </Form>
