@@ -6,7 +6,7 @@ import Message from "../components/Message"
 import Loader from "../components/Loader"
 import { listProducts } from "../actions/productActions"
 import Paginate from "../components/Paginate"
-import ProductCarousel from "../components/ProductCarousel"
+// import ProductCarousel from "../components/ProductCarousel"
 import Meta from "../components/Meta"
 
 const HomeScreen = ({ match }) => {
@@ -23,7 +23,7 @@ const HomeScreen = ({ match }) => {
 
   return (
     <div>
-      {!keyword && <ProductCarousel />}
+      {/* {!keyword && <ProductCarousel />} */}
       <h1>Latest Products</h1>
       {loading ? (
         <Loader />
@@ -34,11 +34,12 @@ const HomeScreen = ({ match }) => {
           <Meta />
           <Paginate pages={pages} page={page} keyword={keyword} />
           <Row>
-            {products.map(product => (
-              <Col key={product._id} sm={12} md={6} lg={3}>
-                <Product product={product} />
-              </Col>
-            ))}
+            {products &&
+              products.map(product => (
+                <Col key={product._id} sm={12} md={6} lg={3}>
+                  <Product product={product} />
+                </Col>
+              ))}
           </Row>
           <Paginate pages={pages} page={page} keyword={keyword} />
         </>

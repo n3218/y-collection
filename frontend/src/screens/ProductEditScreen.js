@@ -21,6 +21,9 @@ const ProductEditScreen = ({ history, match }) => {
   const [description, setDescription] = useState("")
   const [countInStock, setCountInStock] = useState(0)
   const [uploading, setUploading] = useState(false)
+  const [color, setColor] = useState(false)
+  const [weight, setWeight] = useState(false)
+
   const productDetails = useSelector(state => state.productDetails)
   const { loading, error, product } = productDetails
   const productUpdate = useSelector(state => state.productUpdate)
@@ -89,7 +92,11 @@ const ProductEditScreen = ({ history, match }) => {
       })
     )
   }
+  const addColorWeight = () => {
+    console.log("addColorWeight")
+  }
   console.log(image)
+
   return (
     <>
       <Meta title="Admin | Edit Product | Woolunatics" />
@@ -121,13 +128,21 @@ const ProductEditScreen = ({ history, match }) => {
               <FormField value={brand} label="Brand" onChange={setBrand} />
               <FormField value={category} label="Category" onChange={setCategory} />
               <FormField value={description} label="Description" onChange={setDescription} />
+
               <FormField value={countInStock} label="Count In Stock" onChange={setCountInStock} />
+
+              <Form.Group controlId="color-weight">
+                <Form.Label>Color</Form.Label>
+                <input type="text" placeholder="Color" />
+                <input type="text" placeholder="Weight" />
+                <button onClick={addColorWeight}>Add</button>
+                {/* <FormField value={color} label="Color" onChange={setColor} /> */}
+              </Form.Group>
 
               <Form.Group controlId="image-file">
                 <Form.Label>Image</Form.Label>
                 <div>{image && image.map(i => <div key={i}>{i}</div>)}</div>
-                {/* <Form.Control type="text" placeholder="Image file" value={image} onChange={e => setImage(e.target.value)}></Form.Control> */}
-                <Form.File id="image-file" label="Choose File" custom onChange={uploadFileHandler} multiple></Form.File>
+                <Form.File id="image-file" label="Choose File" custom onChange={uploadFileHandler} multiple accept="image/png, image/jpeg, image/jpg"></Form.File>
                 {uploading && <Loader />}
               </Form.Group>
 

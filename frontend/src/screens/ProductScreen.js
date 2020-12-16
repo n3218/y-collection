@@ -111,6 +111,18 @@ const ProductScreen = ({ history, match }) => {
                       <Col>{product.countInStock > 0 ? product.countInStock : "Out of Stock"}</Col>
                     </Row>
                   </ListGroup.Item>
+                  <Form.Group controlId="rating">
+                    <Form.Label>Choose</Form.Label>
+                    <Form.Control as="select" value={rating} onChange={e => setRating(e.target.value)}>
+                      <option value="">Select...</option>
+                      <option value="1">1 - Poor</option>
+                      <option value="2">2 - Fair</option>
+                      <option value="3">3 - Good</option>
+                      <option value="4">4 - Very Good</option>
+                      <option value="5">5 - Excellent</option>
+                    </Form.Control>
+                  </Form.Group>
+
                   {product.countInStock > 0 && (
                     <ListGroup.Item>
                       <Row>
