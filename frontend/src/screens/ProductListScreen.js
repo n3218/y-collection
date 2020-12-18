@@ -76,12 +76,15 @@ const ProductListScreen = ({ history, match }) => {
           <Table striped hover responsive className="table-sm">
             <thead>
               <tr>
-                <th>ID</th>
+                {/* <th>ID</th> */}
                 <th>PIC</th>
-                <th>NAME</th>
-                <th>PRICE</th>
-                <th>CATEGORY</th>
                 <th>BRAND</th>
+                <th>NAME</th>
+                <th>CATEGORY</th>
+                <th>FIBERS</th>
+                <th>MERETAGE</th>
+                <th>PRICE</th>
+                <th>IN STOCK</th>
                 <th>EDIT</th>
                 <th>DEL</th>
               </tr>
@@ -89,16 +92,25 @@ const ProductListScreen = ({ history, match }) => {
             <tbody>
               {products.map(product => (
                 <tr key={product._id}>
-                  <td>{product._id}</td>
+                  {/* <td>{product._id}</td> */}
                   <td width="50px">
                     <Image src={product.image[0]} alt={product.name} fluid />
                   </td>
+                  <td>{product.brand}</td>
                   <td>
                     <Link to={`/products/${product._id}`}>{product.name}</Link>
                   </td>
-                  <td>€{product.price}</td>
                   <td>{product.category}</td>
-                  <td>{product.brand}</td>
+                  <td>{product.fibers}</td>
+                  <td>{product.meterage}</td>
+                  <td>€{product.price}</td>
+                  <td>
+                    {product.color.map(col => (
+                      <div>
+                        <b>{col.name}</b>: {col.inStock}
+                      </div>
+                    ))}
+                  </td>
                   <td>
                     <LinkContainer to={`/admin/product/${product._id}/edit`}>
                       <Button variant="link" title="Edit">

@@ -5,7 +5,7 @@ import Product from "../models/productModel.js"
 // @route  GET /api/products
 // @access Public
 export const getProducts = asyncHandler(async (req, res) => {
-  const pageSize = 8
+  const pageSize = 20
   const page = Number(req.query.pageNumber) || 1
   const keyword = req.query.keyword
     ? {
@@ -59,12 +59,15 @@ export const createProduct = asyncHandler(async (req, res) => {
     name: "Sample name",
     price: 0,
     user: req.user._id,
-    image: ["/assets/sample.jpg"],
-    brand: "Sample Brand",
-    category: "Sample Category",
+    image: [],
+    brand: "",
+    category: "",
     countInStock: 0,
     numReviews: 0,
-    description: "Sample description"
+    description: "",
+    fibers: "",
+    meterage: "",
+    color: []
   })
 
   const createdProduct = await product.save()
@@ -75,7 +78,7 @@ export const createProduct = asyncHandler(async (req, res) => {
 // @route  PUT /api/products/:id
 // @access Private/+Admin
 export const updateProduct = asyncHandler(async (req, res) => {
-  const { name, price, description, image, brand, category, countInStock } = req.body
+  const { name, price, description, image, brand, category, countInStock, fibers, meterage, color } = req.body
   const product = await Product.findById(req.params.id)
 
   if (product) {
@@ -86,6 +89,9 @@ export const updateProduct = asyncHandler(async (req, res) => {
     product.category = category
     product.countInStock = countInStock
     product.description = description
+    product.fibers = fibers
+    product.meterage = meterage
+    product.color = color
 
     const updatedProduct = await product.save()
     res.json(updatedProduct)

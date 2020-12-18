@@ -36,7 +36,7 @@ const HomeScreen = ({ match }) => {
           <Row>
             {products &&
               products.map(product => (
-                <Col key={product._id} sm={12} md={6} lg={3}>
+                <Col key={product._id} sm={6} md={3} lg={2} className="product-card-block">
                   <Product product={product} />
                 </Col>
               ))}

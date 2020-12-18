@@ -16,6 +16,12 @@ const reviewSchema = mongoose.Schema(
   }
 )
 
+const colorSchema = mongoose.Schema({
+  name: { type: String, required: false },
+  inStock: { type: String, required: false },
+  images: [{ type: String, required: false }]
+})
+
 const productSchema = mongoose.Schema(
   {
     user: {
@@ -30,30 +36,39 @@ const productSchema = mongoose.Schema(
     image: [
       {
         type: String,
-        required: true
+        required: false
       }
     ],
+    color: [colorSchema],
+    reviews: [reviewSchema],
     brand: {
       type: String,
-      required: true
+      required: false
     },
     category: {
       type: String,
-      required: true
+      required: false
+    },
+    fibers: {
+      type: String,
+      required: false
+    },
+    meterage: {
+      type: String,
+      required: false
     },
     description: {
       type: String,
-      required: true
+      required: false
     },
-    reviews: [reviewSchema],
     rating: {
       type: Number,
-      required: true,
+      required: false,
       default: 0
     },
     numReviews: {
       type: Number,
-      required: true,
+      required: false,
       default: 0
     },
     price: {

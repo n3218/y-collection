@@ -1,14 +1,15 @@
 import React, { useState, useEffect } from "react"
-import axios from "axios"
 import { Link } from "react-router-dom"
 import { Form, Button, Row, Col, Image } from "react-bootstrap"
 import { useDispatch, useSelector } from "react-redux"
 import Message from "../components/Message"
 import Loader from "../components/Loader"
-import FormField from "../components/FormField"
+import { FormFieldAsRow } from "../components/FormField"
 import { productDetailsAction, productUpdateAction } from "../actions/productActions"
 import { PRODUCT_UPDATE_RESET } from "../constants/productConstants"
 import Meta from "../components/Meta"
+import ImageLarge from "../components/ImageLarge"
+import ImageUpload from "../components/ImageUpload"
 
 const ProductEditScreen = ({ history, match }) => {
   const productId = match.params.id
@@ -21,8 +22,24 @@ const ProductEditScreen = ({ history, match }) => {
   const [description, setDescription] = useState("")
   const [countInStock, setCountInStock] = useState(0)
   const [uploading, setUploading] = useState(false)
-  const [color, setColor] = useState(false)
-  const [weight, setWeight] = useState(false)
+
+  const [showColorPictureBlock, setShowColorPictureBlock] = useState(false)
+  const [checkedPictures, setCheckedPictures] = useState([])
+
+  const defaultColor = [
+    {
+      name: "",
+      inStock: "",
+      images: []
+    }
+  ]
+  const [fibers, setFibers] = useState("")
+  const [meterage, setMeterage] = useState(100)
+  const [color, setColor] = useState(defaultColor)
+  const [colorName, setColorName] = useState("")
+  const [colorInStock, setColorInStock] = useState("")
+
+  const [colorImage, setColorImage] = useState([])
 
   const productDetails = useSelector(state => state.productDetails)
   const { loading, error, product } = productDetails
@@ -44,40 +61,16 @@ const ProductEditScreen = ({ history, match }) => {
         setCategory(product.category)
         setDescription(product.description)
         setCountInStock(product.countInStock)
+        setFibers(product.fibers)
+        setMeterage(product.meterage)
+        setColor(product.color)
       }
     }
   }, [product, dispatch, productId, history, successUpdate])
 
-  //
-  //
-  const uploadFileHandler = async e => {
-    const file = e.target.files
-    const formData = new FormData()
-    for (let i in file) {
-      if (typeof file[i] === "object") {
-        formData.append("image", file[i])
-      }
-    }
-
-    setUploading(true)
-    try {
-      const config = {
-        headers: {
-          "Content-Type": "multipart/form-data"
-        }
-      }
-      const { data } = await axios.post("/api/upload", formData, config)
-      console.log("data: ", data)
-      setImage([...image, ...data.map(img => `/${img.path}`)])
-      setUploading(false)
-    } catch (error) {
-      console.error(error)
-      setUploading(false)
-    }
-  }
-
   const submitHandler = e => {
     console.log("submitHandler")
+    console.log("submitHandler:color: ", color)
     e.preventDefault()
     dispatch(
       productUpdateAction({
@@ -88,30 +81,66 @@ const ProductEditScreen = ({ history, match }) => {
         brand,
         category,
         description,
-        countInStock
+        countInStock,
+        fibers,
+        meterage,
+        color
       })
     )
   }
-  const addColorWeight = () => {
-    console.log("addColorWeight")
+
+  const addColorHandler = e => {
+    e.preventDefault()
+    console.log("addColorHandler")
+    setColor([
+      ...color,
+      {
+        name: colorName,
+        image: [...colorImage],
+        inStock: colorInStock
+      }
+    ])
+    setColorName("")
+    setColorInStock("")
   }
-  console.log(image)
+
+  const setCheckedPicturesHandler = e => {
+    e.preventDefault()
+    setCheckedPictures([...checkedPictures, e.target.value])
+    e.target.checked = true
+  }
+
+  console.log("color: ", color)
+
+  const colorPictureBlock = () => {
+    return (
+      <div className="color-picture-block">
+        {image &&
+          image.map(i => (
+            <div key={i} className="color-picture">
+              <Form.Label>
+                <img src={i} width="80" />
+              </Form.Label>
+              <Form.Check type="checkbox" value={i} checked={checkedPictures.includes(i)} onChange={setCheckedPicturesHandler}></Form.Check>
+              {console.log(checkedPictures.includes(i))}
+            </div>
+          ))}
+        <div className="btn btn-primary">Link</div>
+      </div>
+    )
+  }
+
+  console.log("showColorPictureBlock: ", showColorPictureBlock)
 
   return (
     <>
+      <Link to="/admin/productList" className="btn btn-light my-3">
+        Back
+      </Link>
       <Meta title="Admin | Edit Product | Woolunatics" />
       <Row>
         <Col md={4}>
-          <Link to="/admin/productList" className="btn btn-light my-3">
-            Back
-          </Link>
-          {image &&
-            image.map(i => (
-              <div key={i}>
-                {i}:
-                <Image src={i} alt={name} fluid />
-              </div>
-            ))}
+          <ImageLarge image={image} name={`${brand} ${name}`} />
         </Col>
         <Col>
           <h1>Edit Product</h1>
@@ -123,28 +152,39 @@ const ProductEditScreen = ({ history, match }) => {
             <Message variant="danger">{error}</Message>
           ) : (
             <Form onSubmit={submitHandler}>
-              <FormField value={name} label="Name" onChange={setName} />
-              <FormField value={price} label="Price" onChange={setPrice} />
-              <FormField value={brand} label="Brand" onChange={setBrand} />
-              <FormField value={category} label="Category" onChange={setCategory} />
-              <FormField value={description} label="Description" onChange={setDescription} />
+              <FormFieldAsRow value={name} label="Name" onChange={setName} />
+              <FormFieldAsRow value={brand} label="Brand" onChange={setBrand} />
+              <FormFieldAsRow value={category} label="Category" onChange={setCategory} />
+              <FormFieldAsRow value={fibers} label="Fibers" onChange={setFibers} />
+              <FormFieldAsRow value={meterage} label="Meterage" onChange={setMeterage} />
+              <FormFieldAsRow as="textarea" rows={5} value={description} label="Description" onChange={setDescription} />
+              <FormFieldAsRow value={price} label="Price" onChange={setPrice} />
+              <FormFieldAsRow value={countInStock} label="In Stock" onChange={setCountInStock} />
 
-              <FormField value={countInStock} label="Count In Stock" onChange={setCountInStock} />
-
-              <Form.Group controlId="color-weight">
-                <Form.Label>Color</Form.Label>
-                <input type="text" placeholder="Color" />
-                <input type="text" placeholder="Weight" />
-                <button onClick={addColorWeight}>Add</button>
-                {/* <FormField value={color} label="Color" onChange={setColor} /> */}
+              {/* COLOR */}
+              <Form.Group controlId="inStock">
+                <Form.Label>Colors:</Form.Label>
+                {color &&
+                  color.map((item, i) => (
+                    <div key={i}>
+                      <strong>{item.name}</strong>: {item.inStock}
+                      <div className="btn btn-primary mx-2 btn-sm" onClick={e => console.log("changingColor")}>
+                        Change Color
+                      </div>
+                      <div className="btn btn-primary mx-2 my-2 btn-sm" onClick={() => setShowColorPictureBlock(!showColorPictureBlock)}>
+                        Link Picture
+                      </div>
+                    </div>
+                  ))}
+                {showColorPictureBlock && colorPictureBlock()}
+                <hr />
+                <input type="text" value={colorName} placeholder="Color" onChange={e => setColorName(e.target.value)} />
+                <input type="text" value={colorInStock} placeholder="inStock" onChange={e => setColorInStock(e.target.value)} />
+                <button onClick={addColorHandler}>Add Color</button>
+                <hr />
               </Form.Group>
 
-              <Form.Group controlId="image-file">
-                <Form.Label>Image</Form.Label>
-                <div>{image && image.map(i => <div key={i}>{i}</div>)}</div>
-                <Form.File id="image-file" label="Choose File" custom onChange={uploadFileHandler} multiple accept="image/png, image/jpeg, image/jpg"></Form.File>
-                {uploading && <Loader />}
-              </Form.Group>
+              <ImageUpload image={image} setUploading={setUploading} setImage={setImage} uploading={uploading} />
 
               <Button type="submit" variant="primary">
                 Save

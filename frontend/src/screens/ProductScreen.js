@@ -9,6 +9,7 @@ import Loader from "../components/Loader"
 import { PRODUCT_CREATE_REVIEW_RESET } from "../constants/productConstants"
 import "../assets/rating.css"
 import Meta from "../components/Meta"
+import ImageLarge from "../components/ImageLarge"
 
 const ProductScreen = ({ history, match }) => {
   const dispatch = useDispatch()
@@ -72,26 +73,24 @@ const ProductScreen = ({ history, match }) => {
           <Meta title={product.name} description={product.description} />
           <Row>
             <Col md={6}>
-              {product.image &&
-                product.image.map(img => (
-                  <div>
-                    {img}:
-                    <Image src={img} alt={product.name} fluid />
-                  </div>
-                ))}
+              <ImageLarge image={product.image} name={`${product.brand} ${product.name}`} />
             </Col>
             <Col md={3}>
               <ListGroup variant="flush">
                 <ListGroup.Item>
+                  <div>{product.brand}</div>
                   <h2>{product.name}</h2>
                 </ListGroup.Item>
                 <ListGroup.Item>
                   <Rating value={product.rating} text={`${product.numReviews} reviews`} />
                 </ListGroup.Item>
-                <ListGroup.Item>Price: €{product.price}</ListGroup.Item>
                 <ListGroup.Item>
-                  <p>{product.description}</p>
+                  <div>Fibers:</div> {product.fibers}
                 </ListGroup.Item>
+                <ListGroup.Item>
+                  <div>Meterage:</div> {product.meterage}m / 100g
+                </ListGroup.Item>
+                <ListGroup.Item>{product.description && product.description.split("\n").map(p => <p>{p}</p>)}</ListGroup.Item>
               </ListGroup>
             </Col>
             <Col md={3}>
@@ -100,7 +99,7 @@ const ProductScreen = ({ history, match }) => {
                   <ListGroup.Item>
                     <Row>
                       <Col>Price: </Col>
-                      <Col>€{product.price}</Col>
+                      <Col>€{product.price} / 100g</Col>
                     </Row>
                   </ListGroup.Item>
 
@@ -110,17 +109,20 @@ const ProductScreen = ({ history, match }) => {
                       <Col>{product.countInStock > 0 ? product.countInStock : "Out of Stock"}</Col>
                     </Row>
                   </ListGroup.Item>
-                  <Form.Group controlId="rating">
-                    <Form.Label>Choose</Form.Label>
-                    <Form.Control as="select" value={rating} onChange={e => setRating(e.target.value)}>
-                      <option value="">Select...</option>
-                      <option value="1">1 - Poor</option>
-                      <option value="2">2 - Fair</option>
-                      <option value="3">3 - Good</option>
-                      <option value="4">4 - Very Good</option>
-                      <option value="5">5 - Excellent</option>
-                    </Form.Control>
-                  </Form.Group>
+
+                  <ListGroup.Item>
+                    <Row>
+                      <Col>Color</Col>
+                      <Col>
+                        <Form.Group controlId="color">
+                          <Form.Control as="select" className="select-color" value={product.color} onChange={e => setRating(e.target.value)}>
+                            {/* <option value="">Select...</option> */}
+                            {product.color && product.color.map(col => <option value={col.name}>{col.name}</option>)}
+                          </Form.Control>
+                        </Form.Group>
+                      </Col>
+                    </Row>
+                  </ListGroup.Item>
 
                   {product.countInStock > 0 && (
                     <ListGroup.Item>
