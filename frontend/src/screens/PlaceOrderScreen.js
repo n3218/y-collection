@@ -14,9 +14,9 @@ const PlaceOrderScreen = ({ history }) => {
 
   // Calculate prices
   const addDecimals = num => (Math.round(num * 100) / 100).toFixed(2)
-  cart.itemsPrice = addDecimals(cart.cartItems.reduce((acc, item) => acc + item.price * item.qty, 0))
+  cart.itemsPrice = addDecimals(cart.cartItems.reduce((acc, item) => acc + (item.price * item.qty) / 100, 0))
   cart.shippingPrice = addDecimals(cart.itemsPrice > 100 ? 26 : 26)
-  cart.taxPrice = addDecimals(Number((0.15 * cart.itemsPrice).toFixed(2)))
+  cart.taxPrice = addDecimals(Number((0.0 * cart.itemsPrice).toFixed(2)))
   cart.totalPrice = (Number(cart.itemsPrice) + Number(cart.taxPrice) + Number(cart.shippingPrice)).toFixed(2)
 
   const orderCreate = useSelector(state => state.orderCreate)
@@ -76,10 +76,21 @@ const PlaceOrderScreen = ({ history }) => {
                           <Image src={item.image} alt={item.name} fluid rounded />
                         </Col>
                         <Col>
+                          <div>
+                            <small>{item.brand}</small>
+                          </div>
                           <Link to={`/products/${item.product}`}>{item.name}</Link>
+                          <div>
+                            <b>Color: </b> {item.color.replace(/_+/g, " ")}
+                          </div>
+                          {item.meterage && <div>{item.meterage}m / 100g</div>}
+                          <div>
+                            <small>{item.fibers}</small>
+                          </div>
                         </Col>
                         <Col md={4}>
-                          {item.qty} x €{item.price} = €{item.qty * item.price}
+                          {item.qty}g x €{item.price} = €{(item.qty * item.price) / 100}
+                          <div>{item.meterage * item.qty * 0.01}m</div>
                         </Col>
                       </Row>
                     </ListGroup.Item>
@@ -124,12 +135,16 @@ const PlaceOrderScreen = ({ history }) => {
                   </Col>
                 </Row>
               </ListGroup.Item>
-              <ListGroup.Item>{error && <Message>{error}</Message>}</ListGroup.Item>
+              {error && (
+                <ListGroup.Item>
+                  <Message>{error}</Message>
+                </ListGroup.Item>
+              )}
               <ListGroup.Item>
                 <Button //
                   type="button"
                   className="btn-block"
-                  disabled={cart.cartItems === 0}
+                  disabled={cart.cartItems.length === 0}
                   onClick={placeOrderHandler}
                 >
                   Place Order and Pay

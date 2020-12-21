@@ -25,7 +25,7 @@ const OrderScreen = ({ match, history }) => {
   if (!loading) {
     // Calculate prices
     const addDecimals = num => (Math.round(num * 100) / 100).toFixed(2)
-    order.itemsPrice = addDecimals(order.orderItems.reduce((acc, item) => acc + item.price * item.qty, 0))
+    order.itemsPrice = addDecimals(order.orderItems.reduce((acc, item) => acc + (item.price * item.qty) / 100, 0))
   }
 
   useEffect(() => {
@@ -110,10 +110,15 @@ const OrderScreen = ({ match, history }) => {
                           <Image src={item.image} alt={item.name} fluid rounded />
                         </Col>
                         <Col>
-                          <Link to={`/products/${item.product}`}>{item.name}</Link>
+                          <div>
+                            <small>{item.brand}</small>
+                          </div>
+                          <Link to={`/products/${item.product}`}>
+                            {item.name}, {item.color.replace(/_+/g, " ")}
+                          </Link>
                         </Col>
                         <Col md={4}>
-                          {item.qty} x €{item.price} = €{item.qty * item.price}
+                          {item.qty}g x €{item.price} = €{(item.qty * item.price) / 100}
                         </Col>
                       </Row>
                     </ListGroup.Item>
@@ -132,7 +137,7 @@ const OrderScreen = ({ match, history }) => {
               </ListGroup.Item>
               <ListGroup.Item>
                 <Row>
-                  <Col>Items</Col>
+                  <Col>Items price</Col>
                   <Col>€{order.itemsPrice}</Col>
                 </Row>
               </ListGroup.Item>

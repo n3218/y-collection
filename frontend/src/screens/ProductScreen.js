@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react"
 import { useDispatch, useSelector } from "react-redux"
-import { Col, ListGroup, Row, Image, Card, Button, Form } from "react-bootstrap"
+import { Col, ListGroup, Row, Card, Button, Form } from "react-bootstrap"
 import { Link } from "react-router-dom"
 import Rating from "../components/Rating"
 import { productDetailsAction, productCreateReviewAction } from "../actions/productActions"
@@ -16,6 +16,7 @@ const ProductScreen = ({ history, match }) => {
   const [qty, setQty] = useState(1)
   const [rating, setRating] = useState(0)
   const [comment, setComment] = useState("")
+  const [colorName, setColorName] = useState("")
   const userLogin = useSelector(state => state.userLogin)
   const { userInfo } = userLogin
   const productDetails = useSelector(state => state.productDetails)
@@ -33,10 +34,10 @@ const ProductScreen = ({ history, match }) => {
       dispatch(productDetailsAction(match.params.id))
       dispatch({ type: PRODUCT_CREATE_REVIEW_RESET })
     }
-  }, [dispatch, match, successCreateReview])
+  }, [dispatch, match, successCreateReview, product._id])
 
   const addToCartHandler = () => {
-    history.push(`/cart/${match.params.id}?qty=${qty}`)
+    history.push(`/cart/${match.params.id}?qty=${qty}&color=${colorName.replace(/ +/g, "_")}`)
   }
 
   const submitHandler = e => {
@@ -45,25 +46,19 @@ const ProductScreen = ({ history, match }) => {
     dispatch(productCreateReviewAction(match.params.id, { rating, comment }))
   }
 
-  // const radio = ({}) => (
-  //   <Form.Check //
-  //     type="radio"
-  //     label={label}
-  //     id={name}
-  //     name="paymentMethod"
-  //     value={name}
-  //     checked={paymentMethod === name}
-  //     onChange={e => setRating(e.target.value)}
-  //     className="my-3"
-  //   ></Form.Check>
-  // )
-
   console.log(product)
+  console.log(colorName)
+
+  const showOptions = min => {
+    let values = []
+    for (let i = min; i <= 2000; i += 50) {
+      values.push(i)
+    }
+    return values
+  }
+
   return (
     <>
-      <Link to="/" className="btn btn-light my-3">
-        Go Back
-      </Link>
       {loading ? (
         <Loader />
       ) : error ? (
@@ -71,6 +66,16 @@ const ProductScreen = ({ history, match }) => {
       ) : (
         <>
           <Meta title={product.name} description={product.description} />
+          <div className="submenu">
+            <Link to="/" className="btn btn-light my-3">
+              Go Back
+            </Link>
+            {userInfo && userInfo.isAdmin && (
+              <Link to={`/admin/product/${match.params.id}/edit`} className="btn btn-primary my-3 ">
+                Edit
+              </Link>
+            )}
+          </div>
           <Row>
             <Col md={6}>
               <ImageLarge image={product.image} name={`${product.brand} ${product.name}`} />
@@ -82,7 +87,9 @@ const ProductScreen = ({ history, match }) => {
                   <h2>{product.name}</h2>
                 </ListGroup.Item>
                 <ListGroup.Item>
-                  <Rating value={product.rating} text={`${product.numReviews} reviews`} />
+                  <a href="#review-section">
+                    <Rating value={product.rating} text={`${product.numReviews} reviews`} />
+                  </a>
                 </ListGroup.Item>
                 <ListGroup.Item>
                   <div>Fibers:</div> {product.fibers}
@@ -90,7 +97,7 @@ const ProductScreen = ({ history, match }) => {
                 <ListGroup.Item>
                   <div>Meterage:</div> {product.meterage}m / 100g
                 </ListGroup.Item>
-                <ListGroup.Item>{product.description && product.description.split("\n").map(p => <p>{p}</p>)}</ListGroup.Item>
+                <ListGroup.Item>{product.description && product.description.split("\n").map((p, i) => <p key={i}>{p}</p>)}</ListGroup.Item>
               </ListGroup>
             </Col>
             <Col md={3}>
@@ -105,54 +112,75 @@ const ProductScreen = ({ history, match }) => {
 
                   <ListGroup.Item>
                     <Row>
-                      <Col>In Stock:</Col>
-                      <Col>{product.countInStock > 0 ? product.countInStock : "Out of Stock"}</Col>
-                    </Row>
-                  </ListGroup.Item>
-
-                  <ListGroup.Item>
-                    <Row>
                       <Col>Color</Col>
                       <Col>
                         <Form.Group controlId="color">
-                          <Form.Control as="select" className="select-color" value={product.color} onChange={e => setRating(e.target.value)}>
-                            {/* <option value="">Select...</option> */}
-                            {product.color && product.color.map(col => <option value={col.name}>{col.name}</option>)}
+                          <Form.Control as="select" className="order-select" value={colorName.replace(/ +/g, "_")} onChange={e => setColorName(e.target.value)}>
+                            <option key="0" value="">
+                              Select...
+                            </option>
+                            {product.color &&
+                              product.color.map(col => (
+                                <option key={col.name} value={col.name}>
+                                  {col.name}
+                                </option>
+                              ))}
                           </Form.Control>
                         </Form.Group>
                       </Col>
                     </Row>
                   </ListGroup.Item>
 
-                  {product.countInStock > 0 && (
+                  {!product.outOfStock && (
                     <ListGroup.Item>
                       <Row>
                         <Col>Qty</Col>
                         <Col>
-                          <Form.Control as="select" value={qty} onChange={e => setQty(e.target.value)}>
-                            {[...Array(product.countInStock).keys()].map(x => (
-                              <option key={x + 1} value={x + 1}>
-                                {x + 1}
+                          {/* <-- select qty */}
+                          <Form.Group controlId="qty">
+                            <Form.Control as="select" className="order-select" value={qty} onChange={e => setQty(e.target.value)}>
+                              <option key="0" value="">
+                                Select...
                               </option>
-                            ))}
-                          </Form.Control>
+                              {colorName &&
+                                Number(product.color.filter(col => col.name.replace(/ +/g, "_") === colorName.replace(/ +/g, "_"))[0].inStock) !== 0 &&
+                                product.color
+                                  .filter(col => col.name.replace(/ +/g, "_") === colorName.replace(/ +/g, "_"))[0]
+                                  .inStock.split(",")
+                                  .map((el, i) => (
+                                    <option key={i} value={el}>
+                                      {el} cone
+                                    </option>
+                                  ))}
+
+                              {product.minimum &&
+                                showOptions(product.minimum).map(el => (
+                                  <option key={el} value={el}>
+                                    {el}
+                                  </option>
+                                ))}
+                            </Form.Control>
+                          </Form.Group>
                         </Col>
                       </Row>
                     </ListGroup.Item>
                   )}
 
                   <ListGroup.Item>
-                    <Button onClick={addToCartHandler} className="btn-block btn-dark" type="button" disabled={product.countInStock === 0}>
-                      Add to Cart
+                    <Button onClick={addToCartHandler} className="btn-block btn-dark" type="button" disabled={product.outOfStock}>
+                      {!product.outOfStock ? "Add to Cart" : "Out of Stock"}
                     </Button>
                   </ListGroup.Item>
                 </ListGroup>
               </Card>
             </Col>
           </Row>
+
           <Row>
             <Col md={6}>
-              <h3 className="my-3">Reviews</h3>
+              <h3 className="my-3" id="review-section">
+                Reviews
+              </h3>
               {product.reviews.length === 0 && <Message>No Reviews for this product</Message>}
               <ListGroup variant="flush">
                 {product.reviews.map(review => (
@@ -175,25 +203,18 @@ const ProductScreen = ({ history, match }) => {
                   {userInfo ? (
                     <Form onSubmit={submitHandler}>
                       <Form.Group controlId="rating">
-                        {/* <Form.Label as="legend">Rate this product</Form.Label> */}
                         <div id="rating">
                           <input type="radio" name="rating" value="5" id="5" onChange={e => setRating(e.target.value)} />
-                          <label for="5">&#9734;</label>
+                          <label htmlFor="5">&#9734;</label>
                           <input type="radio" name="rating" value="4" id="4" onChange={e => setRating(e.target.value)} />
-                          <label for="4">&#9734;</label>
+                          <label htmlFor="4">&#9734;</label>
                           <input type="radio" name="rating" value="3" id="3" onChange={e => setRating(e.target.value)} />
-                          <label for="3">&#9734;</label>
+                          <label htmlFor="3">&#9734;</label>
                           <input type="radio" name="rating" value="2" id="2" onChange={e => setRating(e.target.value)} />
-                          <label for="2">&#9734;</label>
+                          <label htmlFor="2">&#9734;</label>
                           <input type="radio" name="rating" value="1" id="1" onChange={e => setRating(e.target.value)} />
-                          <label for="1">&#9734;</label>
+                          <label htmlFor="1">&#9734;</label>
                         </div>
-
-                        {/* {radioButton("GoolePay", "GoolePay")} */}
-
-                        {/* <Form.Control as="select" value={rating} onChange={e => setRating(e.target.value)}>
-
-                        </Form.Control> */}
                       </Form.Group>
                       <Form.Group>
                         <Form.Label>Comment</Form.Label>

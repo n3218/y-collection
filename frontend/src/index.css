@@ -77,6 +77,16 @@ h1 {
   flex: 1 1 auto;
 }
 
-.select-color {
+.form-control {
+  min-width: 85px;
+}
+
+.order-select {
   min-width: 120px;
+}
+
+.submenu {
+  display: flex;
+  justify-content: space-between;
+  border-top: 1px solid lightgray;
 }

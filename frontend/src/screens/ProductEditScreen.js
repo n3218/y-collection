@@ -1,10 +1,10 @@
 import React, { useState, useEffect } from "react"
 import { Link } from "react-router-dom"
-import { Form, Button, Row, Col, Image } from "react-bootstrap"
+import { Form, Button, Row, Col } from "react-bootstrap"
 import { useDispatch, useSelector } from "react-redux"
 import Message from "../components/Message"
 import Loader from "../components/Loader"
-import { FormFieldAsRow } from "../components/FormField"
+import { FormFieldAsRow, FormFieldAsRowCheckbox } from "../components/FormField"
 import { productDetailsAction, productUpdateAction } from "../actions/productActions"
 import { PRODUCT_UPDATE_RESET } from "../constants/productConstants"
 import Meta from "../components/Meta"
@@ -20,7 +20,7 @@ const ProductEditScreen = ({ history, match }) => {
   const [brand, setBrand] = useState("")
   const [category, setCategory] = useState("")
   const [description, setDescription] = useState("")
-  const [countInStock, setCountInStock] = useState(0)
+  const [outOfStock, setOutOfStock] = useState(false)
   const [uploading, setUploading] = useState(false)
 
   const [showColorPictureBlock, setShowColorPictureBlock] = useState(false)
@@ -34,17 +34,21 @@ const ProductEditScreen = ({ history, match }) => {
     }
   ]
   const [fibers, setFibers] = useState("")
-  const [meterage, setMeterage] = useState(100)
+  const [meterage, setMeterage] = useState(0)
+  const [minimum, setMinimum] = useState(0)
   const [color, setColor] = useState(defaultColor)
+  const [colors, setColors] = useState({})
+
   const [colorName, setColorName] = useState("")
   const [colorInStock, setColorInStock] = useState("")
-
   const [colorImage, setColorImage] = useState([])
 
   const productDetails = useSelector(state => state.productDetails)
   const { loading, error, product } = productDetails
   const productUpdate = useSelector(state => state.productUpdate)
   const { loading: loadingUpdate, error: errorUpdate, success: successUpdate } = productUpdate
+
+  const [colorMap, setColorMap] = useState({})
 
   useEffect(() => {
     if (successUpdate) {
@@ -60,10 +64,15 @@ const ProductEditScreen = ({ history, match }) => {
         setBrand(product.brand)
         setCategory(product.category)
         setDescription(product.description)
-        setCountInStock(product.countInStock)
+        setOutOfStock(product.outOfStock)
         setFibers(product.fibers)
         setMeterage(product.meterage)
+        setMinimum(product.minimum)
         setColor(product.color)
+
+        let copyColorMap = { ...colorMap }
+        color.map(col => (copyColorMap[col.name] = { ...col }))
+        setColorMap({ ...copyColorMap })
       }
     }
   }, [product, dispatch, productId, history, successUpdate])
@@ -81,9 +90,10 @@ const ProductEditScreen = ({ history, match }) => {
         brand,
         category,
         description,
-        countInStock,
+        outOfStock,
         fibers,
         meterage,
+        minimum,
         color
       })
     )
@@ -110,7 +120,12 @@ const ProductEditScreen = ({ history, match }) => {
     e.target.checked = true
   }
 
+  const onChangeColorHandler = () => {
+    let copy = color
+  }
+
   console.log("color: ", color)
+  console.log("colorMap: ", colorMap)
 
   const colorPictureBlock = () => {
     return (
@@ -130,14 +145,18 @@ const ProductEditScreen = ({ history, match }) => {
     )
   }
 
-  console.log("showColorPictureBlock: ", showColorPictureBlock)
-
   return (
     <>
-      <Link to="/admin/productList" className="btn btn-light my-3">
-        Back
-      </Link>
       <Meta title="Admin | Edit Product | Woolunatics" />
+      <div className="submenu">
+        <Link to="/admin/productList" className="btn btn-light my-3 text-left">
+          Back
+        </Link>
+        <Link to={`/products/${productId}`} className="btn btn-light my-3 text-right">
+          Preview
+        </Link>
+      </div>
+
       <Row>
         <Col md={4}>
           <ImageLarge image={image} name={`${brand} ${name}`} />
@@ -159,23 +178,27 @@ const ProductEditScreen = ({ history, match }) => {
               <FormFieldAsRow value={meterage} label="Meterage" onChange={setMeterage} />
               <FormFieldAsRow as="textarea" rows={5} value={description} label="Description" onChange={setDescription} />
               <FormFieldAsRow value={price} label="Price" onChange={setPrice} />
-              <FormFieldAsRow value={countInStock} label="In Stock" onChange={setCountInStock} />
+              <FormFieldAsRow value={minimum} label="Minimum" onChange={setMinimum} />
+              <FormFieldAsRowCheckbox value={outOfStock} label="Out Of Stock" onChange={setOutOfStock} />
 
-              {/* COLOR */}
               <Form.Group controlId="inStock">
                 <Form.Label>Colors:</Form.Label>
+
                 {color &&
-                  color.map((item, i) => (
+                  color.map((col, i) => (
                     <div key={i}>
-                      <strong>{item.name}</strong>: {item.inStock}
-                      <div className="btn btn-primary mx-2 btn-sm" onClick={e => console.log("changingColor")}>
-                        Change Color
-                      </div>
+                      <input type="text" value={color[i].name} placeholder="Color" onChange={e => setColor({ ...color, [color[i].name]: e.target.value })} />
+                      <input type="text" value={col.inStock} placeholder="inStock" onChange={e => setColorInStock(e.target.value)} />
+
+                      {/* <div className="btn btn-primary mx-2 btn-sm" onClick={e => console.log("changingColor")}>
+                            Change Color
+                          </div> */}
                       <div className="btn btn-primary mx-2 my-2 btn-sm" onClick={() => setShowColorPictureBlock(!showColorPictureBlock)}>
                         Link Picture
                       </div>
                     </div>
                   ))}
+
                 {showColorPictureBlock && colorPictureBlock()}
                 <hr />
                 <input type="text" value={colorName} placeholder="Color" onChange={e => setColorName(e.target.value)} />

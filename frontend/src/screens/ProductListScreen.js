@@ -72,7 +72,7 @@ const ProductListScreen = ({ history, match }) => {
       ) : (
         <>
           <Meta title="Admin | Product List | Woolunatics" />
-          <Paginate isAdmin pages={pages} page={page} />
+          <Paginate isAdmin list="productlist" pages={pages} page={page} />
           <Table striped hover responsive className="table-sm">
             <thead>
               <tr>
@@ -83,15 +83,17 @@ const ProductListScreen = ({ history, match }) => {
                 <th>CATEGORY</th>
                 <th>FIBERS</th>
                 <th>MERETAGE</th>
+                <th>MINIMUM</th>
                 <th>PRICE</th>
                 <th>IN STOCK</th>
+                <th>GONE</th>
                 <th>EDIT</th>
                 <th>DEL</th>
               </tr>
             </thead>
             <tbody>
               {products.map(product => (
-                <tr key={product._id}>
+                <tr key={product._id} className={`${product.outOfStock && "font-weight-light"}`}>
                   {/* <td>{product._id}</td> */}
                   <td width="50px">
                     <Image src={product.image[0]} alt={product.name} fluid />
@@ -103,13 +105,21 @@ const ProductListScreen = ({ history, match }) => {
                   <td>{product.category}</td>
                   <td>{product.fibers}</td>
                   <td>{product.meterage}</td>
+                  <td>{product.minimum}</td>
                   <td>€{product.price}</td>
                   <td>
                     {product.color.map(col => (
                       <div>
-                        <b>{col.name}</b>: {col.inStock}
+                        <i>{col.name}</i> : {col.inStock}
                       </div>
                     ))}
+                  </td>
+                  <td>
+                    {product.outOfStock && (
+                      // <span className="text-danger font-weight-bold">
+                      <i className="fas fa-check text-danger font-weight-bold"></i>
+                      // </span>
+                    )}
                   </td>
                   <td>
                     <LinkContainer to={`/admin/product/${product._id}/edit`}>
@@ -127,7 +137,7 @@ const ProductListScreen = ({ history, match }) => {
               ))}
             </tbody>
           </Table>
-          <Paginate isAdmin pages={pages} page={page} />
+          <Paginate isAdmin list="productlist" pages={pages} page={page} />
         </>
       )}
     </>

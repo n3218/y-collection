@@ -157,7 +157,8 @@ export const listMyOrdersAction = () => async (dispatch, getState) => {
   }
 }
 
-export const listOrdersAction = () => async (dispatch, getState) => {
+export const listOrdersAction = (pageNumber = "") => async (dispatch, getState) => {
+  console.log("listOrdersAction: pageNumber: ", pageNumber)
   try {
     dispatch({ type: ORDER_LIST_REQUEST })
     const {
@@ -168,7 +169,7 @@ export const listOrdersAction = () => async (dispatch, getState) => {
         Authorization: `Bearer ${userInfo.token}`
       }
     }
-    const { data } = await axios.get(`/api/orders`, config)
+    const { data } = await axios.get(`/api/orders?pageNumber=${pageNumber}`, config)
     dispatch({ type: ORDER_LIST_SUCCESS, payload: data })
   } catch (error) {
     const message = error.response && error.response.data.message ? error.response.data.message : error.message

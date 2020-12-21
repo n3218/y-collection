@@ -57,6 +57,11 @@ const productSchema = mongoose.Schema(
       type: String,
       required: false
     },
+    minimum: {
+      type: Number,
+      required: true,
+      default: 0
+    },
     description: {
       type: String,
       required: false
@@ -76,10 +81,10 @@ const productSchema = mongoose.Schema(
       required: true,
       default: 0
     },
-    countInStock: {
-      type: Number,
+    outOfStock: {
+      type: Boolean,
       required: true,
-      default: 0
+      default: false
     }
   },
   {
