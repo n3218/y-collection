@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react"
 import { useDispatch, useSelector } from "react-redux"
 import { Col, ListGroup, Row, Card, Button, Form } from "react-bootstrap"
 import { Link } from "react-router-dom"
+import ImageGallery from "react-image-gallery"
 import Rating from "../components/Rating"
 import { productDetailsAction, productCreateReviewAction } from "../actions/productActions"
 import Message from "../components/Message"
@@ -46,15 +47,35 @@ const ProductScreen = ({ history, match }) => {
     dispatch(productCreateReviewAction(match.params.id, { rating, comment }))
   }
 
-  console.log(product)
-  console.log(colorName)
-
   const showOptions = min => {
     let values = []
     for (let i = min; i <= 2000; i += 50) {
       values.push(i)
     }
     return values
+  }
+
+  const images = [
+    {
+      original: "https://picsum.photos/id/1018/1000/600/",
+      thumbnail: "https://picsum.photos/id/1018/250/150/"
+    },
+    {
+      original: "https://picsum.photos/id/1015/1000/600/",
+      thumbnail: "https://picsum.photos/id/1015/250/150/"
+    },
+    {
+      original: "https://picsum.photos/id/1019/1000/600/",
+      thumbnail: "https://picsum.photos/id/1019/250/150/"
+    }
+  ]
+
+  const showImages = () => {
+    let productImages = []
+    console.log("product.image: ", product.image)
+    product.image.map(img => productImages.push({ original: img, thumbnail: img }))
+    console.log("productImages: ", productImages)
+    return productImages
   }
 
   return (
@@ -77,10 +98,13 @@ const ProductScreen = ({ history, match }) => {
             )}
           </div>
           <Row>
-            <Col md={6}>
-              <ImageLarge image={product.image} name={`${product.brand} ${product.name}`} />
+            <Col md={12} lg={6}>
+              {product.image && console.log(showImages())}
+              {product.image && <ImageGallery items={showImages()} showPlayButton={false} showIndex={true} thumbnailPosition="left" />}
+
+              {/* <ImageLarge image={product.image} name={`${product.brand} ${product.name}`} /> */}
             </Col>
-            <Col md={3}>
+            <Col md={6} lg={3}>
               <ListGroup variant="flush">
                 <ListGroup.Item>
                   <div>{product.brand}</div>
@@ -100,7 +124,7 @@ const ProductScreen = ({ history, match }) => {
                 <ListGroup.Item>{product.description && product.description.split("\n").map((p, i) => <p key={i}>{p}</p>)}</ListGroup.Item>
               </ListGroup>
             </Col>
-            <Col md={3}>
+            <Col md={6} lg={3}>
               <Card>
                 <ListGroup variant="flush">
                   <ListGroup.Item>
@@ -181,7 +205,7 @@ const ProductScreen = ({ history, match }) => {
               <h3 className="my-3" id="review-section">
                 Reviews
               </h3>
-              {product.reviews.length === 0 && <Message>No Reviews for this product</Message>}
+              {product.reviews.length === 0 && <Message variant="warning">No Reviews for this product</Message>}
               <ListGroup variant="flush">
                 {product.reviews.map(review => (
                   <ListGroup.Item key={review._id}>
@@ -217,8 +241,7 @@ const ProductScreen = ({ history, match }) => {
                         </div>
                       </Form.Group>
                       <Form.Group>
-                        <Form.Label>Comment</Form.Label>
-                        <Form.Control as="textarea" row="5" value={comment} onChange={e => setComment(e.target.value)}></Form.Control>
+                        <Form.Control as="textarea" row="5" value={comment} onChange={e => setComment(e.target.value)} placeholder="Write your review here..."></Form.Control>
                       </Form.Group>
                       <Button type="submit" className="btn-block" disabled={loadingCreateReview}>
                         Submit a review

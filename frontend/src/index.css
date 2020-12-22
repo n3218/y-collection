@@ -1,4 +1,5 @@
 @import "./_cosmo.min.css";
+@import "~react-image-gallery/styles/css/image-gallery.css";
 
 main {
   min-height: 80vh;
@@ -33,7 +34,6 @@ h1 {
   max-height: 30vh;
   overflow: hidden;
 }
-
 .carousel-caption {
   bottom: auto;
   top: 10px;
@@ -49,15 +49,12 @@ h1 {
   padding-right: 8px;
   padding-left: 8px;
 }
-
 .card.product-card {
   border: 0;
 }
-
 .card-body {
   padding: 0 0 10px 0;
 }
-
 .card-title {
   margin-top: 0.75rem;
   margin-bottom: 0;
@@ -89,4 +86,20 @@ h1 {
   display: flex;
   justify-content: space-between;
   border-top: 1px solid lightgray;
+}
+
+button.image-gallery-icon {
+  filter: none;
+}
+.image-gallery-right-nav,
+.image-gallery-left-nav {
+  transform: translateY(-50%) scale(0.6);
+  padding: 50px 0px;
+}
+.image-gallery-fullscreen-button {
+  padding: 3px;
+}
+
+.list-group-item p {
+  margin-bottom: 0.5rem;
 }
