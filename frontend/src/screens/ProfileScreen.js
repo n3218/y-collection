@@ -112,20 +112,21 @@ const ProfileScreen = ({ history, location }) => {
               </tr>
             </thead>
             <tbody>
-              {orders.map(order => (
-                <tr key={order._id}>
-                  <td>{order._id}</td>
-                  <td>{order.createdAt.substring(0, 10)}</td>
-                  <td>{order.totalPrice}</td>
-                  <td>{order.isPaid ? <span className="text-success">{order.paidAt.substring(0, 10)}</span> : <i className="fas fa-times text-danger"></i>}</td>
-                  <td>{order.isDelivered ? order.deliveredAt.substring(0, 10) : <i className="fas fa-times text-danger"></i>}</td>
-                  <td>
-                    <LinkContainer to={`/orders/${order._id}`}>
-                      <Button className="btn-sm">Details</Button>
-                    </LinkContainer>
-                  </td>
-                </tr>
-              ))}
+              {orders &&
+                orders.map(order => (
+                  <tr key={order._id}>
+                    <td>{order._id}</td>
+                    <td>{order.createdAt.substring(0, 10)}</td>
+                    <td>{order.totalPrice}</td>
+                    <td>{order.isPaid ? <span className="text-success">{order.paidAt.substring(0, 10)}</span> : <i className="fas fa-times text-danger"></i>}</td>
+                    <td>{order.isDelivered ? order.deliveredAt.substring(0, 10) : <i className="fas fa-times text-danger"></i>}</td>
+                    <td>
+                      <LinkContainer to={`/orders/${order._id}`}>
+                        <Button className="btn-sm">Details</Button>
+                      </LinkContainer>
+                    </td>
+                  </tr>
+                ))}
             </tbody>
           </Table>
         )}

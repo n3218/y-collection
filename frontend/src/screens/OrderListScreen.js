@@ -27,8 +27,6 @@ const OrderListScreen = ({ history, match }) => {
     }
   }, [dispatch, history, userInfo, pageNumber])
 
-  console.log("OrderScreen-useEffect", match.params.pageNumber)
-
   return (
     <>
       <Meta title="Admin | Orders | Woolunatics" />

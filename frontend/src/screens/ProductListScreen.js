@@ -109,7 +109,7 @@ const ProductListScreen = ({ history, match }) => {
                   <td>€{product.price}</td>
                   <td>
                     {product.color.map(col => (
-                      <div>
+                      <div key={col.name}>
                         <i>{col.name}</i> : {col.inStock}
                       </div>
                     ))}

@@ -12,13 +12,13 @@ const FormField = ({ value, label, onChange }) => {
 
 export const FormFieldAsRow = ({ value, label, onChange, as, rows }) => {
   return (
-    <Form.Group controlId={value}>
+    <Form.Group controlId={label}>
       <Row>
         <Col sm="2">
           <Form.Label>{label}</Form.Label>
         </Col>
         <Col>
-          <Form.Control as={as} rows={rows} column sm="10" type="text" placeholder={`Enter ${label}`} value={value} onChange={e => onChange(e.target.value)}></Form.Control>
+          <Form.Control as={as} rows={rows} sm="10" type="text" placeholder={`Enter ${label}`} value={value} onChange={e => onChange(e.target.value)}></Form.Control>
         </Col>
       </Row>
     </Form.Group>

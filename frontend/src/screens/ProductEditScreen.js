@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react"
 import { Link } from "react-router-dom"
-import { Form, Button, Row, Col } from "react-bootstrap"
+import { Form, Button, Row, Col, Accordion } from "react-bootstrap"
 import { useDispatch, useSelector } from "react-redux"
 import Message from "../components/Message"
 import Loader from "../components/Loader"
@@ -22,33 +22,23 @@ const ProductEditScreen = ({ history, match }) => {
   const [description, setDescription] = useState("")
   const [outOfStock, setOutOfStock] = useState(false)
   const [uploading, setUploading] = useState(false)
-
-  const [showColorPictureBlock, setShowColorPictureBlock] = useState(false)
-  const [checkedPictures, setCheckedPictures] = useState([])
-
-  const defaultColor = [
-    {
-      name: "",
-      inStock: "",
-      images: []
-    }
-  ]
   const [fibers, setFibers] = useState("")
   const [meterage, setMeterage] = useState(0)
   const [minimum, setMinimum] = useState(0)
+  const defaultColor = [
+    {
+      name: "",
+      inStock: ""
+    }
+  ]
   const [color, setColor] = useState(defaultColor)
-  const [colors, setColors] = useState({})
-
-  const [colorName, setColorName] = useState("")
-  const [colorInStock, setColorInStock] = useState("")
-  const [colorImage, setColorImage] = useState([])
+  const [newColorName, setNewColorName] = useState("")
+  const [newColorInStock, setNewColorInStock] = useState("")
 
   const productDetails = useSelector(state => state.productDetails)
   const { loading, error, product } = productDetails
   const productUpdate = useSelector(state => state.productUpdate)
   const { loading: loadingUpdate, error: errorUpdate, success: successUpdate } = productUpdate
-
-  const [colorMap, setColorMap] = useState({})
 
   useEffect(() => {
     if (successUpdate) {
@@ -69,17 +59,11 @@ const ProductEditScreen = ({ history, match }) => {
         setMeterage(product.meterage)
         setMinimum(product.minimum)
         setColor(product.color)
-
-        let copyColorMap = { ...colorMap }
-        color.map(col => (copyColorMap[col.name] = { ...col }))
-        setColorMap({ ...copyColorMap })
       }
     }
   }, [product, dispatch, productId, history, successUpdate])
 
   const submitHandler = e => {
-    console.log("submitHandler")
-    console.log("submitHandler:color: ", color)
     e.preventDefault()
     dispatch(
       productUpdateAction({
@@ -101,46 +85,47 @@ const ProductEditScreen = ({ history, match }) => {
 
   const addColorHandler = e => {
     e.preventDefault()
-    console.log("addColorHandler")
     setColor([
       ...color,
       {
-        name: colorName,
-        image: [...colorImage],
-        inStock: colorInStock
+        name: newColorName,
+        inStock: newColorInStock
       }
     ])
-    setColorName("")
-    setColorInStock("")
+    setNewColorName("")
+    setNewColorInStock("")
   }
 
-  const setCheckedPicturesHandler = e => {
-    e.preventDefault()
-    setCheckedPictures([...checkedPictures, e.target.value])
-    e.target.checked = true
-  }
-
-  const onChangeColorHandler = () => {
+  const changeColorHandler = name => e => {
     let copy = color
+    copy.filter(el => el.name === name)[0][e.target.id] = e.target.value
+    setColor([...copy])
   }
 
-  console.log("color: ", color)
-  console.log("colorMap: ", colorMap)
+  const thumbs = colorObject => {
+    const setColorHandler = img => {
+      let copy = color
+      let colorImages = copy.filter(col => col.name === colorObject.name)[0].images
+      if (colorImages.includes(img)) {
+        colorImages.splice(colorImages.indexOf(img), 1)
+        colorImages = [...colorImages.filter(col => col !== img)]
+      } else {
+        colorImages.push(img)
+      }
+      setColor([...copy])
+    }
 
-  const colorPictureBlock = () => {
     return (
-      <div className="color-picture-block">
+      <div>
         {image &&
-          image.map(i => (
-            <div key={i} className="color-picture">
+          image.map(img => (
+            <div key={img} className="color-picture">
               <Form.Label>
-                <img src={i} width="80" />
+                <img src={img} alt="Color Preview" width="80" />
               </Form.Label>
-              <Form.Check type="checkbox" value={i} checked={checkedPictures.includes(i)} onChange={setCheckedPicturesHandler}></Form.Check>
-              {console.log(checkedPictures.includes(i))}
+              <Form.Check className="checkboxImg" type="checkbox" value={img} checked={color.filter(col => col.name === colorObject.name)[0].images.includes(img)} onChange={() => setColorHandler(img)}></Form.Check>
             </div>
           ))}
-        <div className="btn btn-primary">Link</div>
       </div>
     )
   }
@@ -170,7 +155,7 @@ const ProductEditScreen = ({ history, match }) => {
           ) : error ? (
             <Message variant="danger">{error}</Message>
           ) : (
-            <Form onSubmit={submitHandler}>
+            <Form onSubmit={submitHandler} id="ProductEditForm">
               <FormFieldAsRow value={name} label="Name" onChange={setName} />
               <FormFieldAsRow value={brand} label="Brand" onChange={setBrand} />
               <FormFieldAsRow value={category} label="Category" onChange={setCategory} />
@@ -181,37 +166,70 @@ const ProductEditScreen = ({ history, match }) => {
               <FormFieldAsRow value={minimum} label="Minimum" onChange={setMinimum} />
               <FormFieldAsRowCheckbox value={outOfStock} label="Out Of Stock" onChange={setOutOfStock} />
 
-              <Form.Group controlId="inStock">
-                <Form.Label>Colors:</Form.Label>
+              <Form.Group controlId="Color">
+                <Row>
+                  <Col sm="2">
+                    <Form.Label>Colors in Stock:</Form.Label>
+                  </Col>
+                  <Col>
+                    {color &&
+                      color.map((col, i) => (
+                        <div key={i}>
+                          <Accordion defaultActiveKey="0">
+                            <Row>
+                              <Col>
+                                <input type="text" id="name" className="form-control" value={col.name} placeholder="Color" onChange={changeColorHandler(col.name)} />
+                              </Col>
+                              <Col>
+                                <input type="text" id="inStock" className="form-control" value={col.inStock} placeholder="inStock" onChange={changeColorHandler(col.name)} />
+                              </Col>
+                              <Col>
+                                <Accordion.Toggle as={Button} variant="link" eventKey={`thumbs-${col.name}`}>
+                                  <i className="fas fa-images text-success btn" title="Link a Pictures"></i>
+                                </Accordion.Toggle>
+                                <i className="fas fa-trash text-danger btn-sm" title="Delete Color"></i>
+                              </Col>
+                            </Row>
+                            <Accordion.Collapse eventKey={`thumbs-${col.name}`}>{thumbs(col)}</Accordion.Collapse>
+                          </Accordion>
+                        </div>
+                      ))}
+                  </Col>
+                </Row>
+              </Form.Group>
 
-                {color &&
-                  color.map((col, i) => (
-                    <div key={i}>
-                      <input type="text" value={color[i].name} placeholder="Color" onChange={e => setColor({ ...color, [color[i].name]: e.target.value })} />
-                      <input type="text" value={col.inStock} placeholder="inStock" onChange={e => setColorInStock(e.target.value)} />
-
-                      {/* <div className="btn btn-primary mx-2 btn-sm" onClick={e => console.log("changingColor")}>
-                            Change Color
-                          </div> */}
-                      <div className="btn btn-primary mx-2 my-2 btn-sm" onClick={() => setShowColorPictureBlock(!showColorPictureBlock)}>
-                        Link Picture
-                      </div>
-                    </div>
-                  ))}
-
-                {showColorPictureBlock && colorPictureBlock()}
-                <hr />
-                <input type="text" value={colorName} placeholder="Color" onChange={e => setColorName(e.target.value)} />
-                <input type="text" value={colorInStock} placeholder="inStock" onChange={e => setColorInStock(e.target.value)} />
-                <button onClick={addColorHandler}>Add Color</button>
-                <hr />
+              <Form.Group controlId="newColor">
+                <Row>
+                  <Col sm="2">
+                    <Form.Label>New Color:</Form.Label>
+                  </Col>
+                  <Col>
+                    <Row>
+                      <Col>
+                        <input type="text" id="newColorName" className="form-control" name="newColorName" value={newColorName} onChange={e => setNewColorName(e.target.value)} placeholder="Color" />
+                      </Col>
+                      <Col>
+                        <input type="text" id="newColorInStock" className="form-control" name="newColorInStock" value={newColorInStock} onChange={e => setNewColorInStock(e.target.value)} placeholder="inStock" />
+                      </Col>
+                      <Col>
+                        <Button type="button" variant="success" onClick={addColorHandler}>
+                          Add Color
+                        </Button>
+                      </Col>
+                    </Row>
+                  </Col>
+                </Row>
               </Form.Group>
 
               <ImageUpload image={image} setUploading={setUploading} setImage={setImage} uploading={uploading} />
-
-              <Button type="submit" variant="primary">
-                Save
-              </Button>
+              <Row>
+                <Col sm="2"></Col>
+                <Col>
+                  <Button type="submit" variant="dark">
+                    Save Changes
+                  </Button>
+                </Col>
+              </Row>
             </Form>
           )}
         </Col>

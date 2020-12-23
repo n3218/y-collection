@@ -1,6 +1,6 @@
 import React from "react"
 import axios from "axios"
-import { Form } from "react-bootstrap"
+import { Form, Row, Col } from "react-bootstrap"
 import Loader from "../components/Loader"
 
 const ImageUpload = ({ image, setUploading, setImage, uploading }) => {
@@ -32,10 +32,15 @@ const ImageUpload = ({ image, setUploading, setImage, uploading }) => {
 
   return (
     <Form.Group controlId="image-file">
-      <Form.Label>Images</Form.Label>
-      <div>{image && image.map(i => <div key={i}>{i}</div>)}</div>
-      <Form.File id="image-file" label="Choose File" custom onChange={uploadFileHandler} multiple accept="image/png, image/jpeg, image/jpg"></Form.File>
-      {uploading && <Loader />}
+      <Row>
+        <Col sm="2">
+          <Form.Label>Images</Form.Label>
+        </Col>
+        <Col>
+          <Form.File id="image-file" label="Choose File" custom onChange={uploadFileHandler} multiple accept="image/png, image/jpeg, image/jpg"></Form.File>
+          {uploading && <Loader />}
+        </Col>
+      </Row>
     </Form.Group>
   )
 }

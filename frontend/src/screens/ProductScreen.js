@@ -10,7 +10,6 @@ import Loader from "../components/Loader"
 import { PRODUCT_CREATE_REVIEW_RESET } from "../constants/productConstants"
 import "../assets/rating.css"
 import Meta from "../components/Meta"
-import ImageLarge from "../components/ImageLarge"
 
 const ProductScreen = ({ history, match }) => {
   const dispatch = useDispatch()
@@ -55,26 +54,9 @@ const ProductScreen = ({ history, match }) => {
     return values
   }
 
-  const images = [
-    {
-      original: "https://picsum.photos/id/1018/1000/600/",
-      thumbnail: "https://picsum.photos/id/1018/250/150/"
-    },
-    {
-      original: "https://picsum.photos/id/1015/1000/600/",
-      thumbnail: "https://picsum.photos/id/1015/250/150/"
-    },
-    {
-      original: "https://picsum.photos/id/1019/1000/600/",
-      thumbnail: "https://picsum.photos/id/1019/250/150/"
-    }
-  ]
-
   const showImages = () => {
     let productImages = []
-    console.log("product.image: ", product.image)
     product.image.map(img => productImages.push({ original: img, thumbnail: img }))
-    console.log("productImages: ", productImages)
     return productImages
   }
 

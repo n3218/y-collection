@@ -1,5 +1,4 @@
 import React from "react"
-import { Link } from "react-router-dom"
 import { Image } from "react-bootstrap"
 
 const ImageLarge = ({ image, name }) => {
