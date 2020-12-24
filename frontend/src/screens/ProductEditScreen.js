@@ -6,7 +6,7 @@ import Message from "../components/Message"
 import Loader from "../components/Loader"
 import { FormFieldAsRow, FormFieldAsRowCheckbox } from "../components/FormField"
 import { productDetailsAction, productUpdateAction } from "../actions/productActions"
-import { PRODUCT_UPDATE_RESET } from "../constants/productConstants"
+import { PRODUCT_DETAILS_RESET, PRODUCT_UPDATE_RESET } from "../constants/productConstants"
 import Meta from "../components/Meta"
 import ImageLarge from "../components/ImageLarge"
 import ImageUpload from "../components/ImageUpload"
@@ -43,6 +43,7 @@ const ProductEditScreen = ({ history, match }) => {
   useEffect(() => {
     if (successUpdate) {
       dispatch({ type: PRODUCT_UPDATE_RESET })
+      dispatch({ type: PRODUCT_DETAILS_RESET })
       history.push("/admin/productlist")
     } else {
       if (!product.name || product._id !== productId) {
@@ -89,6 +90,7 @@ const ProductEditScreen = ({ history, match }) => {
       ...color,
       {
         name: newColorName,
+        images: [],
         inStock: newColorInStock
       }
     ])
@@ -123,11 +125,23 @@ const ProductEditScreen = ({ history, match }) => {
               <Form.Label>
                 <img src={img} alt="Color Preview" width="80" />
               </Form.Label>
-              <Form.Check className="checkboxImg" type="checkbox" value={img} checked={color.filter(col => col.name === colorObject.name)[0].images.includes(img)} onChange={() => setColorHandler(img)}></Form.Check>
+              <Form.Check //
+                className="checkboxImg"
+                type="checkbox"
+                value={img}
+                checked={color.filter(col => col.name === colorObject.name)[0].images.includes(img)}
+                onChange={() => setColorHandler(img)}
+              ></Form.Check>
             </div>
           ))}
       </div>
     )
+  }
+
+  const deleteColorHandler = colorName => {
+    let copy = color
+    let filteredColors = copy.filter(col => col.name !== colorName)
+    setColor([...filteredColors])
   }
 
   return (
@@ -187,7 +201,9 @@ const ProductEditScreen = ({ history, match }) => {
                                 <Accordion.Toggle as={Button} variant="link" eventKey={`thumbs-${col.name}`}>
                                   <i className="fas fa-images text-success btn" title="Link a Pictures"></i>
                                 </Accordion.Toggle>
-                                <i className="fas fa-trash text-danger btn-sm" title="Delete Color"></i>
+                                <Button variant="link" title="Delete Color" onClick={() => deleteColorHandler(col.name)}>
+                                  <i className="fas fa-trash text-danger btn-sm"></i>
+                                </Button>
                               </Col>
                             </Row>
                             <Accordion.Collapse eventKey={`thumbs-${col.name}`}>{thumbs(col)}</Accordion.Collapse>

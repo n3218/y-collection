@@ -17,6 +17,8 @@ const ProductScreen = ({ history, match }) => {
   const [rating, setRating] = useState(0)
   const [comment, setComment] = useState("")
   const [colorName, setColorName] = useState("")
+  const [colorImages, setColorImages] = useState([])
+  const [initialImages, setInitialImages] = useState([])
   const userLogin = useSelector(state => state.userLogin)
   const { userInfo } = userLogin
   const productDetails = useSelector(state => state.productDetails)
@@ -26,7 +28,6 @@ const ProductScreen = ({ history, match }) => {
 
   useEffect(() => {
     if (successCreateReview) {
-      console.log("successCreateReview")
       setRating(0)
       setComment("")
     }
@@ -34,7 +35,12 @@ const ProductScreen = ({ history, match }) => {
       dispatch(productDetailsAction(match.params.id))
       dispatch({ type: PRODUCT_CREATE_REVIEW_RESET })
     }
-  }, [dispatch, match, successCreateReview, product._id])
+    if (product.image) {
+      let currentImages = imagesForGallery(product.image)
+      setInitialImages([...currentImages])
+      setColorImages([...currentImages])
+    }
+  }, [dispatch, match, successCreateReview, product])
 
   const addToCartHandler = () => {
     history.push(`/cart/${match.params.id}?qty=${qty}&color=${colorName.replace(/ +/g, "_")}`)
@@ -42,7 +48,6 @@ const ProductScreen = ({ history, match }) => {
 
   const submitHandler = e => {
     e.preventDefault()
-    console.log("submitHandler")
     dispatch(productCreateReviewAction(match.params.id, { rating, comment }))
   }
 
@@ -54,10 +59,25 @@ const ProductScreen = ({ history, match }) => {
     return values
   }
 
-  const showImages = () => {
-    let productImages = []
-    product.image.map(img => productImages.push({ original: img, thumbnail: img }))
-    return productImages
+  const imagesForGallery = imageArray => {
+    let currentImages = []
+    imageArray.map(img => currentImages.push({ original: img, thumbnail: img }))
+    return currentImages
+  }
+
+  const selectColorHandler = e => {
+    setColorName(e.target.value.trim())
+    if (e.target.value.trim() !== "") {
+      let imgs = product.color.filter(col => col.name === e.target.value)[0].images
+      if (imgs.length > 0) {
+        let currentImages = imagesForGallery(imgs)
+        setColorImages([...currentImages])
+      } else {
+        setColorImages([...initialImages])
+      }
+    } else {
+      setColorImages([...initialImages])
+    }
   }
 
   return (
@@ -81,10 +101,7 @@ const ProductScreen = ({ history, match }) => {
           </div>
           <Row>
             <Col md={12} lg={6}>
-              {product.image && console.log(showImages())}
-              {product.image && <ImageGallery items={showImages()} showPlayButton={false} showIndex={true} thumbnailPosition="left" />}
-
-              {/* <ImageLarge image={product.image} name={`${product.brand} ${product.name}`} /> */}
+              {product.image && <ImageGallery items={colorImages} showPlayButton={false} showIndex={true} thumbnailPosition="left" />}
             </Col>
             <Col md={6} lg={3}>
               <ListGroup variant="flush">
@@ -121,7 +138,7 @@ const ProductScreen = ({ history, match }) => {
                       <Col>Color</Col>
                       <Col>
                         <Form.Group controlId="color">
-                          <Form.Control as="select" className="order-select" value={colorName.replace(/ +/g, "_")} onChange={e => setColorName(e.target.value)}>
+                          <Form.Control as="select" className="order-select" value={colorName} onChange={selectColorHandler}>
                             <option key="0" value="">
                               Select...
                             </option>
