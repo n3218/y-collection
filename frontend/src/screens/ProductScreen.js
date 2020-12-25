@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from "react-redux"
 import { Col, ListGroup, Row, Card, Button, Form } from "react-bootstrap"
 import { Link } from "react-router-dom"
 import ImageGallery from "react-image-gallery"
+import ReactHtmlParser from "react-html-parser"
 import Rating from "../components/Rating"
 import { productDetailsAction, productCreateReviewAction } from "../actions/productActions"
 import Message from "../components/Message"
@@ -120,7 +121,7 @@ const ProductScreen = ({ history, match }) => {
                 <ListGroup.Item>
                   <div>Meterage:</div> {product.meterage}m / 100g
                 </ListGroup.Item>
-                <ListGroup.Item>{product.description && product.description.split("\n").map((p, i) => <p key={i}>{p}</p>)}</ListGroup.Item>
+                <ListGroup.Item>{product.description && ReactHtmlParser(product.description)}</ListGroup.Item>
               </ListGroup>
             </Col>
             <Col md={6} lg={3}>
@@ -159,7 +160,6 @@ const ProductScreen = ({ history, match }) => {
                       <Row>
                         <Col>Qty</Col>
                         <Col>
-                          {/* <-- select qty */}
                           <Form.Group controlId="qty">
                             <Form.Control as="select" className="order-select" value={qty} onChange={e => setQty(e.target.value)}>
                               <option key="0" value="">

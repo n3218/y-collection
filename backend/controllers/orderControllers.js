@@ -90,6 +90,7 @@ export const getOrders = asyncHandler(async (req, res) => {
 
   const count = await Order.countDocuments({})
   const orders = await Order.find({})
+    .sort({ createdAt: -1 })
     .populate("user", "id name")
     .limit(pageSize)
     .skip(pageSize * (page - 1))

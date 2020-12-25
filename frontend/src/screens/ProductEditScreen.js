@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react"
 import { Link } from "react-router-dom"
 import { Form, Button, Row, Col, Accordion } from "react-bootstrap"
 import { useDispatch, useSelector } from "react-redux"
+import ReactQuill from "react-quill"
 import Message from "../components/Message"
 import Loader from "../components/Loader"
 import { FormFieldAsRow, FormFieldAsRowCheckbox } from "../components/FormField"
@@ -10,6 +11,7 @@ import { PRODUCT_DETAILS_RESET, PRODUCT_UPDATE_RESET } from "../constants/produc
 import Meta from "../components/Meta"
 import ImageLarge from "../components/ImageLarge"
 import ImageUpload from "../components/ImageUpload"
+import "react-quill/dist/quill.snow.css"
 
 const ProductEditScreen = ({ history, match }) => {
   const productId = match.params.id
@@ -175,10 +177,18 @@ const ProductEditScreen = ({ history, match }) => {
               <FormFieldAsRow value={category} label="Category" onChange={setCategory} />
               <FormFieldAsRow value={fibers} label="Fibers" onChange={setFibers} />
               <FormFieldAsRow value={meterage} label="Meterage" onChange={setMeterage} />
-              <FormFieldAsRow as="textarea" rows={5} value={description} label="Description" onChange={setDescription} />
               <FormFieldAsRow value={price} label="Price" onChange={setPrice} />
               <FormFieldAsRow value={minimum} label="Minimum" onChange={setMinimum} />
-              <FormFieldAsRowCheckbox value={outOfStock} label="Out Of Stock" onChange={setOutOfStock} />
+              <Form.Group controlId="Description">
+                <Row>
+                  <Col sm="2">
+                    <Form.Label>Description:</Form.Label>
+                  </Col>
+                  <Col>
+                    <ReactQuill value={description} onChange={setDescription} />
+                  </Col>
+                </Row>
+              </Form.Group>
 
               <Form.Group controlId="Color">
                 <Row>
@@ -238,6 +248,7 @@ const ProductEditScreen = ({ history, match }) => {
               </Form.Group>
 
               <ImageUpload image={image} setUploading={setUploading} setImage={setImage} uploading={uploading} />
+              <FormFieldAsRowCheckbox value={outOfStock} label="Out Of Stock" onChange={setOutOfStock} />
               <Row>
                 <Col sm="2"></Col>
                 <Col>

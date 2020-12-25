@@ -118,3 +118,7 @@ button.image-gallery-icon {
 .checkboxImg {
   margin-top: -25px;
 }
+
+.col {
+  padding-right: 0;
+}
