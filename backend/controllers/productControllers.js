@@ -9,7 +9,7 @@ export const getProducts = asyncHandler(async (req, res) => {
   const page = Number(req.query.pageNumber) || 1
   const keyword = req.query.keyword
     ? {
-        name: {
+        description: {
           $regex: req.query.keyword,
           $options: "i"
         }

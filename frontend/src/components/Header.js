@@ -41,15 +41,33 @@ const Header = () => {
               <LinkContainer to="/how-to">
                 <Nav.Link>How to Order</Nav.Link>
               </LinkContainer>
-              <NavDropdown title="Catalog" id="basic-nav-dropdown">
-                <LinkContainer to="/cashmere">
+              <NavDropdown title="Catalogue" id="basic-nav-dropdown">
+                <LinkContainer to="/search/cashmere|кашемир">
                   <NavDropdown.Item>Cachmere</NavDropdown.Item>
                 </LinkContainer>
-                <LinkContainer to="/mohair">
+                <LinkContainer to="/search/merino|меринос">
+                  <NavDropdown.Item>Merino</NavDropdown.Item>
+                </LinkContainer>
+                <LinkContainer to="/search/camel|верблюд">
+                  <NavDropdown.Item>Camel</NavDropdown.Item>
+                </LinkContainer>
+                <LinkContainer to="/search/mohair|мохер">
                   <NavDropdown.Item>Mohair</NavDropdown.Item>
                 </LinkContainer>
-                <LinkContainer to="/cotton">
-                  <NavDropdown.Item>Cotton</NavDropdown.Item>
+                <LinkContainer to="/search/silk|шелк">
+                  <NavDropdown.Item>Silk</NavDropdown.Item>
+                </LinkContainer>
+                <LinkContainer to="/search/angora|ангора">
+                  <NavDropdown.Item>Angora</NavDropdown.Item>
+                </LinkContainer>
+                <LinkContainer to="/search/alpaca|альпака">
+                  <NavDropdown.Item>Alpaca</NavDropdown.Item>
+                </LinkContainer>
+                <LinkContainer to="/search/linen|linnen|_лен">
+                  <NavDropdown.Item>Linen</NavDropdown.Item>
+                </LinkContainer>
+                <LinkContainer to="/search/Пайетки|пайетки">
+                  <NavDropdown.Item>Paillettes</NavDropdown.Item>
                 </LinkContainer>
                 <NavDropdown.Divider />
                 <LinkContainer to="/all">

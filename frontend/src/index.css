@@ -5,6 +5,11 @@ main {
   min-height: 80vh;
 }
 
+.row {
+  margin-right: 0;
+  margin-left: 0;
+}
+
 .logo {
   width: 70px;
 }
@@ -24,7 +29,7 @@ h1 {
 
 @media only screen and (min-width: 1200px) {
   .container {
-    max-width: 94%;
+    max-width: 100%;
   }
 }
 
@@ -53,6 +58,8 @@ h1 {
 }
 .card.product-card {
   border: 0;
+  overflow: hidden;
+  display: block;
 }
 .card-body {
   padding: 0 0 10px 0;
@@ -110,15 +117,70 @@ button.image-gallery-icon {
   margin-bottom: 0.5rem;
 }
 
-/* .image-gallery-content.left .image-gallery-slide .image-gallery-image,
-.image-gallery-content.right .image-gallery-slide .image-gallery-image {
-  max-height: 100%;
-} */
-
 .checkboxImg {
   margin-top: -25px;
 }
 
 .col {
   padding-right: 0;
+}
+
+.img-example {
+  width: 60%;
+  height: 60%;
+  margin: 20%;
+  filter: opacity(0.3);
+}
+.img-card:hover {
+  transform: scale(1.1);
+  transition: all 0.5s cubic-bezier(0, 0, 0.44, 1.18);
+}
+.img-card-container {
+  overflow: hidden;
+}
+
+.promo-block {
+  max-width: 100vw;
+  display: grid;
+  grid-template-columns: 1fr 0.924fr 2fr 1fr 1fr;
+}
+.promo-block div img {
+  max-width: 100%;
+  margin: auto;
+}
+.promo-block > div {
+  overflow: hidden;
+  position: relative;
+}
+.promo-block div img:hover {
+  transform: scale(1.1);
+  transition: all 0.5s cubic-bezier(0, 0, 0.44, 1.18);
+}
+
+.promo-block-main-text {
+  position: absolute;
+  top: 0;
+  width: 100%;
+  text-align: center;
+  background-color: rgba(255, 255, 255, 0.2);
+  font-weight: bold;
+  z-index: 100;
+}
+.promo-block-button-container {
+  position: relative;
+}
+.promo-block-button-container:hover .promo-block-button {
+  opacity: 1;
+}
+.promo-block-button {
+  transition: all 0.5s;
+  opacity: 0;
+  position: absolute;
+  width: 100%;
+  bottom: 0;
+  padding: 8px 0;
+  text-align: center;
+  z-index: 100;
+  background-color: rgba(248, 7, 7, 0.6);
+  color: white;
 }
