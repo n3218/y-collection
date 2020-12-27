@@ -8,6 +8,13 @@ import axios from "axios"
 
 export const cartAddItemAction = (id, qty, color) => async (dispatch, getState) => {
   const { data } = await axios.get(`/api/products/${id}`)
+  const colorImages = data.color.filter(col => col.name === color)[0].images
+  let imgOfColor = ""
+  if (colorImages.length > 0) {
+    imgOfColor = colorImages[0]
+  } else {
+    imgOfColor = data.image[0]
+  }
   dispatch({
     type: CART_ADD_ITEM,
     payload: {
@@ -17,7 +24,7 @@ export const cartAddItemAction = (id, qty, color) => async (dispatch, getState) 
       fibers: data.fibers,
       meterage: data.meterage,
       minimum: data.minimum,
-      image: data.image[0],
+      image: imgOfColor,
       price: data.price,
       color,
       qty

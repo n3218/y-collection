@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react"
 import { Link } from "react-router-dom"
 import { useDispatch, useSelector } from "react-redux"
-import { Row, Col, Image, Card, ListGroup, Button } from "react-bootstrap"
+import { Row, Col, Card, ListGroup, Button, Table } from "react-bootstrap"
 import { PayPalButton } from "react-paypal-button-v2"
 import axios from "axios"
 import Loader from "../components/Loader"
@@ -74,7 +74,7 @@ const OrderScreen = ({ match, history }) => {
       <Meta title={`Order #${order._id} | Woolunatics`} />
       <h1>Order #{order._id}</h1>
       <Row>
-        <Col md={8}>
+        <Col md={8} px="0">
           <ListGroup variant="flush">
             <ListGroup.Item>
               <h2>SHIPPING:</h2>
@@ -102,28 +102,40 @@ const OrderScreen = ({ match, history }) => {
               {order.orderItems.length === 0 ? (
                 <Message>Order is empty.</Message>
               ) : (
-                <ListGroup variant="flush">
-                  {order.orderItems.map((item, i) => (
-                    <ListGroup.Item key={i}>
-                      <Row>
-                        <Col md={1}>
-                          <Image src={item.image} alt={item.name} fluid rounded />
-                        </Col>
-                        <Col>
-                          <div>
-                            <small>{item.brand}</small>
-                          </div>
-                          <Link to={`/products/${item.product}`}>
-                            {item.name}, {item.color.replace(/_+/g, " ")}
-                          </Link>
-                        </Col>
-                        <Col md={4}>
-                          {item.qty}g x €{item.price} = €{(item.qty * item.price) / 100}
-                        </Col>
-                      </Row>
-                    </ListGroup.Item>
-                  ))}
-                </ListGroup>
+                <>
+                  <Table bordered hover responsive className="table-sm">
+                    <thead>
+                      <tr>
+                        <th>brend</th>
+                        <th>name</th>
+                        <th>colour</th>
+                        <th>Fibers, %</th>
+                        <th>weight, g</th>
+                        <th>m/100 gr</th>
+                        <th>€/100 gr</th>
+                        <th>price</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      {order.orderItems.map((item, i) => (
+                        <tr key={i}>
+                          <td>{item.brand}</td>
+                          <td>
+                            <Link target="_blank" to={`/products/${item.product}`}>
+                              {item.name}
+                            </Link>
+                          </td>
+                          <td>{item.color.replace(/_+/g, " ")}</td>
+                          <td>{item.fibers}</td>
+                          <td>{item.qty}</td>
+                          <td>{item.meterage}</td>
+                          <td>€{item.price}</td>
+                          <td>€{(item.qty * item.price) / 100}</td>
+                        </tr>
+                      ))}
+                    </tbody>
+                  </Table>
+                </>
               )}
             </ListGroup.Item>
           </ListGroup>
