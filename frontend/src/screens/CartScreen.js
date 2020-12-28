@@ -51,11 +51,11 @@ const CartScreen = ({ match, location, history }) => {
   return (
     <>
       <Meta title="Shopping Cart | Woolunatics" />
-      <h1>Shopping Cart</h1>
+      <h2>Shopping Cart</h2>
       <Row>
-        <Col md={8}>
+        <Col md={8} xs={12}>
           {cartItems.length === 0 ? (
-            <Message>
+            <Message variant="success">
               {" "}
               Your cart is empty <br /> <Link to="/">Go Back</Link>
             </Message>
@@ -64,10 +64,10 @@ const CartScreen = ({ match, location, history }) => {
               {cartItems.map(item => (
                 <ListGroup.Item key={`${item.product}-${item.color}`}>
                   <Row>
-                    <Col>
+                    <Col md={4} xs={4}>
                       <Image src={item.image} alt={item.name} fluid rounded />
                     </Col>
-                    <Col md={3}>
+                    <Col md={4} xs={4}>
                       <div>
                         <small>{item.brand}</small>
                       </div>
@@ -78,28 +78,32 @@ const CartScreen = ({ match, location, history }) => {
                       {item.meterage && <div>{item.meterage}m / 100g</div>}
                       <div>{item.fibers}</div>
                     </Col>
-                    <Col>€{item.price} / 100g</Col>
-                    <Col>
-                      {!item.minimum ? (
-                        <>{item.qty} g</>
-                      ) : (
-                        <Form.Group controlId="qty">
-                          <Form.Control as="select" value={item.qty} onChange={e => dispatch(cartAddItemAction(item.product, Number(e.target.value), item.color))}>
-                            {showOptions(item.minimum).map(el => (
-                              <option key={el} value={el}>
-                                {el} g
-                              </option>
-                            ))}
-                          </Form.Control>
-                        </Form.Group>
-                      )}
-                    </Col>
-                    <Col>{item.meterage * item.qty * 0.01}m</Col>
-                    <Col>€{(item.price * item.qty * 0.01).toFixed(2)}</Col>
-                    <Col md={1}>
-                      <Button variant="link" type="button" onClick={() => removeFromCartHandler(item.product, item.color)}>
-                        <i className="fas fa-trash text-danger"></i>
-                      </Button>
+                    <Col md={4} xs={4}>
+                      <Row>
+                        <Col>€{item.price} / 100g</Col>
+                        <Col>
+                          {!item.minimum ? (
+                            <>{item.qty} g</>
+                          ) : (
+                            <Form.Group controlId="qty">
+                              <Form.Control as="select" value={item.qty} onChange={e => dispatch(cartAddItemAction(item.product, Number(e.target.value), item.color))}>
+                                {showOptions(item.minimum).map(el => (
+                                  <option key={el} value={el}>
+                                    {el} g
+                                  </option>
+                                ))}
+                              </Form.Control>
+                            </Form.Group>
+                          )}
+                        </Col>
+                        <Col>{item.meterage * item.qty * 0.01}m</Col>
+                        <Col>€{(item.price * item.qty * 0.01).toFixed(2)}</Col>
+                        <Col md={1}>
+                          <Button variant="link" type="button" onClick={() => removeFromCartHandler(item.product, item.color)}>
+                            <i className="fas fa-trash text-danger"></i>
+                          </Button>
+                        </Col>
+                      </Row>
                     </Col>
                   </Row>
                 </ListGroup.Item>

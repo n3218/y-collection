@@ -163,7 +163,7 @@ const ProductEditScreen = ({ history, match }) => {
           <ImageLarge image={image} name={`${brand} ${name}`} />
         </Col>
         <Col md={8}>
-          <h1>Edit Product</h1>
+          <h2>Edit Product</h2>
           {loadingUpdate && <Loader />}
           {errorUpdate && <Message variant="danger">{errorUpdate}</Message>}
           {loading ? (
@@ -171,7 +171,7 @@ const ProductEditScreen = ({ history, match }) => {
           ) : error ? (
             <Message variant="danger">{error}</Message>
           ) : (
-            <Form onSubmit={submitHandler} id="ProductEditForm" px={1}>
+            <Form onSubmit={submitHandler} id="ProductEditForm">
               <FormFieldAsRow value={name} label="Name" onChange={setName} />
               <FormFieldAsRow value={brand} label="Brand" onChange={setBrand} />
               <FormFieldAsRow value={category} label="Category" onChange={setCategory} />

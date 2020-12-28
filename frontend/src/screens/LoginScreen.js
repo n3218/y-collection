@@ -31,7 +31,7 @@ const LoginScreen = ({ history, location }) => {
   return (
     <FormContainer>
       <Meta title="Sign In | Woolunatics" />
-      <h1>Sign In</h1>
+      <h2>Sign In</h2>
       {error && <Message variant="danger">{error}</Message>}
       {loading && <Loader />}
       <Form onSubmit={submitHandler}>

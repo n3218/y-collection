@@ -1,6 +1,6 @@
 import React, { useEffect } from "react"
 import { LinkContainer } from "react-router-bootstrap"
-import { Table, Button, Row, Col, Image } from "react-bootstrap"
+import { Table, Button, Image } from "react-bootstrap"
 import { useDispatch, useSelector } from "react-redux"
 import Message from "../components/Message"
 import Loader from "../components/Loader"
@@ -50,16 +50,13 @@ const ProductListScreen = ({ history, match }) => {
 
   return (
     <>
-      <Row className="align-items-center">
-        <Col>
-          <h1>Products</h1>
-        </Col>
-        <Col className="text-right">
-          <Button variant="dark" className="my-3" onClick={createProductHandler}>
-            <i className="fas fa-plus"></i> Create Product
-          </Button>
-        </Col>
-      </Row>
+      <h2>Products</h2>
+
+      <div className="text-right">
+        <Button variant="dark" className="my-3" onClick={createProductHandler}>
+          <i className="fas fa-plus"></i> Create Product
+        </Button>
+      </div>
       {loadingDelete && <Loader />}
       {errorDelete && <Message variant="danger">{errorDelete}</Message>}
       {successDelete && <Message variant="success">Product was deleted</Message>}
@@ -72,11 +69,9 @@ const ProductListScreen = ({ history, match }) => {
       ) : (
         <>
           <Meta title="Admin | Product List | Woolunatics" />
-          <Paginate isAdmin list="productlist" pages={pages} page={page} />
           <Table striped hover responsive className="table-sm">
             <thead>
               <tr>
-                {/* <th>ID</th> */}
                 <th>PIC</th>
                 <th>BRAND</th>
                 <th>NAME</th>
@@ -94,7 +89,6 @@ const ProductListScreen = ({ history, match }) => {
             <tbody>
               {products.map(product => (
                 <tr key={product._id} className={`${product.outOfStock && "font-weight-light"}`}>
-                  {/* <td>{product._id}</td> */}
                   <td width="50px">
                     <Image src={product.image[0]} alt={product.name} fluid />
                   </td>

@@ -15,17 +15,18 @@ const Product = ({ product }) => {
           )}
         </Link>
       </div>
-      <Card.Body>
+      <Card.Body className="text-center">
         <Link to={`/products/${product._id}`}>
           <Card.Title as="div">
             {product.brand}, {product.name}
           </Card.Title>
         </Link>
-        <Card.Text as="div">
+        {/* <Card.Text as="div">
           <Rating value={product.rating} text={`${product.numReviews} reviews`} />
-        </Card.Text>
+        </Card.Text> */}
 
-        <Card.Text as="h5">€{product.price} / 100g</Card.Text>
+        <Card.Text className="my-0">€{product.price} / 100g</Card.Text>
+        {product.color.length > 1 && <Card.Text className="my-0 text-danger">{product.color.length} colors</Card.Text>}
       </Card.Body>
     </Card>
   )

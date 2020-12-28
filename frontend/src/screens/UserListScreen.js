@@ -33,7 +33,7 @@ const UserListScreen = ({ history }) => {
   return (
     <>
       <Meta title="Admin | User List | Woolunatics" />
-      <h1>Users</h1>
+      <h2>Users</h2>
       {loading ? (
         <Loader />
       ) : error ? (

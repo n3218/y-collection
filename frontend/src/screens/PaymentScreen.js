@@ -34,12 +34,11 @@ const PaymentScreen = ({ history }) => {
     ></Form.Check>
   )
 
-  console.log(paymentMethod)
   return (
     <FormContainer>
       <Meta title="Payment Method | Woolunatics" />
       <CheckoutSteps step1 step2 step3 />
-      <h1>Payment Method</h1>
+      <h2>Payment Method</h2>
       <Form onSubmit={submitHandler}>
         <Form.Group>
           <Form.Label as="legend">Select Payment Method</Form.Label>

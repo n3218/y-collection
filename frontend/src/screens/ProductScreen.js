@@ -101,21 +101,19 @@ const ProductScreen = ({ history, match }) => {
             )}
           </div>
           <Row>
-            <Col md={12} lg={6}>
+            <Col sm={12} md={8} lg={5} xl={5}>
               {product.image && <ImageGallery items={colorImages} showPlayButton={false} showIndex={true} thumbnailPosition="left" />}
             </Col>
-            <Col md={6} lg={3}>
+            <Col sm={6} md={4} lg={4} xl={4}>
+              <h5 className="product-brand">{product.brand}</h5>
+              <h2>{product.name}</h2>
               <ListGroup variant="flush">
                 <ListGroup.Item>
-                  <div>{product.brand}</div>
-                  <h2>{product.name}</h2>
-                </ListGroup.Item>
-                <ListGroup.Item>
-                  <a href="#review-section">
-                    <Rating value={product.rating} text={`${product.numReviews} reviews`} />
-                  </a>
-                </ListGroup.Item>
-                <ListGroup.Item>
+                  <p>
+                    <a href="#review-section">
+                      <Rating value={product.rating} text={`${product.numReviews} reviews`} />
+                    </a>
+                  </p>
                   <div>Fibers:</div> {product.fibers}
                 </ListGroup.Item>
                 <ListGroup.Item>
@@ -124,7 +122,7 @@ const ProductScreen = ({ history, match }) => {
                 <ListGroup.Item>{product.description && ReactHtmlParser(product.description)}</ListGroup.Item>
               </ListGroup>
             </Col>
-            <Col md={6} lg={3}>
+            <Col sm={6} md={6} lg={3} xl={3}>
               <Card>
                 <ListGroup variant="flush">
                   <ListGroup.Item>
@@ -133,7 +131,6 @@ const ProductScreen = ({ history, match }) => {
                       <Col>€{product.price} / 100g</Col>
                     </Row>
                   </ListGroup.Item>
-
                   <ListGroup.Item>
                     <Row>
                       <Col>Color</Col>
@@ -201,9 +198,9 @@ const ProductScreen = ({ history, match }) => {
 
           <Row>
             <Col md={6}>
-              <h3 className="my-3" id="review-section">
+              <h2 className="my-3" id="review-section">
                 Reviews
-              </h3>
+              </h2>
               {product.reviews.length === 0 && <Message variant="warning">No Reviews for this product</Message>}
               <ListGroup variant="flush">
                 {product.reviews.map(review => (

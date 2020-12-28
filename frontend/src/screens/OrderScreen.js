@@ -72,12 +72,12 @@ const OrderScreen = ({ match, history }) => {
   ) : (
     <>
       <Meta title={`Order #${order._id} | Woolunatics`} />
-      <h1>Order #{order._id}</h1>
+      <h2>Order #{order._id}</h2>
       <Row>
         <Col md={8} px="0">
           <ListGroup variant="flush">
             <ListGroup.Item>
-              <h2>SHIPPING:</h2>
+              <h3>SHIPPING:</h3>
               <p>
                 <strong>Name:</strong> {order.user.name}
               </p>
@@ -92,13 +92,13 @@ const OrderScreen = ({ match, history }) => {
             </ListGroup.Item>
 
             <ListGroup.Item>
-              <h2>PAYMENT METHOD:</h2>
+              <h3>PAYMENT METHOD:</h3>
               <p>{order.paymentMethod}</p>
               {order.isPaid ? <Message variant="success">Paid on {order.paidAt.substring(0, 10)}</Message> : <Message variant="danger">Not Paid</Message>}
             </ListGroup.Item>
 
             <ListGroup.Item>
-              <h2>ORDER ITEMS:</h2>
+              <h3>ORDER ITEMS:</h3>
               {order.orderItems.length === 0 ? (
                 <Message>Order is empty.</Message>
               ) : (
@@ -145,7 +145,7 @@ const OrderScreen = ({ match, history }) => {
           <Card>
             <ListGroup variant="flush">
               <ListGroup.Item>
-                <h2>Order Summary</h2>
+                <h3>Order Summary:</h3>
               </ListGroup.Item>
               <ListGroup.Item>
                 <Row>

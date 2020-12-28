@@ -26,7 +26,7 @@ const ShippingScreen = ({ history }) => {
     <FormContainer>
       <Meta title="Shipping Address | Woolunatics" />
       <CheckoutSteps step1 step2 />
-      <h1>Shipping</h1>
+      <h2>Shipping</h2>
       <Form onSubmit={submitShippingHandler}>
         <Form.Group controlId="address">
           <Form.Label>Address</Form.Label>

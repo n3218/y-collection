@@ -1,10 +1,27 @@
 @import "./_cosmo.min.css";
 @import "~react-image-gallery/styles/css/image-gallery.css";
 
+html,
+body,
+#root {
+  padding: 0;
+  margin: 0;
+}
+header {
+  max-width: 1900px;
+  margin: auto;
+}
 main {
   min-height: 80vh;
+  width: 100vw;
+  max-width: 1900px;
+  margin: auto;
 }
 
+.form-inline {
+  display: flex;
+  flex-flow: row nowrap;
+}
 .row {
   margin-right: 0;
   margin-left: 0;
@@ -14,27 +31,67 @@ main {
   width: 70px;
 }
 
+#adminmenu {
+  color: white;
+}
+
+.underlink {
+  position: relative;
+  color: #000;
+  text-decoration: none;
+}
+.underlink:hover {
+  color: #000;
+}
+.underlink:before {
+  content: "";
+  position: absolute;
+  width: 100%;
+  height: 1px;
+  bottom: 0;
+  left: 0;
+  background-color: #000;
+  visibility: hidden;
+  transform: scaleX(0);
+  transition: all 0.3s ease-in-out 0s;
+}
+.underlink:hover::before {
+  visibility: visible;
+  transform: scaleX(1);
+}
+
 .rating i {
   color: orange;
   font-size: 0.8em;
 }
 
 h1 {
-  margin: 0.8em 0 0.6em 0;
+  margin: 0.5em 0 0 0;
 }
-
+h2 {
+  margin: 0.5em 0 0.5em 0;
+  border-top: 1px solid lightgray;
+  border-bottom: 1px solid lightgray;
+  text-transform: uppercase;
+  text-align: center;
+}
+h3 {
+  text-transform: uppercase;
+}
 .custom-control {
   padding-left: 0;
 }
 
 .container {
+  padding: 0;
+  margin: 0;
+  width: 100%;
   max-width: 100%;
 }
 
-@media only screen and (min-width: 1200px) {
-  .container {
-    max-width: 100%;
-  }
+td:first-of-type,
+th:first-of-type {
+  padding-left: 10px;
 }
 
 .col,
@@ -111,7 +168,6 @@ h1 {
 }
 
 .carousel {
-  margin: 0 -4% 0 -4%;
   height: 30vh;
   max-height: 30vh;
   overflow: hidden;
@@ -169,6 +225,7 @@ h1 {
 button.image-gallery-icon {
   filter: none;
 }
+
 .image-gallery-right-nav,
 .image-gallery-left-nav {
   transform: translateY(-50%) scale(0.5);
@@ -178,11 +235,13 @@ button.image-gallery-icon {
   height: 100px;
   border-radius: 50%;
 }
+
 .image-gallery-left-nav .image-gallery-svg,
 .image-gallery-right-nav .image-gallery-svg {
   height: 100px;
   width: 100px;
 }
+
 .image-gallery-fullscreen-button {
   padding: 3px;
   top: 0;
@@ -216,48 +275,7 @@ button.image-gallery-icon {
   overflow: hidden;
 }
 
-.promo-block {
-  max-width: 100vw;
-  display: grid;
-  grid-template-columns: 1fr 0.924fr 2fr 1fr 1fr;
-}
-.promo-block div img {
-  max-width: 100%;
-  margin: auto;
-}
-.promo-block > div {
-  overflow: hidden;
-  position: relative;
-}
-.promo-block div img:hover {
-  transform: scale(1.1);
-  transition: all 0.5s cubic-bezier(0, 0, 0.44, 1.18);
-}
-
-.promo-block-main-text {
-  position: absolute;
-  top: 0;
-  width: 100%;
+.product-brand {
   text-align: center;
-  background-color: rgba(255, 255, 255, 0.2);
-  font-weight: bold;
-  z-index: 100;
-}
-.promo-block-button-container {
-  position: relative;
-}
-.promo-block-button-container:hover .promo-block-button {
-  opacity: 1;
-}
-.promo-block-button {
-  transition: all 0.5s;
-  opacity: 0;
-  position: absolute;
-  width: 100%;
-  bottom: 0;
-  padding: 8px 0;
-  text-align: center;
-  z-index: 100;
-  background-color: rgba(248, 7, 7, 0.6);
-  color: white;
+  margin-bottom: -15px;
 }

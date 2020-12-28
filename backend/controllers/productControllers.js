@@ -5,7 +5,12 @@ import Product from "../models/productModel.js"
 // @route  GET /api/products
 // @access Public
 export const getProducts = asyncHandler(async (req, res) => {
-  const pageSize = 12
+  let pageSize
+  if (req.query.keyword) {
+    pageSize = 36
+  } else {
+    pageSize = 12
+  }
   const page = Number(req.query.pageNumber) || 1
   const keyword = req.query.keyword
     ? {

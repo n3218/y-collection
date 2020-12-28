@@ -36,12 +36,12 @@ const Header = () => {
           <Navbar.Collapse id="basic-navbar-nav">
             <Nav className="ml-auto">
               <LinkContainer to="/about">
-                <Nav.Link>About</Nav.Link>
+                <Nav.Link className="underlink">About</Nav.Link>
               </LinkContainer>
               <LinkContainer to="/how-to">
-                <Nav.Link>How to Order</Nav.Link>
+                <Nav.Link className="underlink">How To Order</Nav.Link>
               </LinkContainer>
-              <NavDropdown title="Catalogue" id="basic-nav-dropdown">
+              <NavDropdown title="Yarns" id="basic-nav-dropdown">
                 <LinkContainer to="/search/cashmere|кашемир">
                   <NavDropdown.Item>Cachmere</NavDropdown.Item>
                 </LinkContainer>
@@ -66,17 +66,17 @@ const Header = () => {
                 <LinkContainer to="/search/linen|linnen|_лен">
                   <NavDropdown.Item>Linen</NavDropdown.Item>
                 </LinkContainer>
-                <LinkContainer to="/search/Пайетки|пайетки">
+                <LinkContainer to="/search/Пайетки|Paillettes|Sequins">
                   <NavDropdown.Item>Paillettes</NavDropdown.Item>
                 </LinkContainer>
                 <NavDropdown.Divider />
-                <LinkContainer to="/all">
+                <LinkContainer to="/search/yarn">
                   <NavDropdown.Item>All</NavDropdown.Item>
                 </LinkContainer>
               </NavDropdown>
               <LinkContainer to="/cart" className="text-nowrap">
-                <Nav.Link>
-                  <i className="fas fa-shopping-cart"></i> Cart ({cartItems && cartItems.length})
+                <Nav.Link className="underlink">
+                  <i className="fas fa-shopping-cart"></i>({cartItems && cartItems.length})
                 </Nav.Link>
               </LinkContainer>
               {userInfo ? (
@@ -90,20 +90,12 @@ const Header = () => {
               ) : (
                 <LinkContainer to="/login">
                   <Nav.Link>
-                    <i className="fas fa-user"></i> Sign In
+                    <i className="fas fa-user"></i>
                   </Nav.Link>
                 </LinkContainer>
               )}
-
-              <Route render={({ history }) => <SearchBox history={history} />} />
-
-              {/* <Form inline>
-                <FormControl type="text" placeholder="Search" className="mr-sm-2" />
-                <Button>Search</Button>
-              </Form>  */}
-
               {userInfo && userInfo.isAdmin && (
-                <NavDropdown title={"Admin"} id="adminmenu">
+                <NavDropdown title={"Admin"} id="adminmenu" className="bg-success">
                   <LinkContainer to="/admin/userlist">
                     <NavDropdown.Item>Users</NavDropdown.Item>
                   </LinkContainer>
@@ -117,6 +109,7 @@ const Header = () => {
                   <NavDropdown.Item onClick={logoutHandler}>Logout</NavDropdown.Item>
                 </NavDropdown>
               )}
+              <Route render={({ history }) => <SearchBox history={history} />} />
             </Nav>
           </Navbar.Collapse>
         </Container>

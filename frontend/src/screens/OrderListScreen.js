@@ -30,7 +30,7 @@ const OrderListScreen = ({ history, match }) => {
   return (
     <>
       <Meta title="Admin | Orders | Woolunatics" />
-      <h1>Orders</h1>
+      <h2>Orders</h2>
 
       {loading ? (
         <Loader />

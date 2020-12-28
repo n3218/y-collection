@@ -1,6 +1,6 @@
 import React, { useEffect } from "react"
 import { useDispatch, useSelector } from "react-redux"
-import { Row, Col } from "react-bootstrap"
+import { Row, Col, Jumbotron } from "react-bootstrap"
 import Product from "../components/Product"
 import Message from "../components/Message"
 import Loader from "../components/Loader"
@@ -24,7 +24,8 @@ const HomeScreen = ({ match }) => {
   return (
     <div>
       {!keyword && <Promo />}
-      <h1>Products</h1>
+      {!keyword ? <h2>Latest from MY YARN COLLECTION</h2> : <h2>{keyword.split("|").join(" | ")}</h2>}
+
       {loading ? (
         <Loader />
       ) : error ? (
@@ -35,12 +36,18 @@ const HomeScreen = ({ match }) => {
           <Row>
             {products &&
               products.map(product => (
-                <Col key={product._id} sm={6} md={3} lg={2} className="product-card-block">
+                <Col key={product._id} xs={4} sm={3} md={3} lg={2} className="product-card-block">
                   <Product product={product} />
                 </Col>
               ))}
           </Row>
-          <Paginate pages={pages} page={page} keyword={keyword} />
+          {/* <Paginate pages={pages} page={page} keyword={keyword} /> */}
+        </>
+      )}
+      {!keyword && (
+        <>
+          <h2>Latest from my Instagram</h2>
+          <Jumbotron></Jumbotron>
         </>
       )}
     </div>
