@@ -159,7 +159,7 @@ const ProductEditScreen = ({ history, match }) => {
       </div>
 
       <Row>
-        <Col md={4}>
+        <Col md={4} sm={12}>
           <ImageLarge image={image} name={`${brand} ${name}`} />
         </Col>
         <Col md={8}>
@@ -177,12 +177,13 @@ const ProductEditScreen = ({ history, match }) => {
               <FormFieldAsRow value={category} label="Category" onChange={setCategory} />
               <FormFieldAsRow value={fibers} label="Fibers" onChange={setFibers} />
               <FormFieldAsRow value={meterage} label="Meterage" onChange={setMeterage} />
-              <FormFieldAsRow value={price} label="Price" onChange={setPrice} />
-              <FormFieldAsRow value={minimum} label="Minimum" onChange={setMinimum} />
+              <FormFieldAsRow value={price} comment="Число с точкой" label="Price" onChange={setPrice} />
+              <FormFieldAsRow value={minimum} comment="'0' если без отмота" label="Minimum" onChange={setMinimum} />
               <Form.Group controlId="Description">
                 <Row>
                   <Col sm="2">
                     <Form.Label>Description:</Form.Label>
+                    <div className="label-comment">По этому полю происходит поиск, поэтому вся информация по товару и все возможные варианты для поиска должны присутствовать</div>
                   </Col>
                   <Col>
                     <ReactQuill value={description} onChange={setDescription} />
@@ -192,8 +193,9 @@ const ProductEditScreen = ({ history, match }) => {
 
               <Form.Group controlId="Color">
                 <Row>
-                  <Col sm="2">
+                  <Col sm={2} xs={12}>
                     <Form.Label>Colors in Stock:</Form.Label>
+                    <div className="label-comment pt-3">Можно изменить название цвета, отредактировать вес бобин в наличии, привязать фото к цвету, удалить цвет</div>
                   </Col>
                   <Col>
                     {color &&
@@ -201,19 +203,25 @@ const ProductEditScreen = ({ history, match }) => {
                         <div key={i}>
                           <Accordion defaultActiveKey="0">
                             <Row>
-                              <Col>
+                              <Col xs={4} md={4} xl={5}>
                                 <input type="text" id="name" className="form-control" value={col.name} placeholder="Color" onChange={changeColorHandler(col.name)} />
                               </Col>
-                              <Col>
+                              <Col xs={4} md={4} xl={5}>
                                 <input type="text" id="inStock" className="form-control" value={col.inStock} placeholder="inStock" onChange={changeColorHandler(col.name)} />
                               </Col>
-                              <Col>
-                                <Accordion.Toggle as={Button} variant="link" eventKey={`thumbs-${col.name}`}>
-                                  <i className="fas fa-images text-success btn" title="Link a Pictures"></i>
-                                </Accordion.Toggle>
-                                <Button variant="link" title="Delete Color" onClick={() => deleteColorHandler(col.name)}>
-                                  <i className="fas fa-trash text-danger btn-sm"></i>
-                                </Button>
+                              <Col xs={4} md={4} xl={2}>
+                                <Row>
+                                  <Col xs={6} xl={6}>
+                                    <Accordion.Toggle as={Button} variant="outline-success" eventKey={`thumbs-${col.name}`}>
+                                      <i className="fas fa-images" title="Link a Pictures"></i>
+                                    </Accordion.Toggle>
+                                  </Col>
+                                  <Col xs={6} xl={6}>
+                                    <Button variant="outline-danger" title="Delete Color" onClick={() => deleteColorHandler(col.name)}>
+                                      <i className="fas fa-trash"></i>
+                                    </Button>
+                                  </Col>
+                                </Row>
                               </Col>
                             </Row>
                             <Accordion.Collapse eventKey={`thumbs-${col.name}`}>{thumbs(col)}</Accordion.Collapse>
@@ -231,14 +239,15 @@ const ProductEditScreen = ({ history, match }) => {
                   </Col>
                   <Col>
                     <Row>
-                      <Col>
+                      <Col xs={4} md={4} xl={5}>
                         <input type="text" id="newColorName" className="form-control" name="newColorName" value={newColorName} onChange={e => setNewColorName(e.target.value)} placeholder="Color" />
                       </Col>
-                      <Col>
+                      <Col xs={4} md={4} xl={5}>
                         <input type="text" id="newColorInStock" className="form-control" name="newColorInStock" value={newColorInStock} onChange={e => setNewColorInStock(e.target.value)} placeholder="inStock" />
+                        <div className="label-comment pt-3">Вес бобин через запятую</div>
                       </Col>
-                      <Col>
-                        <Button type="button" variant="success" onClick={addColorHandler}>
+                      <Col xs={4} md={4} xl={2}>
+                        <Button type="button" variant="success" className="btn-block" onClick={addColorHandler}>
                           Add Color
                         </Button>
                       </Col>

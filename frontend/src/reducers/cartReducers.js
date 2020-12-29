@@ -4,7 +4,8 @@ import {
   CART_CLEAR_ITEMS,
   CART_REMOVE_ITEM,
   CART_SAVE_PAYMENT_METHOD,
-  CART_SAVE_SHIPPING_ADDRESS
+  CART_SAVE_SHIPPING_ADDRESS,
+  CART_UPDATE_ITEM
 } from "../constants/cartConstants"
 
 export const cartReducer = (state = { cartItems: [], shippingAddress: {} }, action) => {
@@ -25,10 +26,18 @@ export const cartReducer = (state = { cartItems: [], shippingAddress: {} }, acti
         }
       }
 
+    case CART_UPDATE_ITEM:
+      const { product, qty, color } = action.payload
+      const updatingItem = state.cartItems.filter(el => el.product === product && el.color === color)[0]
+      return {
+        ...state,
+        cartItems: [...state.cartItems.map(el => (el.product === updatingItem.product && el.color === updatingItem.color ? { ...updatingItem, qty } : el))]
+      }
+
     case CART_REMOVE_ITEM:
       console.log("cartReducer:")
-      console.log(action.payload.color)
-      console.log(action.payload.id)
+      console.log("action.payload.color: ", action.payload.color)
+      console.log("action.payload.id: ", action.payload.id)
       return {
         ...state,
         cartItems: state.cartItems.filter(item => !(item.color === action.payload.color && item.product === action.payload.id))

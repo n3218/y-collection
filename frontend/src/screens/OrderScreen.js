@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react"
 import { Link } from "react-router-dom"
 import { useDispatch, useSelector } from "react-redux"
-import { Row, Col, Card, ListGroup, Button, Table } from "react-bootstrap"
+import { Row, Col, ListGroup, Button, Table } from "react-bootstrap"
 import { PayPalButton } from "react-paypal-button-v2"
 import axios from "axios"
 import Loader from "../components/Loader"
@@ -9,6 +9,7 @@ import Message from "../components/Message"
 import { getOrderDetailsAction, payOrderAction, deliverOrderAction } from "../actions/orderActions"
 import { ORDER_PAY_RESET, ORDER_DELIVER_RESET } from "../constants/orderConstants"
 import Meta from "../components/Meta"
+import OrderSummary from "../components/OrderSummary"
 
 const OrderScreen = ({ match, history }) => {
   const orderId = match.params.id
@@ -74,45 +75,66 @@ const OrderScreen = ({ match, history }) => {
       <Meta title={`Order #${order._id} | Woolunatics`} />
       <h2>Order #{order._id}</h2>
       <Row>
-        <Col md={8} px="0">
+        <Col md={9}>
           <ListGroup variant="flush">
             <ListGroup.Item>
-              <h3>SHIPPING:</h3>
-              <p>
-                <strong>Name:</strong> {order.user.name}
-              </p>
-              <p>
-                <strong>Email:</strong> <a href={`mailto:${order.user.email}`}>{order.user.email}</a>
-              </p>
-              <p>
-                <strong>Address: </strong>
-                {order.shippingAddress.address}, {order.shippingAddress.city}, {order.shippingAddress.zipCode}, {order.shippingAddress.country}
-              </p>
-              {order.isDelivered ? <Message variant="success">Delivered on {order.deliveredAt.substring(0, 10)}</Message> : <Message variant="danger">Not Delivered</Message>}
+              <Row>
+                <Col lg={4} md={5} sm={6}>
+                  <h4>
+                    <nobr>SHIPPING ADDRESS</nobr>
+                  </h4>
+                </Col>
+                <Col>
+                  <div>
+                    <a href={`mailto:${order.user.email}`}>{order.user.email}</a>
+                  </div>
+                  <div>{order.user.name}</div>
+                  <div>{order.shippingAddress.address}</div>
+                  <div>
+                    {order.shippingAddress.city}, {order.shippingAddress.zipCode}, {order.shippingAddress.country}
+                  </div>
+                  {order.isDelivered ? <Message variant="success">Delivered on {order.deliveredAt.substring(0, 10)}</Message> : <Message variant="warning">Not Delivered</Message>}
+                </Col>
+              </Row>
             </ListGroup.Item>
 
             <ListGroup.Item>
-              <h3>PAYMENT METHOD:</h3>
-              <p>{order.paymentMethod}</p>
-              {order.isPaid ? <Message variant="success">Paid on {order.paidAt.substring(0, 10)}</Message> : <Message variant="danger">Not Paid</Message>}
+              <Row>
+                <Col lg={4} md={5} sm={6}>
+                  <h4>
+                    <nobr>PAYMENT METHOD</nobr>
+                  </h4>
+                </Col>
+                <Col>
+                  {order.isPaid && (
+                    <>
+                      <div>{order.paymentMethod}</div>
+                      <div>ID: {order.paymentResult.id}</div>
+                      <div>Status: {order.paymentResult.status}</div>
+                      <div>email: {order.paymentResult.email_address}</div>{" "}
+                    </>
+                  )}
+                  {order.isPaid ? <Message variant="success">Paid on {order.paidAt.substring(0, 10)}</Message> : <Message variant="warning">Not Paid</Message>}
+                </Col>
+              </Row>
             </ListGroup.Item>
 
             <ListGroup.Item>
-              <h3>ORDER ITEMS:</h3>
+              <h4>ORDER ITEMS</h4>
               {order.orderItems.length === 0 ? (
                 <Message>Order is empty.</Message>
               ) : (
                 <>
-                  <Table bordered hover responsive className="table-sm">
+                  <Table bordered hover responsive className="table-sm order-summary-table">
                     <thead>
                       <tr>
-                        <th>brend</th>
+                        <th>brand</th>
                         <th>name</th>
-                        <th>colour</th>
-                        <th>Fibers, %</th>
-                        <th>weight, g</th>
-                        <th>m/100 gr</th>
-                        <th>€/100 gr</th>
+                        <th>color</th>
+                        <th>fibers,%</th>
+                        <th>weight,g</th>
+                        <th>m/100gr</th>
+                        <th>€/100gr</th>
                         <th>price</th>
                       </tr>
                     </thead>
@@ -141,58 +163,21 @@ const OrderScreen = ({ match, history }) => {
           </ListGroup>
         </Col>
 
-        <Col md={4}>
-          <Card>
-            <ListGroup variant="flush">
-              <ListGroup.Item>
-                <h3>Order Summary:</h3>
-              </ListGroup.Item>
-              <ListGroup.Item>
-                <Row>
-                  <Col>Items price</Col>
-                  <Col>€{order.itemsPrice}</Col>
-                </Row>
-              </ListGroup.Item>
-              <ListGroup.Item>
-                <Row>
-                  <Col>Shipping</Col>
-                  <Col>€{order.shippingPrice}</Col>
-                </Row>
-              </ListGroup.Item>
-              <ListGroup.Item>
-                <Row>
-                  <Col>Tax</Col>
-                  <Col>€{order.taxPrice}</Col>
-                </Row>
-              </ListGroup.Item>
-              <ListGroup.Item>
-                <Row>
-                  <Col>
-                    <h5>Total</h5>
-                  </Col>
-                  <Col>
-                    <h5>€{order.totalPrice}</h5>
-                  </Col>
-                </Row>
-              </ListGroup.Item>
-              {!order.isPaid && (
-                <ListGroup.Item>
-                  {loadingPay && <Loader />}
-                  {!sdkReady ? <Loader /> : <PayPalButton amount={order.totalPrice} onSuccess={successPaymentHandler} />}
-                </ListGroup.Item>
-              )}
+        <OrderSummary cart={order} items={order.orderItems} error={error}>
+          {!order.isPaid && (
+            <>
+              {loadingPay && <Loader />}
+              {!sdkReady ? <Loader /> : <PayPalButton amount={order.totalPrice} onSuccess={successPaymentHandler} />}
+            </>
+          )}
 
-              {loadingDeliver && <Loader />}
-              {userInfo && userInfo.isAdmin && order.isPaid && !order.isDelivered && (
-                <ListGroup.Item>
-                  <Button type="button" className="btn btn-block" onClick={deliverHandler}>
-                    Mark as delivered
-                  </Button>
-                </ListGroup.Item>
-              )}
-            </ListGroup>
-          </Card>
-        </Col>
+          {loadingDeliver && <Loader />}
+          {userInfo && userInfo.isAdmin && order.isPaid && !order.isDelivered && (
+            <Button type="button" className="btn btn-block" onClick={deliverHandler}>
+              Mark as delivered
+            </Button>
+          )}
+        </OrderSummary>
       </Row>
     </>
   )

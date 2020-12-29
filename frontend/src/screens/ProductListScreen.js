@@ -102,11 +102,18 @@ const ProductListScreen = ({ history, match }) => {
                   <td>{product.minimum}</td>
                   <td>€{product.price}</td>
                   <td>
-                    {product.color.map(col => (
-                      <div key={col.name}>
-                        <i>{col.name}</i> : {col.inStock}
-                      </div>
-                    ))}
+                    {product.color.map((col, i) =>
+                      col.inStock !== "" ? (
+                        <div key={col.name}>
+                          <i>{col.name}</i> : {col.inStock}
+                        </div>
+                      ) : (
+                        <span key={col.name}>
+                          <i>{col.name}</i>
+                          {i !== product.color.length - 1 && ", "}
+                        </span>
+                      )
+                    )}
                   </td>
                   <td>
                     {product.outOfStock && (

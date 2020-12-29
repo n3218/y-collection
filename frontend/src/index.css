@@ -93,6 +93,11 @@ td:first-of-type,
 th:first-of-type {
   padding-left: 10px;
 }
+.order-summary-table th {
+  font-size: 0.8em;
+  font-weight: normal;
+  font-style: oblique;
+}
 
 .col,
 .col-1,
@@ -278,4 +283,20 @@ button.image-gallery-icon {
 .product-brand {
   text-align: center;
   margin-bottom: -15px;
+}
+
+.form-container {
+  justify-content: center;
+}
+
+.nav-link {
+  padding: 0rem 1rem;
+}
+
+.label-comment {
+  font-size: 0.9em;
+  color: gray;
+  margin-top: -10px;
+  margin-left: 10px;
+  line-height: 0.9em;
 }

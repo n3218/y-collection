@@ -89,7 +89,7 @@ const ProfileScreen = ({ history, location }) => {
                   <Form.Label>Confirm Password</Form.Label>
                   <Form.Control type="password" placeholder="Confirm Password" value={confirmPassword} autoComplete="new-password" onChange={e => setConfirmPassword(e.target.value)}></Form.Control>
                 </Form.Group>
-                <Button type="submit" variant="primary">
+                <Button type="submit" variant="primary" className="btn-block">
                   Update
                 </Button>
               </Form>

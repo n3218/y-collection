@@ -72,11 +72,11 @@ const UserListScreen = ({ history }) => {
                     </Button>
                   </LinkContainer>
                 </td>
-                {/* <td>
+                <td>
                   <Button variant="link" title="Delete" onClick={() => deleteHandler(user._id)}>
                     <i className="fas fa-trash text-danger"></i>
                   </Button>
-                </td> */}
+                </td>
               </tr>
             ))}
           </tbody>

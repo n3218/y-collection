@@ -35,26 +35,28 @@ const PaymentScreen = ({ history }) => {
   )
 
   return (
-    <FormContainer>
+    <>
       <Meta title="Payment Method | Woolunatics" />
       <CheckoutSteps step1 step2 step3 />
       <h2>Payment Method</h2>
-      <Form onSubmit={submitHandler}>
-        <Form.Group>
-          <Form.Label as="legend">Select Payment Method</Form.Label>
+      <FormContainer>
+        <Form onSubmit={submitHandler}>
+          <Form.Group>
+            <Form.Label as="legend">Select Payment Method</Form.Label>
 
-          {radioButton("PayPal or Credit Card", "PayPal")}
-          {radioButton("GoolePay", "GoolePay")}
-          {radioButton("ApplePay", "ApplePay")}
-          {radioButton("Paysend", "Paysend")}
-          {radioButton("Stripe", "Stripe")}
+            {radioButton("PayPal or Credit Card", "PayPal")}
+            {radioButton("GoolePay", "GoolePay")}
+            {radioButton("ApplePay", "ApplePay")}
+            {radioButton("Paysend", "Paysend")}
+            {radioButton("Stripe", "Stripe")}
 
-          <Button type="submit" variant="primary">
-            Continue
-          </Button>
-        </Form.Group>
-      </Form>
-    </FormContainer>
+            <Button type="submit" variant="primary">
+              Continue
+            </Button>
+          </Form.Group>
+        </Form>
+      </FormContainer>
+    </>
   )
 }
 

@@ -21,17 +21,26 @@ const HomeScreen = ({ match }) => {
     dispatch(listProducts(keyword, pageNumber))
   }, [dispatch, keyword, pageNumber])
 
+  console.log("keyword: ", keyword)
+  console.log("pageNumber: ", pageNumber)
   return (
     <div>
-      {!keyword && <Promo />}
-      {!keyword ? <h2>Latest from MY YARN COLLECTION</h2> : <h2>{keyword.split("|").join(" | ")}</h2>}
-
       {loading ? (
         <Loader />
       ) : error ? (
         <Message variant="danger">{error}</Message>
       ) : (
         <>
+          {keyword ? (
+            <h2>{keyword.split("|").join(" | ")}</h2>
+          ) : Number(pageNumber) === 1 ? (
+            <>
+              <Promo />
+              <h2>Latest from MY YARN COLLECTION</h2>
+            </>
+          ) : (
+            <h2>MY YARN COLLECTION</h2>
+          )}
           <Meta />
           <Row>
             {products &&
@@ -41,15 +50,15 @@ const HomeScreen = ({ match }) => {
                 </Col>
               ))}
           </Row>
-          {/* <Paginate pages={pages} page={page} keyword={keyword} /> */}
+          <Paginate pages={pages} page={page} keyword={keyword} />
         </>
       )}
-      {!keyword && (
+      {/* {!keyword && Number(pageNumber) === 1 && (
         <>
           <h2>Latest from my Instagram</h2>
           <Jumbotron></Jumbotron>
         </>
-      )}
+      )} */}
     </div>
   )
 }

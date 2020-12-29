@@ -17,7 +17,7 @@ const ProductScreen = ({ history, match }) => {
   const [qty, setQty] = useState(1)
   const [rating, setRating] = useState(0)
   const [comment, setComment] = useState("")
-  const [colorName, setColorName] = useState("")
+  const [colorId, setColorId] = useState("")
   const [colorImages, setColorImages] = useState([])
   const [initialImages, setInitialImages] = useState([])
   const userLogin = useSelector(state => state.userLogin)
@@ -44,7 +44,7 @@ const ProductScreen = ({ history, match }) => {
   }, [dispatch, match, successCreateReview, product])
 
   const addToCartHandler = () => {
-    history.push(`/cart/${match.params.id}?qty=${qty}&color=${colorName.replace(/ +/g, "_")}`)
+    history.push(`/cart/${match.params.id}?qty=${qty}&color=${colorId}`)
   }
 
   const submitHandler = e => {
@@ -67,9 +67,9 @@ const ProductScreen = ({ history, match }) => {
   }
 
   const selectColorHandler = e => {
-    setColorName(e.target.value.trim())
-    if (e.target.value.trim() !== "") {
-      let imgs = product.color.filter(col => col.name === e.target.value)[0].images
+    setColorId(e.target.value)
+    if (e.target.value !== "") {
+      let imgs = product.color.filter(col => col._id === e.target.value)[0].images
       if (imgs.length > 0) {
         let currentImages = imagesForGallery(imgs)
         setColorImages([...currentImages])
@@ -109,11 +109,11 @@ const ProductScreen = ({ history, match }) => {
               <h2>{product.name}</h2>
               <ListGroup variant="flush">
                 <ListGroup.Item>
-                  <p>
+                  <div>
                     <a href="#review-section">
                       <Rating value={product.rating} text={`${product.numReviews} reviews`} />
                     </a>
-                  </p>
+                  </div>
                   <div>Fibers:</div> {product.fibers}
                 </ListGroup.Item>
                 <ListGroup.Item>
@@ -122,61 +122,31 @@ const ProductScreen = ({ history, match }) => {
                 <ListGroup.Item>{product.description && ReactHtmlParser(product.description)}</ListGroup.Item>
               </ListGroup>
             </Col>
+
             <Col sm={6} md={6} lg={3} xl={3}>
               <Card>
-                <ListGroup variant="flush">
-                  <ListGroup.Item>
-                    <Row>
-                      <Col>Price: </Col>
-                      <Col>€{product.price} / 100g</Col>
-                    </Row>
-                  </ListGroup.Item>
-                  <ListGroup.Item>
-                    <Row>
-                      <Col>Color</Col>
-                      <Col>
-                        <Form.Group controlId="color">
-                          <Form.Control as="select" className="order-select" value={colorName} onChange={selectColorHandler}>
-                            <option key="0" value="">
-                              Select...
-                            </option>
-                            {product.color &&
-                              product.color.map(col => (
-                                <option key={col.name} value={col.name}>
-                                  {col.name}
-                                </option>
-                              ))}
-                          </Form.Control>
-                        </Form.Group>
-                      </Col>
-                    </Row>
-                  </ListGroup.Item>
-
-                  {!product.outOfStock && (
+                <Form onSubmit={addToCartHandler}>
+                  <ListGroup variant="flush">
                     <ListGroup.Item>
                       <Row>
-                        <Col>Qty</Col>
+                        <Col>Price: </Col>
+                        <Col>€{product.price} / 100g</Col>
+                      </Row>
+                    </ListGroup.Item>
+
+                    <ListGroup.Item>
+                      <Row>
+                        <Col>Color</Col>
                         <Col>
-                          <Form.Group controlId="qty">
-                            <Form.Control as="select" className="order-select" value={qty} onChange={e => setQty(e.target.value)}>
+                          <Form.Group controlId="color">
+                            <Form.Control as="select" className="order-select" value={colorId} onChange={selectColorHandler} required>
                               <option key="0" value="">
                                 Select...
                               </option>
-                              {colorName &&
-                                Number(product.color.filter(col => col.name.replace(/ +/g, "_") === colorName.replace(/ +/g, "_"))[0].inStock) !== 0 &&
-                                product.color
-                                  .filter(col => col.name.replace(/ +/g, "_") === colorName.replace(/ +/g, "_"))[0]
-                                  .inStock.split(",")
-                                  .map((el, i) => (
-                                    <option key={i} value={el}>
-                                      {el} cone
-                                    </option>
-                                  ))}
-
-                              {product.minimum &&
-                                showOptions(product.minimum).map(el => (
-                                  <option key={el} value={el}>
-                                    {el}
+                              {product.color &&
+                                product.color.map(col => (
+                                  <option key={col._id} value={col._id}>
+                                    {col.name}
                                   </option>
                                 ))}
                             </Form.Control>
@@ -184,14 +154,49 @@ const ProductScreen = ({ history, match }) => {
                         </Col>
                       </Row>
                     </ListGroup.Item>
-                  )}
 
-                  <ListGroup.Item>
-                    <Button onClick={addToCartHandler} className="btn-block btn-dark" type="button" disabled={product.outOfStock}>
-                      {!product.outOfStock ? "Add to Cart" : "Out of Stock"}
-                    </Button>
-                  </ListGroup.Item>
-                </ListGroup>
+                    {!product.outOfStock && (
+                      <ListGroup.Item>
+                        <Row>
+                          <Col>Qty</Col>
+                          <Col>
+                            <Form.Group controlId="qty">
+                              <Form.Control as="select" className="order-select" value={qty} onChange={e => setQty(e.target.value)} required>
+                                <option key="0" value="">
+                                  Select...
+                                </option>
+                                {colorId &&
+                                  product.color &&
+                                  product.color.filter(col => col._id === colorId)[0].inStock !== "" &&
+                                  product.color
+                                    .filter(col => col._id === colorId)[0]
+                                    .inStock.split(",")
+                                    .map((el, i) => (
+                                      <option key={i} value={el}>
+                                        {el.trim()} cone
+                                      </option>
+                                    ))}
+
+                                {product.minimum &&
+                                  showOptions(product.minimum).map(el => (
+                                    <option key={el} value={el}>
+                                      {el}
+                                    </option>
+                                  ))}
+                              </Form.Control>
+                            </Form.Group>
+                          </Col>
+                        </Row>
+                      </ListGroup.Item>
+                    )}
+
+                    <ListGroup.Item>
+                      <Button className="btn-block btn-dark" type="submit" disabled={product.outOfStock}>
+                        {!product.outOfStock ? "Add to Cart" : "Out of Stock"}
+                      </Button>
+                    </ListGroup.Item>
+                  </ListGroup>
+                </Form>
               </Card>
             </Col>
           </Row>
