@@ -90,7 +90,7 @@ const OrderScreen = ({ match, history }) => {
                   </div>
                   <div>{order.user.name}</div>
                   <div>{order.shippingAddress.address}</div>
-                  <div>
+                  <div className="mb-3">
                     {order.shippingAddress.city}, {order.shippingAddress.zipCode}, {order.shippingAddress.country}
                   </div>
                   {order.isDelivered ? <Message variant="success">Delivered on {order.deliveredAt.substring(0, 10)}</Message> : <Message variant="warning">Not Delivered</Message>}

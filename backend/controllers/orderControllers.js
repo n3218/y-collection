@@ -77,7 +77,7 @@ export const updateOrderToPaid = asyncHandler(async (req, res) => {
 // @route  GET /api/orders/myorders
 // @access Private
 export const getMyOrders = asyncHandler(async (req, res) => {
-  const orders = await Order.find({ user: req.user._id })
+  const orders = await Order.find({ user: req.user._id }).sort({ updatedAt: -1 })
   res.json(orders)
 })
 
@@ -90,7 +90,7 @@ export const getOrders = asyncHandler(async (req, res) => {
 
   const count = await Order.countDocuments({})
   const orders = await Order.find({})
-    .sort({ createdAt: -1 })
+    .sort({ updatedAt: -1 })
     .populate("user", "id name")
     .limit(pageSize)
     .skip(pageSize * (page - 1))
@@ -98,7 +98,7 @@ export const getOrders = asyncHandler(async (req, res) => {
   res.json({ orders, page, pages: Math.ceil(count / pageSize) })
 })
 
-// @desc update Oreder to Delivered
+// @desc update Order to Delivered
 // @route GET /api/orders/:id/deliver
 // @access Private/Admin
 export const updateOrderToDelivered = asyncHandler(async (req, res) => {

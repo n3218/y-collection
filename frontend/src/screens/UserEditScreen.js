@@ -44,11 +44,8 @@ const UserEditScreen = ({ history, match }) => {
   return (
     <>
       <Meta title="Admin | Edit User | Woolunatics" />
-      <Link to="/admin/userList" className="btn btn-light my-3">
-        Back
-      </Link>
+      <h2>Edit User</h2>
       <FormContainer>
-        <h1>Edit User</h1>
         {loadingUpdate && <Loader />}
         {errorUpdate && <Message variant="danger">{errorUpdate}</Message>}
         {loading ? (

@@ -317,3 +317,12 @@ button.image-gallery-icon {
   color: white;
   border-radius: 0 0 30px 30px;
 }
+
+.breadcrumb-item .nav-item .nav-link {
+  padding: 0 0.6rem;
+}
+
+label {
+  margin-top: 0.8rem;
+  margin-bottom: 0;
+}
