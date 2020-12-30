@@ -243,7 +243,7 @@ const ProductEditScreen = ({ history, match }) => {
                   <Col>
                     <Row>
                       <Col xs={4} md={4} xl={5}>
-                        <input type="text" id="newColorName" className="form-control" name="newColorName" value={newColorName} onChange={e => setNewColorName(e.target.value)} placeholder="Color" required />
+                        <input type="text" id="newColorName" className="form-control" name="newColorName" value={newColorName} onChange={e => setNewColorName(e.target.value)} placeholder="Color" />
                       </Col>
                       <Col xs={4} md={4} xl={5}>
                         <input type="text" id="newColorInStock" className="form-control" name="newColorInStock" value={newColorInStock} onChange={e => setNewColorInStock(e.target.value)} placeholder="inStock" />
