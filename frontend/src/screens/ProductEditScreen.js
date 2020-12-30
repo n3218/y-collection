@@ -153,10 +153,7 @@ const ProductEditScreen = ({ history, match }) => {
     <>
       <Meta title="Admin | Edit Product | Woolunatics" />
       <div className="submenu">
-        <Link to="/admin/productList" className="btn btn-light my-3 text-left">
-          Back
-        </Link>
-        <Link to={`/products/${productId}`} className="btn btn-light my-3 text-right">
+        <Link to={`/products/${productId}`} className="btn btn-success">
           Preview
         </Link>
       </div>

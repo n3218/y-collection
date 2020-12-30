@@ -11,7 +11,6 @@ import Loader from "../components/Loader"
 import { PRODUCT_CREATE_REVIEW_RESET } from "../constants/productConstants"
 import "../assets/rating.css"
 import Meta from "../components/Meta"
-import "./ProductScreen.css"
 
 const ProductScreen = ({ history, match }) => {
   const dispatch = useDispatch()
@@ -93,20 +92,16 @@ const ProductScreen = ({ history, match }) => {
           <Meta title={product.name} description={product.description} />
           <div className="submenu">
             {userInfo && userInfo.isAdmin && (
-              <Link to={`/admin/product/${match.params.id}/edit`} className="btn btn-primary px-4">
+              <Link to={`/admin/product/${match.params.id}/edit`} className="btn btn-primary my-3 ">
                 Edit
               </Link>
             )}
           </div>
-
-          <div id="product-details">
-            {/* ---------------------------Gallery--------------------------- */}
-
-            <div id="product-gallery">{product.image && <ImageGallery items={colorImages} showPlayButton={false} showIndex={true} thumbnailPosition="left" />}</div>
-
-            {/* ---------------------------Title--------------------------- */}
-
-            <div id="product-title">
+          <Row>
+            <Col sm={12} md={8} lg={5} xl={5}>
+              {product.image && <ImageGallery items={colorImages} showPlayButton={false} showIndex={true} thumbnailPosition="left" />}
+            </Col>
+            <Col sm={6} md={4} lg={4} xl={4}>
               <h5 className="product-brand">{product.brand}</h5>
               <h2>{product.name}</h2>
               <ListGroup variant="flush">
@@ -121,12 +116,11 @@ const ProductScreen = ({ history, match }) => {
                 <ListGroup.Item>
                   <div>Meterage:</div> {product.meterage}m / 100g
                 </ListGroup.Item>
+                <ListGroup.Item>{product.description && ReactHtmlParser(product.description)}</ListGroup.Item>
               </ListGroup>
-            </div>
+            </Col>
 
-            {/* ---------------------------Add--------------------------- */}
-
-            <div id="product-add" className="mx-3">
+            <Col sm={6} md={6} lg={3} xl={3}>
               <Card>
                 <Form onSubmit={addToCartHandler}>
                   <ListGroup variant="flush">
@@ -201,19 +195,11 @@ const ProductScreen = ({ history, match }) => {
                   </ListGroup>
                 </Form>
               </Card>
-            </div>
-            {/* ---------------------------Description--------------------------- */}
+            </Col>
+          </Row>
 
-            <div id="product-description">
-              <ListGroup variant="flush">
-                <ListGroup.Item>
-                  <div>{product.description && ReactHtmlParser(product.description)}</div>
-                </ListGroup.Item>
-              </ListGroup>
-            </div>
-            {/* ---------------------------Reviews--------------------------- */}
-
-            <div id="product-reviews">
+          <Row>
+            <Col md={6}>
               <h2 className="my-3" id="review-section">
                 Reviews
               </h2>
@@ -228,11 +214,8 @@ const ProductScreen = ({ history, match }) => {
                   </ListGroup.Item>
                 ))}
               </ListGroup>
-            </div>
-
-            {/* ---------------------------Write a customer Review--------------------------- */}
-
-            <div id="product-write-review" className="mx-3 my-3">
+            </Col>
+            <Col md={6}>
               <ListGroup>
                 <ListGroup.Item>
                   <h3>Write a customer Review</h3>
@@ -269,8 +252,8 @@ const ProductScreen = ({ history, match }) => {
                   )}
                 </ListGroup.Item>
               </ListGroup>
-            </div>
-          </div>
+            </Col>
+          </Row>
         </>
       )}
     </>

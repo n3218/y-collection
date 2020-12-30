@@ -52,8 +52,8 @@ const ProductListScreen = ({ history, match }) => {
     <>
       <h2>Products</h2>
 
-      <div className="text-right">
-        <Button variant="dark" className="my-3" onClick={createProductHandler}>
+      <div className="submenu">
+        <Button variant="success" className="my-3" onClick={createProductHandler}>
           <i className="fas fa-plus"></i> Create Product
         </Button>
       </div>

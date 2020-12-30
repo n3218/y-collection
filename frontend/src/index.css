@@ -221,12 +221,6 @@ th:first-of-type {
   min-width: 120px;
 }
 
-.submenu {
-  display: flex;
-  justify-content: space-between;
-  border-top: 1px solid lightgray;
-}
-
 button.image-gallery-icon {
   filter: none;
 }
@@ -290,7 +284,7 @@ button.image-gallery-icon {
 }
 
 .nav-link {
-  padding: 0rem 1rem;
+  padding: 0.5rem 1rem;
 }
 
 .label-comment {
@@ -299,4 +293,27 @@ button.image-gallery-icon {
   margin-top: -10px;
   margin-left: 10px;
   line-height: 0.9em;
+}
+
+.form-group {
+  margin-bottom: 0;
+}
+
+.submenu {
+  text-align: right;
+}
+#admin-menu {
+  flex-flow: row nowrap;
+  justify-content: flex-end;
+  padding: 0;
+  margin: -5px;
+  height: 32px;
+}
+
+#admin-menu a {
+  margin: 0 5px;
+  padding: 0 10px;
+  background-color: green;
+  color: white;
+  border-radius: 0 0 30px 30px;
 }

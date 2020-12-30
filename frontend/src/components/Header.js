@@ -19,6 +19,24 @@ const Header = () => {
 
   return (
     <header>
+      {userInfo && userInfo.isAdmin && (
+        <Navbar id="admin-menu">
+          <LinkContainer to="/admin/userlist">
+            <Nav.Link>Users</Nav.Link>
+          </LinkContainer>
+          <LinkContainer to="/admin/productlist">
+            <Nav.Link>Products</Nav.Link>
+          </LinkContainer>
+          {/* <LinkContainer to="/admin/productlist" variant="success" className="my-3">
+            <Nav.Link>
+              <i className="fas fa-plus"></i> Create Product
+            </Nav.Link>
+          </LinkContainer> */}
+          <LinkContainer to="/admin/orderlist">
+            <Nav.Link>Orders</Nav.Link>
+          </LinkContainer>
+        </Navbar>
+      )}
       <Navbar bg="white" expand="lg" collapseOnSelect>
         <Container>
           <LinkContainer to="/">
@@ -96,21 +114,6 @@ const Header = () => {
                     <i className="fas fa-user"></i>
                   </Nav.Link>
                 </LinkContainer>
-              )}
-              {userInfo && userInfo.isAdmin && (
-                <NavDropdown title={"Admin"} id="adminmenu" className="bg-success">
-                  <LinkContainer to="/admin/userlist">
-                    <NavDropdown.Item>Users</NavDropdown.Item>
-                  </LinkContainer>
-                  <LinkContainer to="/admin/productlist">
-                    <NavDropdown.Item>Products</NavDropdown.Item>
-                  </LinkContainer>
-                  <LinkContainer to="/admin/orderlist">
-                    <NavDropdown.Item>Orders</NavDropdown.Item>
-                  </LinkContainer>
-                  <NavDropdown.Divider />
-                  <NavDropdown.Item onClick={logoutHandler}>Logout</NavDropdown.Item>
-                </NavDropdown>
               )}
               <Route render={({ history }) => <SearchBox history={history} />} />
             </Nav>

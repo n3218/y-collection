@@ -40,7 +40,7 @@ const HomeScreen = () => {
           </Row>
           <Row className="justify-content-center">
             <Link to="/collection" className="btn btn-danger px-5">
-              See Collection
+              SEE COLLECTION
             </Link>
           </Row>
         </>
