@@ -4,6 +4,7 @@ import { Container } from "react-bootstrap"
 import Footer from "./components/Footer"
 import Header from "./components/Header"
 import HomeScreen from "./screens/HomeScreen"
+import CollectionScreen from "./screens/CollectionScreen"
 import LoginScreen from "./screens/LoginScreen"
 import RegisterScreen from "./screens/RegisterScreen"
 import ProfileScreen from "./screens/ProfileScreen"
@@ -50,9 +51,10 @@ const App = () => {
             <Route path="/admin/orderlist" component={OrderListScreen} exact />
             <Route path="/admin/orderlist/:pageNumber" component={OrderListScreen} exact />
 
-            <Route path="/page/:pageNumber" component={HomeScreen} exact />
-            <Route path="/search/:keyword" component={HomeScreen} exact />
-            <Route path="/search/:keyword/page/:pageNumber" component={HomeScreen} exact />
+            <Route path="/collection/page/:pageNumber" component={CollectionScreen} exact />
+            <Route path="/search/:keyword" component={CollectionScreen} exact />
+            <Route path="/search/:keyword/page/:pageNumber" component={CollectionScreen} exact />
+            <Route path="/collection" component={CollectionScreen} exact />
 
             <Route path="/" exact component={HomeScreen} />
           </Switch>

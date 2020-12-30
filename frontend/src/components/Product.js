@@ -9,18 +9,19 @@ const Product = ({ product }) => {
       <div className="img-card-container">
         <Link to={`/products/${product._id}`}>
           {product.image.length === 0 ? ( //
-            <Card.Img src="/assets/mono-logo.webp" variant="top" alt={product.name} className="img-card image-example" />
+            <Card.Img src="/assets/noimage.webp" variant="top" alt={product.name} className="img-card" />
           ) : (
             <Card.Img src={product.image[0]} variant="top" alt={product.name} className="img-card" />
           )}
         </Link>
       </div>
       <Card.Body className="text-center">
-        <Link to={`/products/${product._id}`}>
-          <Card.Title as="div">
-            {product.brand}, {product.name}
-          </Card.Title>
-        </Link>
+        <Card.Title as="div">
+          {product.brand && <small>{product.brand} </small>}
+          <div>
+            <Link to={`/products/${product._id}`}>{product.name}</Link>
+          </div>
+        </Card.Title>
         {/* <Card.Text as="div">
           <Rating value={product.rating} text={`${product.numReviews} reviews`} />
         </Card.Text> */}

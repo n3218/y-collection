@@ -142,8 +142,11 @@ const ProductEditScreen = ({ history, match }) => {
 
   const deleteColorHandler = colorName => {
     let copy = color
-    let filteredColors = copy.filter(col => col.name !== colorName)
-    setColor([...filteredColors])
+    if (window.confirm("You want to delete color " + colorName + ". Are you sure?")) {
+      let filteredColors = copy.filter(col => col.name !== colorName)
+      setColor([...filteredColors])
+    }
+    console.log("deleteColorHandler")
   }
 
   return (
@@ -240,7 +243,7 @@ const ProductEditScreen = ({ history, match }) => {
                   <Col>
                     <Row>
                       <Col xs={4} md={4} xl={5}>
-                        <input type="text" id="newColorName" className="form-control" name="newColorName" value={newColorName} onChange={e => setNewColorName(e.target.value)} placeholder="Color" />
+                        <input type="text" id="newColorName" className="form-control" name="newColorName" value={newColorName} onChange={e => setNewColorName(e.target.value)} placeholder="Color" required />
                       </Col>
                       <Col xs={4} md={4} xl={5}>
                         <input type="text" id="newColorInStock" className="form-control" name="newColorInStock" value={newColorInStock} onChange={e => setNewColorInStock(e.target.value)} placeholder="inStock" />

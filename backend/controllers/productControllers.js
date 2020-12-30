@@ -6,11 +6,7 @@ import Product from "../models/productModel.js"
 // @access Public
 export const getProducts = asyncHandler(async (req, res) => {
   let pageSize
-  if (req.query.keyword) {
-    pageSize = 36
-  } else {
-    pageSize = 12
-  }
+  pageSize = 24
   const page = Number(req.query.pageNumber) || 1
   const keyword = req.query.keyword
     ? {
@@ -144,7 +140,7 @@ export const createProductReview = asyncHandler(async (req, res) => {
 // @route  GET /api/products/top
 // @access Public
 export const getTopProducts = asyncHandler(async (req, res) => {
-  const products = await Product.find({}).sort({ rating: -1 }).limit(3)
+  const products = await Product.find({}).sort({ updatedAt: -1 }).limit(12)
 
   res.json(products)
 })

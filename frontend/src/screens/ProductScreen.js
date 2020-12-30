@@ -54,7 +54,7 @@ const ProductScreen = ({ history, match }) => {
 
   const showOptions = min => {
     let values = []
-    for (let i = min; i <= 2000; i += 50) {
+    for (let i = min; i <= 1500; i += 50) {
       values.push(i)
     }
     return values

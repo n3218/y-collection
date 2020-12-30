@@ -43,7 +43,10 @@ const Header = () => {
               </LinkContainer>
               <NavDropdown title="Yarns" id="basic-nav-dropdown">
                 <LinkContainer to="/search/cashmere|кашемир">
-                  <NavDropdown.Item>Cachmere</NavDropdown.Item>
+                  <NavDropdown.Item>Cashmere</NavDropdown.Item>
+                </LinkContainer>
+                <LinkContainer to="/search/cashmix|смесовкакашемир">
+                  <NavDropdown.Item>Cashmere Mix</NavDropdown.Item>
                 </LinkContainer>
                 <LinkContainer to="/search/merino|меринос">
                   <NavDropdown.Item>Merino</NavDropdown.Item>
@@ -70,7 +73,7 @@ const Header = () => {
                   <NavDropdown.Item>Paillettes</NavDropdown.Item>
                 </LinkContainer>
                 <NavDropdown.Divider />
-                <LinkContainer to="/search/yarn">
+                <LinkContainer to="/collection">
                   <NavDropdown.Item>All</NavDropdown.Item>
                 </LinkContainer>
               </NavDropdown>

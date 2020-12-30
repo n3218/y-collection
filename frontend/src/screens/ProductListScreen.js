@@ -90,7 +90,13 @@ const ProductListScreen = ({ history, match }) => {
               {products.map(product => (
                 <tr key={product._id} className={`${product.outOfStock && "font-weight-light"}`}>
                   <td width="50px">
-                    <Image src={product.image[0]} alt={product.name} fluid />
+                    {product.image.length === 0 ? (
+                      <div>
+                        <Image src="/assets/noimage.webp" alt={product.name} fluid />
+                      </div>
+                    ) : (
+                      <Image src={product.image[0]} alt={product.name} fluid />
+                    )}
                   </td>
                   <td>{product.brand}</td>
                   <td>

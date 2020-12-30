@@ -1,28 +1,24 @@
 import React, { useEffect } from "react"
 import { useDispatch, useSelector } from "react-redux"
-import { Row, Col, Jumbotron } from "react-bootstrap"
+import { Row, Col } from "react-bootstrap"
 import Product from "../components/Product"
 import Message from "../components/Message"
 import Loader from "../components/Loader"
-import { listProducts } from "../actions/productActions"
-import Paginate from "../components/Paginate"
+import { productTopAction } from "../actions/productActions"
 import Promo from "../components/Promo"
+import PromoInstagram from "../components/PromoInstagram"
 import Meta from "../components/Meta"
+import { Link } from "react-router-dom"
 
-const HomeScreen = ({ match }) => {
-  const keyword = match.params.keyword
-  const pageNumber = match.params.pageNumber || 1
-
+const HomeScreen = () => {
   const dispatch = useDispatch()
-  const productList = useSelector(state => state.productList)
-  const { loading, error, products, page, pages } = productList
+  const productTop = useSelector(state => state.productTop)
+  const { loading, error, products } = productTop
 
   useEffect(() => {
-    dispatch(listProducts(keyword, pageNumber))
-  }, [dispatch, keyword, pageNumber])
+    dispatch(productTopAction())
+  }, [dispatch])
 
-  console.log("keyword: ", keyword)
-  console.log("pageNumber: ", pageNumber)
   return (
     <div>
       {loading ? (
@@ -31,16 +27,8 @@ const HomeScreen = ({ match }) => {
         <Message variant="danger">{error}</Message>
       ) : (
         <>
-          {keyword ? (
-            <h2>{keyword.split("|").join(" | ")}</h2>
-          ) : Number(pageNumber) === 1 ? (
-            <>
-              <Promo />
-              <h2>Latest from MY YARN COLLECTION</h2>
-            </>
-          ) : (
-            <h2>MY YARN COLLECTION</h2>
-          )}
+          <Promo />
+          <h2>Latest from MY YARN COLLECTION</h2>
           <Meta />
           <Row>
             {products &&
@@ -50,15 +38,16 @@ const HomeScreen = ({ match }) => {
                 </Col>
               ))}
           </Row>
-          <Paginate pages={pages} page={page} keyword={keyword} />
+          <Row className="justify-content-center">
+            <Link to="/collection" className="btn btn-danger px-5">
+              See Collection
+            </Link>
+          </Row>
         </>
       )}
-      {/* {!keyword && Number(pageNumber) === 1 && (
-        <>
-          <h2>Latest from my Instagram</h2>
-          <Jumbotron></Jumbotron>
-        </>
-      )} */}
+      <div className="py-5">
+        <PromoInstagram />
+      </div>
     </div>
   )
 }
