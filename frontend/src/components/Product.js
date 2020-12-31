@@ -1,18 +1,30 @@
-import React from "react"
+import React, { useState } from "react"
 import { Card } from "react-bootstrap"
 import { Link } from "react-router-dom"
 // import Rating from "./Rating"
 
 const Product = ({ product }) => {
+  const [imgSrc, setImgSrc] = useState("/assets/noimage.webp")
+
+  const getImageOrFallback = (path, fallback) => {
+    return new Promise(resolve => {
+      const img = new Image()
+      img.src = path
+      img.onload = () => resolve(setImgSrc(path))
+      img.onerror = () => resolve(setImgSrc(fallback))
+    })
+  }
+
+  getImageOrFallback(
+    product.image[0], //
+    "/assets/noimage.webp"
+  ).then(result => console.log(result) || result)
+
   return (
     <Card className="product-card">
       <div className="img-card-container">
         <Link to={`/products/${product._id}`}>
-          {product.image.length === 0 ? ( //
-            <Card.Img src="/assets/noimage.webp" variant="top" alt={product.name} className="img-card" />
-          ) : (
-            <Card.Img src={product.image[0]} variant="top" alt={product.name} className="img-card" />
-          )}
+          <Card.Img src={imgSrc} variant="top" alt={product.name} className="img-card" />
         </Link>
       </div>
       <Card.Body className="text-center">

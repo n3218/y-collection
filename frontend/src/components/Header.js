@@ -27,11 +27,6 @@ const Header = () => {
           <LinkContainer to="/admin/productlist">
             <Nav.Link>Products</Nav.Link>
           </LinkContainer>
-          {/* <LinkContainer to="/admin/productlist" variant="success" className="my-3">
-            <Nav.Link>
-              <i className="fas fa-plus"></i> Create Product
-            </Nav.Link>
-          </LinkContainer> */}
           <LinkContainer to="/admin/orderlist">
             <Nav.Link>Orders</Nav.Link>
           </LinkContainer>
@@ -78,11 +73,14 @@ const Header = () => {
                 <LinkContainer to="/search/silk|шелк">
                   <NavDropdown.Item>Silk</NavDropdown.Item>
                 </LinkContainer>
-                <LinkContainer to="/search/angora|ангора">
-                  <NavDropdown.Item>Angora</NavDropdown.Item>
-                </LinkContainer>
                 <LinkContainer to="/search/alpaca|альпака">
                   <NavDropdown.Item>Alpaca</NavDropdown.Item>
+                </LinkContainer>
+                <LinkContainer to="/search/boucle|букле">
+                  <NavDropdown.Item>Boucle</NavDropdown.Item>
+                </LinkContainer>
+                <LinkContainer to="/search/angora|ангора">
+                  <NavDropdown.Item>Angora</NavDropdown.Item>
                 </LinkContainer>
                 <LinkContainer to="/search/linen|linnen|_лен">
                   <NavDropdown.Item>Linen</NavDropdown.Item>

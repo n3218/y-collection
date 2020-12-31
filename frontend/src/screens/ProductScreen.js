@@ -27,6 +27,7 @@ const ProductScreen = ({ history, match }) => {
   const { loading, error, product } = productDetails
   const productCreateReview = useSelector(state => state.productCreateReview)
   const { loading: loadingCreateReview, error: errorCreateReview, success: successCreateReview } = productCreateReview
+  const noimage = "/assets/noimage.webp"
 
   useEffect(() => {
     if (successCreateReview) {
@@ -38,9 +39,25 @@ const ProductScreen = ({ history, match }) => {
       dispatch({ type: PRODUCT_CREATE_REVIEW_RESET })
     }
     if (product.image) {
-      let currentImages = imagesForGallery(product.image)
-      setInitialImages([...currentImages])
-      setColorImages([...currentImages])
+      let checkedImgArr = []
+      product.image.map(img => {
+        fetch(img)
+          .then(res => {
+            if (res.ok) {
+              checkedImgArr.push(img)
+            } else {
+              checkedImgArr.push(noimage)
+            }
+          })
+          .then(() => {
+            let currentImages = imagesForGallery(checkedImgArr)
+            setInitialImages([...currentImages])
+            setColorImages([...currentImages])
+          })
+      })
+    } else {
+      setInitialImages(imagesForGallery([noimage]))
+      setColorImages(imagesForGallery([noimage]))
     }
   }, [dispatch, match, successCreateReview, product])
 
@@ -93,7 +110,7 @@ const ProductScreen = ({ history, match }) => {
           <Meta title={product.name} description={product.description} />
           <div className="submenu">
             {userInfo && userInfo.isAdmin && (
-              <Link to={`/admin/product/${match.params.id}/edit`} className="btn btn-primary px-4">
+              <Link to={`/admin/product/${match.params.id}/edit`} className="btn btn-primary submenu">
                 Edit
               </Link>
             )}

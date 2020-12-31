@@ -1,14 +1,13 @@
 import React, { useEffect } from "react"
-import { LinkContainer } from "react-router-bootstrap"
-import { Table, Button, Image } from "react-bootstrap"
+import { Table, Button } from "react-bootstrap"
 import { useDispatch, useSelector } from "react-redux"
 import Message from "../components/Message"
 import Loader from "../components/Loader"
 import { listProducts, productCreateAction, productDeleteAction } from "../actions/productActions"
 import { PRODUCT_CREATE_RESET } from "../constants/productConstants"
-import { Link } from "react-router-dom"
 import Paginate from "../components/Paginate"
 import Meta from "../components/Meta"
+import ProductListItem from "../components/ProductListItem"
 
 const ProductListScreen = ({ history, match }) => {
   const dispatch = useDispatch()
@@ -35,13 +34,6 @@ const ProductListScreen = ({ history, match }) => {
       dispatch(listProducts("", pageNumber))
     }
   }, [dispatch, history, userInfo, successDelete, successCreate, createdProduct, pageNumber])
-
-  const deleteHandler = id => {
-    if (window.confirm("Are you sure?")) {
-      dispatch(productDeleteAction(id))
-    }
-    console.log("deleteHandler")
-  }
 
   const createProductHandler = () => {
     console.log("createProductHandler")
@@ -88,59 +80,7 @@ const ProductListScreen = ({ history, match }) => {
             </thead>
             <tbody>
               {products.map(product => (
-                <tr key={product._id} className={`${product.outOfStock && "font-weight-light"}`}>
-                  <td width="50px">
-                    {product.image.length === 0 ? (
-                      <div>
-                        <Image src="/assets/noimage.webp" alt={product.name} fluid />
-                      </div>
-                    ) : (
-                      <Image src={product.image[0]} alt={product.name} fluid />
-                    )}
-                  </td>
-                  <td>{product.brand}</td>
-                  <td>
-                    <Link to={`/products/${product._id}`}>{product.name}</Link>
-                  </td>
-                  <td>{product.category}</td>
-                  <td>{product.fibers}</td>
-                  <td>{product.meterage}</td>
-                  <td>{product.minimum}</td>
-                  <td>€{product.price}</td>
-                  <td>
-                    {product.color.map((col, i) =>
-                      col.inStock !== "" ? (
-                        <div key={col.name}>
-                          <i>{col.name}</i> : {col.inStock}
-                        </div>
-                      ) : (
-                        <span key={col.name}>
-                          <i>{col.name}</i>
-                          {i !== product.color.length - 1 && ", "}
-                        </span>
-                      )
-                    )}
-                  </td>
-                  <td>
-                    {product.outOfStock && (
-                      // <span className="text-danger font-weight-bold">
-                      <i className="fas fa-check text-danger font-weight-bold"></i>
-                      // </span>
-                    )}
-                  </td>
-                  <td>
-                    <LinkContainer to={`/admin/product/${product._id}/edit`}>
-                      <Button variant="link" title="Edit">
-                        <i className="fas fa-edit text-success"></i>
-                      </Button>
-                    </LinkContainer>
-                  </td>
-                  <td>
-                    <Button variant="link" title="Delete" onClick={() => deleteHandler(product._id)}>
-                      <i className="fas fa-trash text-danger"></i>
-                    </Button>
-                  </td>
-                </tr>
+                <ProductListItem product={product} />
               ))}
             </tbody>
           </Table>
