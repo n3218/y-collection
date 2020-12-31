@@ -1,12 +1,11 @@
 import React, { useEffect } from "react"
 import { useDispatch, useSelector } from "react-redux"
-import { Row, Col, Jumbotron } from "react-bootstrap"
+import { Row, Col } from "react-bootstrap"
 import Product from "../components/Product"
 import Message from "../components/Message"
 import Loader from "../components/Loader"
 import { listProducts } from "../actions/productActions"
 import Paginate from "../components/Paginate"
-import Promo from "../components/Promo"
 import Meta from "../components/Meta"
 
 const HomeScreen = ({ match }) => {

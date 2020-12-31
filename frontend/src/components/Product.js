@@ -15,10 +15,7 @@ const Product = ({ product }) => {
     })
   }
 
-  getImageOrFallback(
-    product.image[0], //
-    "/assets/noimage.webp"
-  ).then(result => console.log(result) || result)
+  getImageOrFallback(product.image[0], "/assets/noimage.webp").then(result => result)
 
   return (
     <Card className="product-card">

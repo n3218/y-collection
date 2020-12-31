@@ -195,7 +195,7 @@ const ProductEditScreen = ({ history, match }) => {
                 <Row>
                   <Col sm={2} xs={12}>
                     <Form.Label>Colors in Stock:</Form.Label>
-                    <div className="label-comment pt-3">Можно изменить название цвета, отредактировать вес бобин в наличии, привязать фото к цвету, удалить цвет</div>
+                    <div className="label-comment">Можно изменить название цвета, отредактировать вес бобин в наличии, привязать фото к цвету, удалить цвет</div>
                   </Col>
                   <Col>
                     {color &&

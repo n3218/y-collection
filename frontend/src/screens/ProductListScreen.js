@@ -3,7 +3,7 @@ import { Table, Button } from "react-bootstrap"
 import { useDispatch, useSelector } from "react-redux"
 import Message from "../components/Message"
 import Loader from "../components/Loader"
-import { listProducts, productCreateAction, productDeleteAction } from "../actions/productActions"
+import { listProducts, productCreateAction } from "../actions/productActions"
 import { PRODUCT_CREATE_RESET } from "../constants/productConstants"
 import Paginate from "../components/Paginate"
 import Meta from "../components/Meta"
@@ -36,7 +36,6 @@ const ProductListScreen = ({ history, match }) => {
   }, [dispatch, history, userInfo, successDelete, successCreate, createdProduct, pageNumber])
 
   const createProductHandler = () => {
-    console.log("createProductHandler")
     dispatch(productCreateAction())
   }
 
@@ -80,7 +79,7 @@ const ProductListScreen = ({ history, match }) => {
             </thead>
             <tbody>
               {products.map(product => (
-                <ProductListItem product={product} />
+                <ProductListItem key={product._id} product={product} />
               ))}
             </tbody>
           </Table>

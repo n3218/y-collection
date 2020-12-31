@@ -14,15 +14,12 @@ const ProductListItem = ({ product }) => {
     if (window.confirm("Are you sure?")) {
       dispatch(productDeleteAction(id))
     }
-    console.log("deleteHandler")
   }
 
   fetch(product.image[0]).then(res => {
     if (res.ok) {
-      console.log("ok: ", product.image[0])
       setImgSrc(product.image[0])
     } else {
-      console.log("else: ")
       setImgSrc(noimage)
     }
   })
