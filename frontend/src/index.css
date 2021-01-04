@@ -1,21 +1,29 @@
 @import "./_cosmo.min.css";
 @import "~react-image-gallery/styles/css/image-gallery.css";
 
+/* --breakpoint-xs: 0;
+--breakpoint-sm: 576px;
+--breakpoint-md: 768px;
+--breakpoint-lg: 992px;
+--breakpoint-xl: 1200px; */
+
 html,
 body,
 #root {
   padding: 0;
   margin: 0;
 }
-header {
-  max-width: 1900px;
-  margin: auto;
-}
 main {
   min-height: 80vh;
   width: 100vw;
   max-width: 1900px;
   margin: auto;
+}
+
+@media screen and (max-width: 768px) {
+  .jumbotron {
+    padding: 1rem 1rem;
+  }
 }
 
 .form-inline {
@@ -25,39 +33,6 @@ main {
 .row {
   margin-right: 0;
   margin-left: 0;
-}
-
-.logo {
-  width: 70px;
-}
-
-#adminmenu {
-  color: white;
-}
-
-.underlink {
-  position: relative;
-  color: #000;
-  text-decoration: none;
-}
-.underlink:hover {
-  color: #000;
-}
-.underlink:before {
-  content: "";
-  position: absolute;
-  width: 100%;
-  height: 1px;
-  bottom: 0;
-  left: 0;
-  background-color: #000;
-  visibility: hidden;
-  transform: scaleX(0);
-  transition: all 0.3s ease-in-out 0s;
-}
-.underlink:hover::before {
-  visibility: visible;
-  transform: scaleX(1);
 }
 
 .rating i {
@@ -301,21 +276,6 @@ button.image-gallery-icon {
 
 .submenu {
   text-align: right;
-}
-#admin-menu {
-  flex-flow: row nowrap;
-  justify-content: flex-end;
-  padding: 0;
-  margin: -5px;
-  height: 32px;
-}
-
-#admin-menu a {
-  margin: 0 5px;
-  padding: 0 10px;
-  background-color: green;
-  color: white;
-  border-radius: 0 0 30px 30px;
 }
 
 .breadcrumb-item .nav-item .nav-link {

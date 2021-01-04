@@ -2,7 +2,7 @@ import React from "react"
 import { Link } from "react-router-dom"
 import { Image, Jumbotron } from "react-bootstrap"
 import "./Promo.css"
-import FormContainer from "./FormContainer"
+import FormContainer from "../FormContainer"
 
 const Promo = () => {
   return (
@@ -50,6 +50,24 @@ const Promo = () => {
           </Link>
         </div>
         <div id="promo-6" className="promo-block-button-container overflow-hidden">
+          <Link to="/products/5fe8146bef583024233dbd5e" target="_blank">
+            <Image src="/uploads/image-1609045453112.jpg" alt="Lineapiu Ghost" />
+            <div className="promo-block-text">
+              <div className="text-center">
+                <small>Filati Naturali</small>
+              </div>
+              <div className="text-center">
+                <small>BABY YAK</small>
+              </div>
+            </div>
+            <div className="promo-block-button">ПОДРОБНЕЕ</div>
+          </Link>
+        </div>
+        <div id="promo-7" className="overflow-hidden">
+          <Image src="/assets/promo/79645455_172311820520261_3764907917497880995_n.webp" alt="Promo Block" />
+        </div>
+
+        <div id="promo-8" className="promo-block-button-container overflow-hidden">
           <Link to="/products/5fe7f934be9ee90017f179c4" target="_blank">
             <Image src="/uploads/image-1608189301100.jpg" alt="Lineapiu Ghost" />
             <div className="promo-block-text">
@@ -59,8 +77,8 @@ const Promo = () => {
             <div className="promo-block-button">ПОДРОБНЕЕ</div>
           </Link>
         </div>
-        <div id="promo-7" className="overflow-hidden">
-          <Image src="/assets/promo/79645455_172311820520261_3764907917497880995_n.webp" alt="Promo Block" />
+        <div id="promo-9" className="overflow-hidden">
+          <Image src="/uploads/image-1609038711626.jpg" alt="Promo Block" />
         </div>
       </div>
       <Jumbotron>

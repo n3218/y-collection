@@ -5,8 +5,8 @@ import Product from "../components/Product"
 import Message from "../components/Message"
 import Loader from "../components/Loader"
 import { productTopAction } from "../actions/productActions"
-import Promo from "../components/Promo"
-import PromoInstagram from "../components/PromoInstagram"
+import Promo from "../components/Promo/Promo"
+// import PromoInstagram from "../components/PromoInstagram"
 import Meta from "../components/Meta"
 import { Link } from "react-router-dom"
 
@@ -38,16 +38,16 @@ const HomeScreen = () => {
                 </Col>
               ))}
           </Row>
-          <Row className="justify-content-center">
+          <Row className="justify-content-center my-3">
             <Link to="/collection" className="btn btn-danger px-5">
               SEE COLLECTION
             </Link>
           </Row>
         </>
       )}
-      <div className="py-5">
+      {/* <div className="py-5">
         <PromoInstagram />
-      </div>
+      </div> */}
     </div>
   )
 }

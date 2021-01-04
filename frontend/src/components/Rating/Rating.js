@@ -1,5 +1,6 @@
 import React from "react"
 import { PropTypes } from "prop-types"
+import "./Rating.css"
 
 const Rating = ({ value, text }) => {
   return (
