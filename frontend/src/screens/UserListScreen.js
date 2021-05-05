@@ -6,6 +6,7 @@ import Message from "../components/Message"
 import Loader from "../components/Loader"
 import { listUsersAction, deleteUserAction } from "../actions/userActions"
 import Meta from "../components/Meta"
+import { appname } from "../constants/commonConstants"
 
 const UserListScreen = ({ history }) => {
   const dispatch = useDispatch()
@@ -32,7 +33,7 @@ const UserListScreen = ({ history }) => {
 
   return (
     <>
-      <Meta title="Admin | User List | Woolunatics" />
+      <Meta title={`Admin | User List | ${appname}`} />
       <h2>Users</h2>
       {loading ? (
         <Loader />

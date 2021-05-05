@@ -7,6 +7,7 @@ import Message from "../components/Message"
 import { login } from "../actions/userActions"
 import Loader from "../components/Loader"
 import Meta from "../components/Meta"
+import { appname } from "../constants/commonConstants"
 
 const LoginScreen = ({ history, location }) => {
   const [email, setEmail] = useState("")
@@ -30,7 +31,7 @@ const LoginScreen = ({ history, location }) => {
 
   return (
     <FormContainer>
-      <Meta title="Sign In | Woolunatics" />
+      <Meta title={`Sign In | ${appname}`} />
       <h2>Sign In</h2>
       {error && <Message variant="danger">{error}</Message>}
       {loading && <Loader />}

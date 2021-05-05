@@ -8,6 +8,7 @@ import { PRODUCT_CREATE_RESET } from "../constants/productConstants"
 import Paginate from "../components/Paginate"
 import Meta from "../components/Meta"
 import ProductListItem from "../components/ProductListItem"
+import { appname } from "../constants/commonConstants"
 
 const ProductListScreen = ({ history, match }) => {
   const dispatch = useDispatch()
@@ -59,7 +60,7 @@ const ProductListScreen = ({ history, match }) => {
         <Message variant="danger">{error}</Message>
       ) : (
         <>
-          <Meta title="Admin | Product List | Woolunatics" />
+          <Meta title={`Admin | Product List | ${appname}`} />
           <Table striped hover responsive className="table-sm">
             <thead>
               <tr>

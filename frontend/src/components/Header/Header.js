@@ -6,6 +6,7 @@ import { LinkContainer } from "react-router-bootstrap"
 import { logout } from "../../actions/userActions"
 import SearchBox from "../SearchBox"
 import "./Header.css"
+import { appname } from "../../constants/commonConstants"
 
 const Header = () => {
   const dispatch = useDispatch()
@@ -42,7 +43,7 @@ const Header = () => {
           </LinkContainer>
 
           <Link to="/" className="text-decoration-none">
-            <h1 className="text-dark">Woolunatics</h1>
+            <h1 className="text-dark">{appname}</h1>
           </Link>
 
           <Navbar.Toggle aria-controls="basic-navbar-nav" />

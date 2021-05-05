@@ -5,6 +5,7 @@ import FormContainer from "../components/FormContainer"
 import { saveShippingAddressAction } from "../actions/cartActions"
 import CheckoutSteps from "../components/CheckoutSteps"
 import Meta from "../components/Meta"
+import { appname } from "../constants/commonConstants"
 
 const ShippingScreen = ({ history }) => {
   const cart = useSelector(state => state.cart)
@@ -24,7 +25,7 @@ const ShippingScreen = ({ history }) => {
   }
   return (
     <>
-      <Meta title="Shipping Address | Woolunatics" />
+      <Meta title={`Shipping Address | ${appname}`} />
       <CheckoutSteps step1 step2 />
       <h2>Shipping</h2>
       <FormContainer>
@@ -69,7 +70,7 @@ const ShippingScreen = ({ history }) => {
               onChange={e => setCountry(e.target.value)}
             ></Form.Control>
           </Form.Group>
-          <Button type="submit" variant="primary">
+          <Button type="submit" variant="primary" className="my-3">
             Continue
           </Button>
         </Form>

@@ -12,6 +12,7 @@ import Meta from "../components/Meta"
 import ImageLarge from "../components/ImageLarge"
 import ImageUpload from "../components/ImageUpload"
 import "react-quill/dist/quill.snow.css"
+import { appname } from "../constants/commonConstants"
 
 const ProductEditScreen = ({ history, match }) => {
   const productId = match.params.id
@@ -151,7 +152,8 @@ const ProductEditScreen = ({ history, match }) => {
 
   return (
     <>
-      <Meta title="Admin | Edit Product | Woolunatics" />
+      <Meta title={`Admin | Edit Product | ${appname}`} />
+
       <div className="submenu">
         <Link to={`/products/${productId}`} className="btn btn-success">
           Preview

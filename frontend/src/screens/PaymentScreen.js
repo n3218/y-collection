@@ -5,6 +5,7 @@ import FormContainer from "../components/FormContainer"
 import { savePaymentMethodAction } from "../actions/cartActions"
 import CheckoutSteps from "../components/CheckoutSteps"
 import Meta from "../components/Meta"
+import { appname } from "../constants/commonConstants"
 
 const PaymentScreen = ({ history }) => {
   const cart = useSelector(state => state.cart)
@@ -36,7 +37,7 @@ const PaymentScreen = ({ history }) => {
 
   return (
     <>
-      <Meta title="Payment Method | Woolunatics" />
+      <Meta title={`Payment Method | | ${appname}`} />
       <CheckoutSteps step1 step2 step3 />
       <h2>Payment Method</h2>
       <FormContainer>
@@ -50,7 +51,7 @@ const PaymentScreen = ({ history }) => {
             {radioButton("Paysend", "Paysend")}
             {radioButton("Stripe", "Stripe")}
 
-            <Button type="submit" variant="primary">
+            <Button type="submit" variant="primary" className="my-3">
               Continue
             </Button>
           </Form.Group>

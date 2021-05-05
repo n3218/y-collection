@@ -8,6 +8,7 @@ import Loader from "../components/Loader"
 import { listOrdersAction } from "../actions/orderActions"
 import Meta from "../components/Meta"
 import Paginate from "../components/Paginate"
+import { appname } from "../constants/commonConstants"
 
 const OrderListScreen = ({ history, match }) => {
   const dispatch = useDispatch()
@@ -29,7 +30,7 @@ const OrderListScreen = ({ history, match }) => {
 
   return (
     <>
-      <Meta title="Admin | Orders | Woolunatics" />
+      <Meta title={`Admin | Orders | | ${appname}`} />
       <h2>Orders</h2>
 
       {loading ? (

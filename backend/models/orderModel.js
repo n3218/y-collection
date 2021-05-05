@@ -10,8 +10,8 @@ const orderSchema = mongoose.Schema(
     orderItems: [
       {
         name: { type: String, required: true },
-        brand: { type: String, required: true },
-        fibers: { type: String, required: true },
+        brand: { type: String, required: false },
+        fibers: { type: String, required: false },
         meterage: { type: String, required: true },
         color: { type: String, required: true },
         qty: { type: Number, required: true },

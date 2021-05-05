@@ -8,6 +8,7 @@ import Loader from "../components/Loader"
 import { listMyOrdersAction } from "../actions/orderActions"
 import Meta from "../components/Meta"
 import { USER_UPDATE_PROFILE_RESET } from "../constants/userConstants"
+import { appname } from "../constants/commonConstants"
 
 const ProfileScreen = ({ history, location }) => {
   const [name, setName] = useState("")
@@ -60,7 +61,7 @@ const ProfileScreen = ({ history, location }) => {
 
   return (
     <Row>
-      <Meta title="Profile | Woolunatics" />
+      <Meta title={`Profile | ${appname}`} />
       <Col md={3}>
         <h2>My Profile</h2>
         {message && <Message variant="danger">{message}</Message>}

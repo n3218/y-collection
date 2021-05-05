@@ -7,6 +7,7 @@ import { getUserDetails, updateUserAction } from "../actions/userActions"
 import Loader from "../components/Loader"
 import { USER_UPDATE_RESET } from "../constants/userConstants"
 import Meta from "../components/Meta"
+import { appname } from "../constants/commonConstants"
 
 const UserEditScreen = ({ history, match }) => {
   const userId = match.params.id
@@ -42,7 +43,7 @@ const UserEditScreen = ({ history, match }) => {
 
   return (
     <>
-      <Meta title="Admin | Edit User | Woolunatics" />
+      <Meta title={`Admin | Edit User | ${appname}`} />
       <h2>Edit User</h2>
       <FormContainer>
         {loadingUpdate && <Loader />}

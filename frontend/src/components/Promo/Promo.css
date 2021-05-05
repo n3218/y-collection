@@ -3,7 +3,7 @@
 .promo-block {
   max-width: 100vw;
   display: grid;
-  gap: 1px;
+  gap: 3px;
   grid-auto-rows: minmax(100px, auto);
 }
 

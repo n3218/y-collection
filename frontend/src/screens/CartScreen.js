@@ -7,6 +7,7 @@ import { cartAddItemAction } from "../actions/cartActions"
 import { useEffect } from "react"
 import Meta from "../components/Meta"
 import CartItems from "../components/CartItems"
+import { appname } from "../constants/commonConstants"
 
 const CartScreen = ({ match, location, history }) => {
   const productId = match.params.id
@@ -33,7 +34,7 @@ const CartScreen = ({ match, location, history }) => {
 
   return (
     <>
-      <Meta title="Shopping Cart | Woolunatics" />
+      <Meta title={`Shopping Cart | ${appname}`} />
       <h2>Shopping Cart</h2>
       <Row>
         <Col md={9} xs={12}>

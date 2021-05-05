@@ -1,5 +1,6 @@
 import React from "react"
 import { Helmet } from "react-helmet"
+import { appname } from "../constants/commonConstants"
 
 const Meta = ({ title, description }) => {
   return (
@@ -11,7 +12,7 @@ const Meta = ({ title, description }) => {
 }
 
 Meta.defaultProps = {
-  title: "Woolunatics | Welcome to my Yarn Collection!",
+  title: appname + ` | Welcome to my Yarn Collection!`,
   description: "Bautiful yarns for knot lovers"
 }
 

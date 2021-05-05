@@ -3,6 +3,7 @@ import { Link } from "react-router-dom"
 import { Image, Jumbotron } from "react-bootstrap"
 import "./Promo.css"
 import FormContainer from "../FormContainer"
+import { appname } from "../../constants/commonConstants"
 
 const Promo = () => {
   return (
@@ -67,23 +68,27 @@ const Promo = () => {
           <Image src="/assets/promo/79645455_172311820520261_3764907917497880995_n.webp" alt="Promo Block" />
         </div>
 
-        <div id="promo-8" className="promo-block-button-container overflow-hidden">
-          <Link to="/products/5fe7f934be9ee90017f179c4" target="_blank">
-            <Image src="/uploads/image-1608189301100.jpg" alt="Lineapiu Ghost" />
-            <div className="promo-block-text">
-              <div>Lineapiu</div>
-              <div>GHOST</div>
-            </div>
-            <div className="promo-block-button">ПОДРОБНЕЕ</div>
-          </Link>
+        <div id="promo-8" className="promo-block-button-container">
+          <div className="overflow-hidden">
+            <Link to="/products/5fe7f934be9ee90017f179c4" target="_blank">
+              <Image src="/uploads/image-1608189301100.jpg" alt="Lineapiu Ghost" />
+              <div className="promo-block-text">
+                <div>Lineapiu</div>
+                <div>GHOST</div>
+              </div>
+              <div className="promo-block-button">ПОДРОБНЕЕ</div>
+            </Link>
+          </div>
         </div>
-        <div id="promo-9" className="overflow-hidden">
-          <Image src="/uploads/image-1609038711626.jpg" alt="Promo Block" />
+        <div id="promo-9">
+          <div className="overflow-hidden">
+            <Image src="/uploads/image-1609038711626.jpg" alt="Promo Block" />
+          </div>
         </div>
       </div>
       <Jumbotron>
         <FormContainer>
-          <h3 className="promo-welcome-header text-center mb-3">Добро пожaловать в коллекцию WOOLUNATICS</h3>
+          <h3 className="promo-welcome-header text-center mb-3">Добро пожaловать в {appname}</h3>
           <div>Здесь вы найдете много эксклюзивных текстур и составов. В основном бобинная пряжа и в основном натуральные составы. Пряжа в этой коллекции - сток текстильного производства, у вас есть шанс преобрести редкие и снятые с производства наименования. Пряжа тонкая, толстая - как для ручного вязания, так и для машинного.</div>
         </FormContainer>
       </Jumbotron>

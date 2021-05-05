@@ -1,7 +1,7 @@
 {
-  "name": "mernapp",
+  "name": "y-collection-server",
   "version": "1.0.0",
-  "description": "MERN shop app",
+  "description": "Y-Collection shop app",
   "main": "server.js",
   "type": "module",
   "scripts": {

@@ -8,6 +8,7 @@ import Meta from "../components/Meta"
 import { ORDER_CREATE_RESET } from "../constants/orderConstants"
 import CartItems from "../components/CartItems"
 import OrderSummary from "../components/OrderSummary"
+import { appname } from "../constants/commonConstants"
 
 const PlaceOrderScreen = ({ history }) => {
   const dispatch = useDispatch()
@@ -46,7 +47,7 @@ const PlaceOrderScreen = ({ history }) => {
   }
   return (
     <>
-      <Meta title="Place order | Woolunatics" />
+      <Meta title={`Place order | | ${appname}`} />
       <CheckoutSteps step1 step2 step3 step4 />
 
       <Row>

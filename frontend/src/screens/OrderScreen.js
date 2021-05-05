@@ -10,6 +10,7 @@ import { getOrderDetailsAction, payOrderAction, deliverOrderAction } from "../ac
 import { ORDER_PAY_RESET, ORDER_DELIVER_RESET } from "../constants/orderConstants"
 import Meta from "../components/Meta"
 import OrderSummary from "../components/OrderSummary"
+import { appname } from "../constants/commonConstants"
 
 const OrderScreen = ({ match, history }) => {
   const orderId = match.params.id
@@ -72,7 +73,8 @@ const OrderScreen = ({ match, history }) => {
     <Message>{error}</Message>
   ) : (
     <>
-      <Meta title={`Order #${order._id} | Woolunatics`} />
+      <Meta title={`Order #${order._id} | ${appname}`} />
+
       <h2>Order #{order._id}</h2>
       <Row>
         <Col md={9}>
