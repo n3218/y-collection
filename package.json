@@ -15,12 +15,12 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/n3218/mern-shop.git"
+    "url": "git+https://github.com/n3218/y-collection.git"
   },
   "author": "N. Shport",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/n3218/mern-shop/issues"
+    "url": "https://github.com/n3218/y-collection/issues"
   },
   "dependencies": {
     "bcryptjs": "^2.4.3",

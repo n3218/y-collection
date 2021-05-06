@@ -4,11 +4,11 @@ import { LinkContainer } from "react-router-bootstrap"
 import { Link } from "react-router-dom"
 import { Button, Image } from "react-bootstrap"
 import { productDeleteAction } from "../actions/productActions"
+import { replaceUploads, noimage } from "../constants/commonConstants"
 
 const ProductListItem = ({ product }) => {
-  const noimage = "/assets/noimage.webp"
   const dispatch = useDispatch()
-  const [imgSrc, setImgSrc] = useState(noimage)
+  const [imgSrc, setImgSrc] = useState(replaceUploads(noimage))
 
   const deleteHandler = id => {
     if (window.confirm("Are you sure?")) {
@@ -16,11 +16,12 @@ const ProductListItem = ({ product }) => {
     }
   }
 
-  fetch(product.image[0]).then(res => {
-    if (res.ok) {
-      setImgSrc(product.image[0])
+  const img = replaceUploads(product.image[0])
+  fetch(img, { mode: "no-cors" }).then(res => {
+    if (res) {
+      setImgSrc(img)
     } else {
-      setImgSrc(noimage)
+      setImgSrc(replaceUploads(noimage))
     }
   })
 

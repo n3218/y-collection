@@ -21,7 +21,6 @@ const ImageUpload = ({ image, setUploading, setImage, uploading }) => {
         }
       }
       const { data } = await axios.post("/api/upload", formData, config)
-      console.log("data: ", data)
       setImage([...image, ...data.map(img => `/${img.path}`)])
       setUploading(false)
     } catch (error) {

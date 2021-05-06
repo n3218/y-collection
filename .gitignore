@@ -27,3 +27,8 @@ yarn-error.log*
 tmp
 tmp/
 /tmp
+
+env_vars.yaml
+/env_vars.yaml
+
+.gcloudignore

@@ -49,7 +49,6 @@ export const cartUpdateItemAction = (product, qty, color) => async (dispatch, ge
 }
 
 export const cartRemoveItemAction = (id, color) => async (dispatch, getState) => {
-  console.log("cartRemoveItemAction: ", id, color)
   dispatch({
     type: CART_REMOVE_ITEM,
     payload: { id, color }

@@ -20,8 +20,6 @@ const HomeScreen = ({ match }) => {
     dispatch(listProducts(keyword, pageNumber))
   }, [dispatch, keyword, pageNumber])
 
-  console.log("keyword: ", keyword)
-  console.log("pageNumber: ", pageNumber)
   return (
     <div>
       {loading ? (

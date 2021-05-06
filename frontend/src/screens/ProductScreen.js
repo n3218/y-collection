@@ -11,6 +11,7 @@ import Loader from "../components/Loader"
 import { PRODUCT_CREATE_REVIEW_RESET } from "../constants/productConstants"
 import Meta from "../components/Meta"
 import "./ProductScreen.css"
+import { replaceUploads, noimage } from "../constants/commonConstants"
 
 const ProductScreen = ({ history, match }) => {
   const dispatch = useDispatch()
@@ -26,7 +27,6 @@ const ProductScreen = ({ history, match }) => {
   const { loading, error, product } = productDetails
   const productCreateReview = useSelector(state => state.productCreateReview)
   const { loading: loadingCreateReview, error: errorCreateReview, success: successCreateReview } = productCreateReview
-  const noimage = "/assets/noimage.webp"
 
   useEffect(() => {
     if (successCreateReview) {
@@ -40,9 +40,10 @@ const ProductScreen = ({ history, match }) => {
     if (product.image) {
       let checkedImgArr = []
       product.image.map(img => {
-        fetch(img)
+        let imageFile = replaceUploads(img)
+        return fetch(imageFile, { mode: "no-cors" })
           .then(res => {
-            if (res.ok) {
+            if (res) {
               checkedImgArr.push(img)
             } else {
               checkedImgArr.push(noimage)
@@ -79,7 +80,7 @@ const ProductScreen = ({ history, match }) => {
 
   const imagesForGallery = imageArray => {
     let currentImages = []
-    imageArray.map(img => currentImages.push({ original: img, thumbnail: img }))
+    imageArray.map(img => currentImages.push({ original: replaceUploads(img), thumbnail: replaceUploads(img) }))
     return currentImages
   }
 

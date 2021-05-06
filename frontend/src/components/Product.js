@@ -1,10 +1,11 @@
 import React, { useState } from "react"
 import { Card } from "react-bootstrap"
 import { Link } from "react-router-dom"
-// import Rating from "./Rating"
+import { replaceUploads, noimage } from "../constants/commonConstants"
+import Rating from "./Rating/Rating"
 
 const Product = ({ product }) => {
-  const [imgSrc, setImgSrc] = useState("/assets/noimage.webp")
+  const [imgSrc, setImgSrc] = useState(replaceUploads(noimage))
 
   const getImageOrFallback = (path, fallback) => {
     return new Promise(resolve => {
@@ -15,7 +16,8 @@ const Product = ({ product }) => {
     })
   }
 
-  getImageOrFallback(product.image[0], "/assets/noimage.webp").then(result => result)
+  const image = replaceUploads(product.image[0])
+  getImageOrFallback(image, replaceUploads(noimage)).then(result => result)
 
   return (
     <Card className="product-card">
@@ -31,9 +33,9 @@ const Product = ({ product }) => {
             <Link to={`/products/${product._id}`}>{product.name}</Link>
           </div>
         </Card.Title>
-        {/* <Card.Text as="div">
+        <Card.Text as="div">
           <Rating value={product.rating} text={`${product.numReviews} reviews`} />
-        </Card.Text> */}
+        </Card.Text>
 
         <Card.Text className="my-0">€{product.price} / 100g</Card.Text>
         {product.color.length > 1 && <Card.Text className="my-0 text-danger">{product.color.length} colors</Card.Text>}

@@ -12,7 +12,7 @@ import Meta from "../components/Meta"
 import ImageLarge from "../components/ImageLarge"
 import ImageUpload from "../components/ImageUpload"
 import "react-quill/dist/quill.snow.css"
-import { appname } from "../constants/commonConstants"
+import { appname, replaceUploads } from "../constants/commonConstants"
 
 const ProductEditScreen = ({ history, match }) => {
   const productId = match.params.id
@@ -126,7 +126,7 @@ const ProductEditScreen = ({ history, match }) => {
           image.map(img => (
             <div key={img} className="color-picture">
               <Form.Label>
-                <img src={img} alt="Color Preview" width="80" />
+                <img src={replaceUploads(img)} alt="Color Preview" width="80" />
               </Form.Label>
               <Form.Check //
                 className="checkboxImg"
@@ -147,7 +147,6 @@ const ProductEditScreen = ({ history, match }) => {
       let filteredColors = copy.filter(col => col.name !== colorName)
       setColor([...filteredColors])
     }
-    console.log("deleteColorHandler")
   }
 
   return (

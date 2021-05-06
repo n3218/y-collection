@@ -3,6 +3,7 @@ import { useDispatch } from "react-redux"
 import { Link } from "react-router-dom"
 import { Row, Col, Image, Form, Button, ListGroup } from "react-bootstrap"
 import { cartRemoveItemAction, cartUpdateItemAction } from "../actions/cartActions"
+import { replaceUploads } from "../constants/commonConstants"
 
 const CartItems = ({ cartItems }) => {
   const dispatch = useDispatch()
@@ -25,7 +26,7 @@ const CartItems = ({ cartItems }) => {
         <ListGroup.Item key={`${item.product}-${item.color}`}>
           <Row>
             <Col xl={2} xs={2}>
-              <Image src={item.image} alt={item.name} fluid thumbnail />
+              <Image src={replaceUploads(item.image)} alt={item.name} fluid thumbnail />
             </Col>
             <Col>
               <div>
